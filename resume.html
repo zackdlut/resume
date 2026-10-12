@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>张恒 - 简历</title>
+<style>
+@page { size: A4; margin: 11mm 14mm 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  /* 色调对齐 zhangheng.pdf（Word 大工模板蓝 #4F81BD） */
+  --ink: #1a1a1a;
+  --accent: #4f81bd;
+  --strong: #4f81bd;
+  --sky: #4f81bd;
+  --rail: #c5d0dc;
+  --mist: #d6dfe7;
+  --muted: #666;
+  --faint: #a6a6a6;
+  --num: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Segoe UI", sans-serif;
+}
+html { background: #ececec; }
+body {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  font-size: 10.5pt; line-height: 1.4; color: var(--ink);
+  width: 210mm; min-height: 297mm; margin: 24px auto; padding: 12mm 14mm;
+  background: #fff; box-shadow: 0 2px 16px rgba(0, 0, 0, .12);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+@media print {
+  @page { size: A4; margin: 8mm 11mm 7mm; }
+  html { background: none; }
+  body {
+    width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none;
+    font-size: 9.25pt; line-height: 1.28;
+  }
+  header.basic { gap: 14px; padding-bottom: 4px; }
+  .who h1 { font-size: 19pt; letter-spacing: 4px; }
+  .intent { margin-top: 3px; }
+  .kv { padding-left: 14px; }
+  .kv p { line-height: 1.32; }
+  .photo { width: 20mm; height: 26mm; }
+  h2 { font-size: 9.5pt; padding: 1px 8px; margin: 3px 0 1px; letter-spacing: 1px; }
+  li { break-inside: auto; }
+  .entry { margin-top: 2px; }
+  li.row { column-gap: 8px; }
+  .timeline { margin-left: 2px; padding-left: 12px; }
+  .timeline .entry::before { width: 7px; height: 7px; left: -17px; }
+  .desc { margin-top: 0; }
+}
+a { color: inherit; text-decoration: none; white-space: nowrap; }
+strong { font-weight: 700; }
+em { font-style: normal; }
+.todo { color: var(--faint); font-weight: 400; }
+
+header.basic {
+  display: flex; align-items: center; gap: 22px;
+  padding: 2px 0 6px 2px; border-bottom: 1.5px solid var(--accent);
+}
+.who { flex: 1 1 auto; min-width: 0; }
+.who h1 { font-size: 22pt; letter-spacing: 6px; line-height: 1.25; }
+.intent { margin-top: 6px; color: var(--ink); font-weight: 700; }
+.kv { flex: 0 0 auto; border-left: 1px solid var(--rail); padding-left: 20px; }
+.kv p { line-height: 1.45; }
+.kv .k { display: inline-block; width: 4em; text-align-last: justify; color: var(--muted); }
+.kv .colon { color: var(--muted); }
+.kv .v { font-family: var(--num); white-space: nowrap; }
+.photo {
+  flex: none; width: 23mm; height: 30mm; object-fit: cover; object-position: center 35%;
+  border-radius: 4px;
+}
+
+h2 {
+  font-size: 11pt; font-weight: 700; letter-spacing: 2px;
+  color: #fff; background: var(--accent);
+  padding: 3px 10px; margin: 8px 0 4px; break-after: avoid;
+}
+
+ul { padding-left: 1.15em; }
+li { break-inside: avoid; }
+.rows > ul, .timeline > ul, .flat > ul { list-style: none; padding-left: 0; }
+.rows li:not(.row) { list-style: disc; margin-left: 1.15em; }
+li.row {
+  display: grid;
+  grid-template-columns: var(--lbl, 4.6em) minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: baseline;
+}
+.rows { --lbl: 6.6em; }
+.lbl { font-weight: 700; white-space: nowrap; }
+.rows-date .lbl { font-family: var(--num); font-weight: 600; }
+li.row > ul { grid-column: 1 / -1; padding-top: 1px; }
+.val { min-width: 0; }
+
+.flat ul { padding-left: 0; }
+
+.timeline { margin-left: 4px; padding-left: 14px; border-left: 1px solid var(--rail); }
+.timeline ul { padding-left: 0; }
+.entry {
+  position: relative; display: flex; align-items: baseline; gap: 12px;
+  margin-top: 4px; break-after: avoid;
+}
+.timeline > .entry:first-child { margin-top: 1px; }
+.timeline .entry::before {
+  content: ""; position: absolute; left: -18.5px; top: .45em;
+  width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 1.5px solid var(--accent);
+}
+.timeline .entry:first-of-type::before { background: var(--accent); border-color: var(--accent); }
+.entry .title { flex: 1; font-weight: 700; }
+.entry .role { font-weight: 400; color: var(--muted); }
+.entry .role::before { content: "·"; margin: 0 8px; color: var(--faint); }
+.entry .date {
+  flex: none; white-space: nowrap;
+  font-family: var(--num); color: var(--strong);
+}
+.desc { color: var(--muted); break-after: avoid; }
+</style>
+</head>
+<body>
+<header class="basic"><div class="who"><h1>张恒</h1><p class="intent">求职意向：C/C++ 高级软件工程师（通信 / 嵌入式与物联网方向）</p></div><div class="kv"><p><span class="k">工作年限</span><span class="colon">：</span><span class="v">16 年</span></p><p><span class="k">出生年月</span><span class="colon">：</span><span class="v">1987.12</span></p><p><span class="k">期望城市</span><span class="colon">：</span><span class="v">青岛</span></p><p><span class="k">到岗时间</span><span class="colon">：</span><span class="v">2026.12 起</span></p><p><span class="k">电话</span><span class="colon">：</span><span class="v">151-9248-5800</span></p><p><span class="k">邮箱</span><span class="colon">：</span><span class="v">354379271@qq.com</span></p></div><img class="photo" src="avatar.jpg" alt="照片"></header>
+<h2>教育背景</h2>
+<section class="sec flat">
+<ul>
+<li>大连理工大学 ｜ 软件工程（嵌入式方向） ｜ 本科 ｜ 2006.09 – 2010.06 ｜ 英语六级（557），英语可作为工作语言
+</li></ul>
+</section>
+<h2>个人优势</h2>
+<section class="sec rows rows-meta">
+<ul>
+<li class="row"><span class="lbl">研发经验</span><span class="val">16 年 C/C++ 通信软件开发，11 年诺基亚 4G/5G 核心网，5 年嵌入式网络协议栈</span>
+</li>
+<li class="row"><span class="lbl">技术深度</span><span class="val">Linux 性能调优、现网疑难故障定位（12 小时恢复 T-Mobile 业务）、高并发网络编程</span>
+</li>
+<li class="row"><span class="lbl">技术负责</span><span class="val">3 个核心模块负责人，多次牵头新功能开发，带领 5~6 人小组；产品在 T-Mobile、Verizon、Vodafone 商用</span>
+</li></ul>
+</section>
+<h2>专业技能</h2>
+<section class="sec rows rows-skill">
+<ul>
+<li class="row"><span class="lbl">开发语言</span><span class="val">C/C++（工作主用 C++11，自学 C++14~20）、Python、Shell</span>
+</li>
+<li class="row"><span class="lbl">网络编程</span><span class="val">TCP/IP、HTTP/2、SCTP、Diameter、SOAP、IPv6；epoll、线程池</span>
+</li>
+<li class="row"><span class="lbl">性能调优</span><span class="val">Linux 下 CPU、内存、网络性能分析；perf、valgrind、GDB、tcpdump、Wireshark</span>
+</li>
+<li class="row"><span class="lbl">电信核心网</span><span class="val">3GPP、4G/5G 用户数据与认证、IMS、4G/5G 互通</span>
+</li>
+<li class="row"><span class="lbl">云原生</span><span class="val">OpenShift、Kubernetes、容器化迁移、业务不中断升级</span>
+</li>
+<li class="row"><span class="lbl">嵌入式</span><span class="val">VxWorks、TCP/IP 与 IPv6 协议栈、AirPrint 设备互联</span>
+</li>
+<li class="row"><span class="lbl">AI 应用</span><span class="val">AI 智能体开发（工具调用、先规划再执行）、DeepSeek 与本地大模型接入</span>
+</li></ul>
+</section>
+<h2>工作经历</h2>
+<section class="sec timeline rows rows-date">
+<div class="entry"><span class="title">诺基亚通信投资（中国）有限公司青岛分公司<span class="role">高级软件工程师</span><span class="role">模块负责人</span></span><span class="date">2015.06 – 至今</span></div>
+<ul>
+<li class="row"><span class="lbl">模块负责</span><span class="val">5G 网络通信、数据库缓存、通用应用中间件 3 个模块的负责人，主导设计、评审与质量</span>
+</li>
+<li class="row"><span class="lbl">团队带领</span><span class="val">敏捷团队中多次牵头新功能开发，带领 5~6 人小组从设计到交付；多次负责新员工培训，做内部技术分享</span>
+</li>
+<li class="row"><span class="lbl">2020 – 至今</span><span class="val">云原生改造：核心网用户数据库容器化迁移与 4G/5G 互通（详见项目经历）</span>
+</li>
+<li class="row"><span class="lbl">2017 – 2020</span><span class="val">现网支持：为北美、欧洲运营商定位现网故障与性能瓶颈（代表案例见项目经历）</span>
+</li>
+<li class="row"><span class="lbl">2015 – 2017</span><span class="val">核心网开发：用 C/C++ 按 3GPP 协议开发 4G 用户数据库与 IMS 功能并交付</span>
+</li></ul>
+<div class="entry"><span class="title">日冲信息（大连）有限公司<span class="role">嵌入式软件工程师</span></span><span class="date">2009.09 – 2015.05</span></div>
+<ul>
+<li class="row"><span class="lbl">2010 – 2015</span><span class="val">正式工作：负责打印机网络协议栈开发，依据 RFC 在 VxWorks 上用 C/C++ 实现 HTTP/UPnP/WSD、CIFS 文件共享、SNMP 等协议；主导 AirPrint 与谷歌云打印协议开发，支持产品连续获得 AirPrint 1.1 至 1.5 认证；主持搭建 IPv6 Ready Logo 测试环境，完成协议栈 Phase-1/Phase-2 认证</span>
+</li>
+<li class="row"><span class="lbl">2009 – 2010</span><span class="val">实习：用 HTML、JavaScript、CSS 开发打印机内嵌管理网页，用 Selenium 编写自动化测试</span>
+</li></ul>
+</section>
+<h2>项目经历</h2>
+<section class="sec timeline rows rows-meta">
+<div class="entry"><span class="title">核心网用户数据库容器化迁移与 4G/5G 互通<span class="role">核心开发</span></span><span class="date">2020.06 – 至今</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">4G/5G 核心网用户数据库需要从虚拟机迁到 OpenShift 容器平台，并与 5G 核心网互通</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val">负责 4G/5G 认证与数据库更新通知模块的容器化迁移、全产品不中断升级与网络通信；开发 4G/5G 互通接口</span>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">已在美国 T-Mobile、Verizon，欧洲 Vodafone 等多家运营商商用上线；容器化服务实现业务不中断升级</span>
+</li></ul>
+<div class="entry"><span class="title">美国 T-Mobile 核心网时延故障等<span class="role">主导根因定位</span></span><span class="date">2019.06 – 2019.09</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">光纤中断后，用户数据库发往信令路由节点的 Diameter 消息出现严重时延，810 万用户 VoLTE 业务受损</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val">与客户沟通，获取并分析日志数据，先协助客户临时恢复服务；随后在 Linux 实验环境复现问题，通过对比测试定位根因为虚拟机网卡多队列导致 SCTP 乱序与快速重传、吞吐大幅下降；提出隔离异常连接的方案</span>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">12 小时内先行恢复客户业务；一周内交付完整解决方案，被客户现网采纳</span>
+</li></ul>
+<div class="entry"><span class="title">C++ 推理引擎（个人学习项目）<span class="role">独立开发</span></span><span class="date">2026.09</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">不依赖任何深度学习框架，用 C++20 从零实现一个在 CPU 上运行的 AI 模型推理引擎</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val">实现模型加载、计算与文本生成全流程，支持手写数字识别、GPT-2 文本生成、模型量化压缩与多线程加速</span>
+</li></ul>
+<div class="entry"><span class="title">AI 智能运维终端（个人开源项目）<span class="role">独立开发</span></span><span class="date">2026.06 – 2026.09</span></div>
+<ul>
+<li class="row"><span class="lbl">我的工作</span><span class="val">开发 MobaXterm 风格多标签 SSH 终端，内置 AI 助手侧边栏，感知终端输出与主机上下文；按 F12 进入 AI 模式，输入自然语言回车即自动转换为 shell 命令执行，无需手写复杂命令；非侵入式设计</span>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">获诺基亚内部 AI 创新大赛二等奖，并在公司内部推广使用</span>
+</li></ul>
+</section>
+<h2>专利、荣誉与证书</h2>
+<section class="sec rows rows-meta">
+<ul>
+<li class="row"><span class="lbl">专利</span><span class="val">第一发明人，PCT 国际专利 <a href="https://patents.google.com/patent/WO2025175539A1">WO2025175539A1</a>，《基于设备信息的 AKMA 认证》</span>
+</li>
+<li class="row"><span class="lbl">荣誉</span><span class="val">因绩效突出获授诺基亚 1000 股股权激励</span>
+</li>
+<li class="row"><span class="lbl">软考</span><span class="val">软件设计师（中级）</span>
+</li>
+<li class="row"><span class="lbl">红帽认证</span><span class="val">OpenShift 应用开发者（证书编号 <a href="https://rhtapps.redhat.com/verify?certId=240-240-408">240-240-408</a>）</span>
+</li></ul>
+</section>
+</body>
+</html>

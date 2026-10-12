@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>张三 - 简历</title>
+<style>
+@page { size: A4; margin: 11mm 14mm 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #1a1a1a;
+  --strong: #1a1a1a;
+  --sky: #8c8c8c;
+  --rail: #c8c8c8;
+  --mist: #d9d9d9;
+  --muted: #666;
+  --faint: #a6a6a6;
+  --num: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Segoe UI", sans-serif;
+}
+html { background: #ececec; }
+body {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  font-size: 10.5pt; line-height: 1.4; color: var(--ink);
+  width: 210mm; min-height: 297mm; margin: 24px auto; padding: 12mm 14mm;
+  background: #fff; box-shadow: 0 2px 16px rgba(0, 0, 0, .12);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+@media print {
+  html { background: none; }
+  body { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
+}
+a { color: inherit; text-decoration: none; white-space: nowrap; }
+strong { font-weight: 700; }
+em { font-style: normal; }
+.todo { color: var(--faint); font-weight: 400; }
+
+header.basic {
+  display: flex; align-items: center; gap: 22px;
+  padding: 2px 0 6px 2px; border-bottom: 1.5px solid var(--ink);
+}
+.who { flex: 1 1 auto; min-width: 0; }
+.who h1 { font-size: 22pt; letter-spacing: 6px; line-height: 1.25; }
+.intent { margin-top: 6px; color: var(--strong); font-weight: 700; }
+.kv { flex: 0 0 auto; border-left: 1px solid var(--rail); padding-left: 20px; }
+.kv p { line-height: 1.45; }
+.kv .k { display: inline-block; width: 4em; text-align-last: justify; color: var(--muted); }
+.kv .colon { color: var(--muted); }
+.kv .v { font-family: var(--num); white-space: nowrap; }
+.photo {
+  flex: none; width: 23mm; height: 30mm; object-fit: cover; object-position: center 35%;
+  border-radius: 4px;
+}
+
+h2 {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11.5pt; font-weight: 700; letter-spacing: 2px; color: var(--strong);
+  margin: 6px 0 2px; break-after: avoid;
+}
+h2::after { content: ""; flex: 1; border-bottom: 1px solid var(--mist); }
+
+ul { padding-left: 1.15em; }
+li { break-inside: avoid; }
+.rows > ul, .timeline > ul, .flat > ul { list-style: none; padding-left: 0; }
+.rows li:not(.row) { list-style: disc; margin-left: 1.15em; }
+li.row {
+  display: grid;
+  grid-template-columns: var(--lbl, 4.6em) minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: baseline;
+}
+.rows { --lbl: 6.6em; }
+.lbl { font-weight: 700; white-space: nowrap; }
+.rows-date .lbl { font-family: var(--num); font-weight: 600; }
+li.row > ul { grid-column: 1 / -1; padding-top: 1px; }
+.val { min-width: 0; }
+
+.flat ul { padding-left: 0; }
+
+.timeline { margin-left: 4px; padding-left: 14px; border-left: 1px solid var(--rail); }
+.timeline ul { padding-left: 0; }
+.entry {
+  position: relative; display: flex; align-items: baseline; gap: 12px;
+  margin-top: 4px; break-after: avoid;
+}
+.timeline > .entry:first-child { margin-top: 1px; }
+.timeline .entry::before {
+  content: ""; position: absolute; left: -18.5px; top: .45em;
+  width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 1.5px solid var(--sky);
+}
+.timeline .entry:first-of-type::before { background: var(--strong); border-color: var(--strong); }
+.entry .title { flex: 1; font-weight: 700; }
+.entry .role { font-weight: 400; color: var(--muted); }
+.entry .role::before { content: "·"; margin: 0 8px; color: var(--faint); }
+.entry .date {
+  flex: none; white-space: nowrap;
+  font-family: var(--num); color: var(--strong);
+}
+.desc { color: var(--muted); break-after: avoid; }
+</style>
+</head>
+<body>
+<header class="basic"><div class="who"><h1>张三</h1><p class="intent">求职意向：资深技术专家 / 架构师（后端）</p></div><div class="kv"><p><span class="k">工作年限</span><span class="colon">：</span><span class="v">16 年</span></p><p><span class="k">期望城市</span><span class="colon">：</span><span class="v">上海</span></p><p><span class="k">电话</span><span class="colon">：</span><span class="v">138-0000-0000</span></p><p><span class="k">邮箱</span><span class="colon">：</span><span class="v">zhangsan@example.com</span></p><p><span class="k">GitHub</span><span class="colon">：</span><span class="v"><a href="https://github.com/zhangsan">github.com/zhangsan</a></span></p></div></header>
+<h2>个人优势</h2>
+<section class="sec rows rows-meta">
+<ul>
+<li><strong>16 年后端研发经验，其中 8 年架构师经历</strong>：先后在 XX 云、XX 电商负责核心交易与基础平台，主导过 <strong>日订单千万级</strong> 系统的从 0 到 1 和多次架构演进。
+</li>
+<li><strong>分布式系统与高可用</strong>：主导 3 次核心系统 <strong>微服务化 / 单元化 / 异地多活</strong> 改造，核心链路可用性从 99.9% 提升至 <strong>99.99%</strong>，大促峰值 <strong>50 万 QPS</strong> 零故障。
+</li>
+<li class="row"><span class="lbl">成本与效能</span><span class="val">推动容器化与资源调度优化，年节省服务器成本 <strong>约 1200 万元</strong>；建设研发效能平台，发布频率从每周 1 次提升到每日 <strong>20+</strong> 次。</span>
+</li>
+<li class="row"><span class="lbl">技术影响力</span><span class="val">授权发明专利 4 项，QCon / ArchSummit 讲师，开源项目 GitHub <strong>3k+ Star</strong>；培养出 5 名高级工程师 / 架构师。</span>
+</li></ul>
+</section>
+<h2>专业技能</h2>
+<section class="sec rows rows-skill">
+<ul>
+<li class="row"><span class="lbl">编程语言</span><span class="val"><strong>Java</strong>（12 年，熟悉 JVM 调优与并发编程，主导过 GC 停顿从 800ms 降至 50ms 的调优）、Go（4 年，生产级服务 20+ 个）、Python（脚本与数据处理）</span>
+</li>
+<li class="row"><span class="lbl">分布式架构</span><span class="val"><strong>微服务</strong>、服务治理、<strong>分布式事务</strong>（TCC / Saga / 本地消息表均有生产落地）、<strong>单元化与异地多活</strong>、限流降级与全链路压测</span>
+</li>
+<li class="row"><span class="lbl">中间件</span><span class="val"><strong>Kafka</strong>、RocketMQ（读过源码并提交过 PR）、Redis（集群规模 2000+ 节点）、Elasticsearch、Dubbo、Spring Cloud、gRPC</span>
+</li>
+<li class="row"><span class="lbl">数据存储</span><span class="val"><strong>MySQL</strong>（分库分表、千亿级数据迁移）、TiDB、HBase、ClickHouse</span>
+</li>
+<li class="row"><span class="lbl">云原生</span><span class="val"><strong>Kubernetes</strong>、Docker、Service Mesh（Istio）、Prometheus / Grafana / OpenTelemetry 可观测体系</span>
+</li>
+<li class="row"><span class="lbl">架构方法</span><span class="val">领域驱动设计（DDD）、技术选型与架构评审、容量规划、稳定性治理（故障演练、SLO 体系）</span>
+</li></ul>
+</section>
+<h2>工作经历</h2>
+<section class="sec timeline rows rows-date">
+<div class="entry"><span class="title">XX 科技有限公司<span class="role">首席架构师 / 技术专家（P9）</span></span><span class="date">2021.03 – 至今</span></div>
+<p class="desc">国内头部电商平台，负责交易与供应链技术架构，汇报给 CTO，虚线管理 3 个团队共 60 人。</p>
+<ul>
+<li><strong>交易平台架构升级</strong>：针对单体系统扩展性瓶颈，主导交易域按 DDD 拆分为 18 个微服务，设计统一的 <strong>分布式事务</strong> 方案；系统支撑日订单从 300 万增长到 <strong>1200 万</strong>，核心接口 P99 延迟从 320ms 降至 <strong>85ms</strong>。
+</li>
+<li class="row"><span class="lbl">异地多活</span><span class="val">牵头设计上海 / 杭州双中心 <strong>单元化</strong> 架构，完成 120+ 服务改造；机房级故障切换时间从 2 小时缩短到 <strong>5 分钟</strong>，全年核心链路可用性 <strong>99.99%</strong>。</span>
+</li>
+<li class="row"><span class="lbl">降本增效</span><span class="val">推动在线业务容器化与混部，CPU 平均利用率从 15% 提升至 <strong>42%</strong>，年节省服务器成本 <strong>约 1200 万元</strong>。</span>
+</li>
+<li class="row"><span class="lbl">技术治理</span><span class="val">建立公司级架构评审委员会与技术选型规范，主持评审 200+ 次；制定稳定性 SLO 体系，P1 及以上故障同比下降 <strong>65%</strong>。</span>
+</li></ul>
+<div class="entry"><span class="title">XX 云计算有限公司<span class="role">高级架构师</span></span><span class="date">2017.06 – 2021.02</span></div>
+<p class="desc">公有云厂商，负责消息队列与中间件产品线，带 15 人团队。</p>
+<ul>
+<li class="row"><span class="lbl">消息队列产品</span><span class="val">从 0 到 1 主导基于 Kafka 内核的云消息队列研发，完成多租户隔离与弹性扩缩容；上线 2 年服务 <strong>3000+</strong> 企业客户，年营收 <strong>8000 万元</strong>。</span>
+</li>
+<li class="row"><span class="lbl">性能优化</span><span class="val">重写存储层索引与刷盘策略，单集群吞吐提升 <strong>3 倍</strong>，同等负载下机器成本下降 <strong>40%</strong>。</span>
+</li>
+<li class="row"><span class="lbl">团队建设</span><span class="val">团队从 4 人扩展到 15 人，建立 Code Review 与 On-call 机制，2 名成员晋升为架构师。</span>
+</li></ul>
+<div class="entry"><span class="title">XX 网络科技有限公司<span class="role">技术经理 / 高级工程师</span></span><span class="date">2013.07 – 2017.05</span></div>
+<p class="desc">互联网金融公司，负责支付与账务系统。</p>
+<ul>
+<li class="row"><span class="lbl">支付系统重构</span><span class="val">主导支付核心从 PHP 迁移到 Java 服务化架构，日交易笔数支撑能力从 50 万提升到 <strong>500 万</strong>，资金差错率降至 <strong>0</strong>。</span>
+</li>
+<li class="row"><span class="lbl">对账平台</span><span class="val">设计 T+0 自动对账系统，人工对账工作量减少 <strong>90%</strong>，每月节省 8 人天。</span>
+</li></ul>
+<div class="entry"><span class="title">XX 软件 / XX 信息技术<span class="role">软件工程师</span></span><span class="date">2010.07 – 2013.06</span></div>
+<p class="desc">参与企业 ERP 与政务系统开发，打下 Java EE 与数据库基础；获公司年度优秀员工。</p>
+</section>
+<h2>项目经历</h2>
+<section class="sec timeline rows rows-meta">
+<div class="entry"><span class="title">交易系统单元化与异地多活<span class="role">总架构师</span></span><span class="date">2022.01 – 2023.06</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">单机房部署，2021 年发生 2 次机房级故障，单次影响 GMV 超 2000 万元；业务要求机房故障时 10 分钟内恢复。</span>
+</li>
+<li class="row"><span class="lbl">目标</span><span class="val">在不停服的前提下完成交易链路双中心单元化，RTO &lt; 10 分钟，RPO ≈ 0。</span>
+</li>
+<li class="row"><span class="lbl">行动</span><span class="val"></span>
+<ul class="sub">
+<li>设计按用户 ID 分片的单元化路由方案，统一网关、RPC、MQ、数据库四层路由规则；
+</li>
+<li>针对库存等全局数据设计"中心单元 + 异步同步"模式，解决跨单元写冲突；
+</li>
+<li>自研数据同步与一致性校验组件，支持秒级延迟监控与自动修复；
+</li>
+<li>制定分 4 期的灰度迁移计划，协调 12 个团队、120+ 服务完成改造。
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">机房级故障切换时间 <strong>5 分钟</strong>，数据零丢失；双 11 期间单元间流量调度 3 次，<strong>业务无感知</strong>；方案获公司年度技术突破奖，申请专利 2 项。</span>
+</li></ul>
+<div class="entry"><span class="title">云消息队列（多租户 Kafka）从 0 到 1<span class="role">技术负责人</span></span><span class="date">2017.09 – 2019.12</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">公司缺少托管消息队列产品，客户自建 Kafka 运维成本高、稳定性差，竞品已占先机。</span>
+</li>
+<li class="row"><span class="lbl">目标</span><span class="val">12 个月内上线商用版本，支持多租户隔离、弹性扩缩容，SLA 99.95%。</span>
+</li>
+<li class="row"><span class="lbl">行动</span><span class="val"></span>
+<ul class="sub">
+<li>在 Kafka 内核上实现租户级配额与限流，解决"吵闹邻居"问题；
+</li>
+<li>将存储与计算分离，分区迁移时间从小时级降到分钟级，实现无感扩容；
+</li>
+<li>建设自动化运维平台，覆盖集群创建、巡检、故障自愈。
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">按期上线，2 年服务 <strong>3000+</strong> 企业客户，年营收 <strong>8000 万元</strong>；实际 SLA <strong>99.98%</strong>；核心改进回馈社区并被合入 Kafka 主干。</span>
+</li></ul>
+</section>
+<h2>技术影响力</h2>
+<section class="sec ">
+<ul>
+<li class="row"><span class="lbl">专利</span><span class="val">授权发明专利 4 项（分布式事务、单元化路由方向），第一发明人 3 项。</span>
+</li>
+<li class="row"><span class="lbl">开源</span><span class="val"><a href="https://github.com/zhangsan/xx-sharding">xx-sharding</a> 作者，GitHub <strong>3k+ Star</strong>；Apache RocketMQ Contributor。</span>
+</li>
+<li><strong>演讲 / 写作</strong>：QCon 2023、ArchSummit 2022 讲师；技术博客文章 50+ 篇，累计阅读 100 万+。
+</li>
+<li class="row"><span class="lbl">人才培养</span><span class="val">公司技术晋升评委、面试官（累计面试 300+ 人），培养 5 名高级工程师 / 架构师。</span>
+</li></ul>
+</section>
+<h2>教育背景</h2>
+<section class="sec flat">
+<ul>
+<li>XX 大学 ｜ 计算机科学与技术 ｜ 本科 ｜ 2006.09 – 2010.06
+</li>
+<li>证书：系统架构设计师（软考高级）、CKA（Certified Kubernetes Administrator）
+</li></ul>
+</section>
+</body>
+</html>
