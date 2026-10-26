@@ -150,13 +150,13 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li class="row"><span class="lbl">网络协议</span><span class="val">熟悉 TCP/IP、SCTP 传输协议，HTTP/2、Diameter 信令协议，以及 3GPP 4G/5G 核心网规范</span>
 </li>
-<li class="row"><span class="lbl">系统编程</span><span class="val">熟悉 Linux 多线程与高并发网络编程；熟练使用 perf、valgrind、Wireshark 等工具调优排障</span>
+<li class="row"><span class="lbl">系统编程</span><span class="val">熟悉 Linux 多线程与高并发网络编程；熟练使用 perf、Valgrind、Wireshark 等工具调优排障</span>
 </li>
 <li class="row"><span class="lbl">云原生</span><span class="val">熟悉 Docker、Kubernetes、OpenShift、Helm 容器化部署与业务不中断升级</span>
 </li>
 <li class="row"><span class="lbl">嵌入式</span><span class="val">ARM/VxWorks 实时操作系统上的嵌入式网络协议栈开发</span>
 </li>
-<li class="row"><span class="lbl">AI 应用</span><span class="val">熟悉 RAG、function calling 与 ReAct Agent 开发；了解 Transformer 推理、KV-Cache 与量化优化</span>
+<li class="row"><span class="lbl">AI 应用</span><span class="val">熟悉 RAG、Function Calling 与 ReAct Agent 开发；了解 Transformer 推理、KV Cache 与量化优化</span>
 </li></ul>
 </section>
 <h2>工作经历</h2>
@@ -167,7 +167,7 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li class="row"><span class="lbl">团队带领</span><span class="val">多次牵头新功能开发，带领 5~6 人小组从设计到交付；负责新员工培训与内部技术分享</span>
 </li>
-<li class="row"><span class="lbl">云原生改造</span><span class="val">主导核心网用户数据库容器化迁移与全产品不中断升级（2020 至今）</span>
+<li class="row"><span class="lbl">云原生改造</span><span class="val">主导核心网用户数据库容器化迁移开发，参与全产品不中断升级方案设计（2020 至今）</span>
 </li>
 <li class="row"><span class="lbl">现网支持</span><span class="val">为北美、欧洲运营商定位现网故障与性能瓶颈，主导 T-Mobile 重大故障根因定位（2017 – 2020）</span>
 </li>
@@ -179,7 +179,7 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li class="row"><span class="lbl">打印协议</span><span class="val">主导 AirPrint 与谷歌云打印协议开发，产品连续通过 AirPrint 1.1～1.5 认证</span>
 </li>
-<li class="row"><span class="lbl">IPv6认证</span><span class="val">主持搭建 IPv6 Ready Logo 测试环境，协议栈通过 Phase-1/Phase-2 认证</span>
+<li><strong>IPv6 认证</strong>：主持搭建 IPv6 Ready Logo 测试环境，协议栈通过 Phase-1/Phase-2 认证
 </li>
 <li class="row"><span class="lbl">实习</span><span class="val">用 HTML、JavaScript、CSS 开发打印机内嵌管理网页，用 Selenium 编写自动化测试（2009 – 2010）</span>
 </li></ul>
@@ -203,39 +203,22 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">12 小时内恢复业务，72 小时内补丁被现网采纳；单队列方案下单连接吞吐提升约 10 倍；推动广域网时延性能实验室与链路级监控告警建设</span>
 </li></ul>
-<div class="entry"><span class="title">核心网用户数据库容器化迁移（Kubernetes/OpenShift）<span class="role">核心开发</span></span><span class="date">2020.06 – 至今</span></div>
+<div class="entry"><span class="title">核心网用户数据库容器化迁移（Kubernetes/OpenShift）<span class="role">主导开发</span></span><span class="date">2020.06 – 至今</span></div>
 <ul>
 <li class="row"><span class="lbl">背景</span><span class="val">核心网用户数据库原以虚拟机/VNF 交付，需迁移至 Kubernetes/OpenShift，且升级过程业务不中断</span>
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>牵头 3 个核心服务的容器化改造与 Helm 发布编排，负责认证与数据库更新通知通路的镜像、配置、健康检查与网络联调
+<li>主导 3 个核心服务的容器化改造与 Helm 发布编排，负责认证与数据库更新通知通路的镜像、配置、健康检查与网络联调
 </li>
 <li>用 Go 开发基于 CRD 的 Kubernetes 自定义控制器，落地调度与分发逻辑
 </li>
-<li>参与其余微服务改造，以及全产品滚动升级（In-Service Upgrade）方案设计与联调
+<li>参与其余微服务改造，以及全产品滚动升级方案设计与联调
 </li></ul>
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">产品支持滚动发版、业务不中断升级，已在 T-Mobile、Verizon、Vodafone 等北美与欧洲运营商商用</span>
 </li></ul>
-<div class="entry"><span class="title">AI 智能运维终端<span class="role">独立开发</span></span><span class="date">2026.06 – 2026.09</span></div>
-<ul>
-<li class="row"><span class="lbl">背景</span><span class="val">运维排障需在多台主机间反复敲命令、看输出；通用 AI 看不到终端上下文，放权执行又有误操作风险</span>
-</li>
-<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
-<ul class="sub">
-<li>基于 Electron + TypeScript 开发多标签 SSH 终端，内置感知终端输出与主机上下文的 AI 侧边栏，F12 进入 AI 模式后用自然语言生成并执行命令
-</li>
-<li>实现基于 function calling 的 ReAct Agent 循环，提供命令执行、文件编辑、git、计划管理等 30 余个工具，支持 Plan / Agent / Execute 三种模式
-</li>
-<li>安全控制：「只读白名单 + 危险命令识别」三级审批策略，用循环守卫和步数预算防止 Agent 失控
-</li>
-<li>上下文工程：按工具集裁剪 prompt 以命中前缀缓存，超预算自动压缩，Skills 按需加载；多主机任务交给只读子 Agent 分头排查，只汇总结论
-</li></ul>
-</li>
-<li class="row"><span class="lbl">成果</span><span class="val">获诺基亚内部 AI 创新大赛二等奖并在公司内部推广；兼容 OpenAI、DeepSeek、Ollama 等模型，已发布 Windows / Linux 版本</span>
-</li></ul>
-<div class="entry"><span class="title">基于 RAG 的智能客服与工单问答系统<span class="role">核心开发</span></span><span class="date">2025 – 2026</span></div>
+<div class="entry"><span class="title">基于 RAG 的智能客服与工单问答系统<span class="role">公司内部项目 · 核心开发</span></span><span class="date">2025.10 – 2026.03</span></div>
 <ul>
 <li class="row"><span class="lbl">背景</span><span class="val">工单依赖人工分析回复，响应慢；同类问题重复建单，历史方案与文档难以复用，客户无法自助查询</span>
 </li>
@@ -245,10 +228,27 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li>检索问答：实现多轮改写、检索、相似度/重排拒答、带引用生成的 RAG 全链路，覆盖机型参数、故障码等易混淆检索场景
 </li>
-<li>工程化：SSE 流式输出与断连停止生成；对接 JIRA REST API，按 updated 字段增量同步、全量对账
+<li>工程化：SSE 流式输出与断连停止生成；对接 Jira REST API，按更新时间增量同步、全量对账
 </li></ul>
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">已解决工单以案例卡片进入知识库，实现「文档 + 历史工单」统一检索；客户可自助问答，内部人员可复用历史方案，缩短首轮响应与重复分析时间</span>
+</li></ul>
+<div class="entry"><span class="title">AI 智能运维终端<span class="role">独立开发</span></span><span class="date">2026.06 – 2026.09</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">运维排障需在多台主机间反复敲命令、看输出；通用 AI 看不到终端上下文，放权执行又有误操作风险</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
+<ul class="sub">
+<li>基于 Electron + TypeScript 开发多标签 SSH 终端，内置感知终端输出与主机上下文的 AI 侧边栏，F12 进入 AI 模式后用自然语言生成并执行命令
+</li>
+<li>实现基于 Function Calling 的 ReAct Agent 循环，提供命令执行、文件编辑、Git 操作、计划管理等 30 余个工具，支持 Plan / Agent / Execute 三种模式
+</li>
+<li>安全控制：「只读白名单 + 危险命令识别」三级审批策略，用循环守卫和步数预算防止 Agent 失控
+</li>
+<li>上下文工程：按工具集裁剪提示词以命中前缀缓存，超预算自动压缩，技能（Skills）按需加载；多主机任务交给只读子 Agent 分头排查，只汇总结论
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">获诺基亚内部 AI 创新大赛二等奖并在公司内部推广；兼容 OpenAI、DeepSeek、Ollama 等模型，已发布 Windows / Linux 版本</span>
 </li></ul>
 <div class="entry"><span class="title">GPT-2 大模型 CPU 推理引擎（C++）<span class="role">个人项目</span></span><span class="date">2026.04 – 至今</span></div>
 <ul>
@@ -256,16 +256,16 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>算子库：张量与矩阵/向量算子，AVX2 SIMD 内核（多头注意力、GELU、LayerNorm、RMSNorm）
+<li>算子库：张量与矩阵/向量算子，AVX2 SIMD 内核（多头注意力、GELU、LayerNorm、RMSNorm 等）
 </li>
 <li>计算图：实现拓扑执行、形状推断、中间缓冲复用与节点计时
 </li>
-<li>模型推理：GPT-2 124M 模型加载、按头存放的 KV-Cache、prefill / decode，手写 forward 与图执行两套路径
+<li>模型推理：GPT-2 124M 模型加载、按头存放的 KV Cache、预填充（Prefill）/ 解码（Decode），手写前向计算与图执行两套路径
 </li>
-<li>采样：temperature / top-k / top-p 采样，presence / frequency penalty 等 Logits Processor
+<li>采样：温度、Top-K、Top-P 采样，以及存在惩罚、频率惩罚等 Logits 处理器
 </li></ul>
 </li>
-<li class="row"><span class="lbl">成果</span><span class="val">Intel Core Ultra 5 135U（14 线程）上 decode 速度达约 111 token/s（Release + AVX2 内核 + 量化）</span>
+<li class="row"><span class="lbl">成果</span><span class="val">Intel Core Ultra 5 135U（14 线程）上解码速度达约 111 token/s（Release 构建 + AVX2 内核 + 量化）</span>
 </li></ul>
 <div class="entry"><span class="title">苹果 AirPrint 打印协议开发与认证（ARM/VxWorks）<span class="role">协议开发与测试</span></span><span class="date">2013.11 – 2015.05</span></div>
 <ul>
