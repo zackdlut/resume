@@ -27,7 +27,7 @@ const inline = (s) =>
 
 // 求职意向超过两项时，在最后一项前换行，避免在 "C/C++" 这类词中间断开。
 const wrapIntent = (s) => {
-  const html = inline(s);
+  const html = inline(s).replace(/（[^）]*）/g, '<span class="nowrap">$&</span>');
   if ((html.match(/、/g) || []).length < 2) return html;
   const i = html.lastIndexOf('、');
   return `${html.slice(0, i + 1)}<br>${html.slice(i + 1)}`;
@@ -197,17 +197,18 @@ body {
   html { background: none; }
   body {
     width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none;
-    font-size: 9.25pt; line-height: 1.28;
+    font-size: 9.75pt; line-height: 1.45;
   }
-  header.basic { gap: 14px; padding-bottom: 4px; }
-  .who h1 { font-size: 19pt; letter-spacing: 4px; }
-  .intent { margin-top: 3px; }
+  header.basic { gap: 14px; padding-bottom: 6px; }
+  .who h1 { font-size: 20pt; letter-spacing: 4px; }
+  .intent { margin-top: 4px; }
   .kv { padding-left: 14px; }
-  .kv p { line-height: 1.32; }
-  .photo { width: 20mm; height: 26mm; }
-  h2 { font-size: 9.5pt; padding: 1px 8px; margin: 3px 0 1px; letter-spacing: 1px; }
+  .kv p { line-height: 1.4; }
+  .photo { width: 21mm; height: 27mm; }
+  h2 { font-size: 10pt; padding: 2px 8px; margin: 9px 0 4px; letter-spacing: 1px; }
   li { break-inside: auto; }
-  .entry { margin-top: 2px; }
+  .entry { margin-top: 7px; margin-bottom: 1px; }
+  .sec > ul > li + li { margin-top: 1px; }
   li.row { column-gap: 8px; }
   .timeline { margin-left: 2px; padding-left: 12px; }
   .timeline .entry::before { width: 7px; height: 7px; left: -17px; }
@@ -225,6 +226,7 @@ header.basic {
 .who { flex: 1 1 auto; min-width: 0; }
 .who h1 { font-size: 22pt; letter-spacing: 6px; line-height: 1.25; }
 .intent { margin-top: 6px; color: var(--ink); font-weight: 700; }
+.nowrap { white-space: nowrap; }
 .kv { flex: 0 0 auto; border-left: 1px solid var(--rail); padding-left: 20px; }
 .kv p { line-height: 1.45; }
 .kv .k { display: inline-block; width: 4em; text-align-last: justify; color: var(--muted); }
@@ -254,8 +256,10 @@ li.row {
 .rows { --lbl: 6.6em; }
 .lbl { font-weight: 700; white-space: nowrap; }
 .rows-date .lbl { font-family: var(--num); font-weight: 600; }
-li.row > ul { grid-column: 1 / -1; padding-top: 1px; }
+li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 .val { min-width: 0; }
+.val:empty { display: none; }
+.val:empty + ul { padding-top: 0; }
 
 .flat ul { padding-left: 0; }
 
