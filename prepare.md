@@ -446,6 +446,14 @@
 
 ## 4. 容器化迁移与不中断升级 ★★
 
+**事实速查**（已确认）
+
+- 产品：HSS/UDM（用户数据服务器），原以 VNF 部署在虚拟机上，迁到 Kubernetes/OpenShift。
+- 规模：7 个服务、8 个 Helm Chart。服务包括 Diameter 负载均衡、Diameter 呼叫处理、认证请求处理、SOAP 触发消息处理、HTTP/2 负载均衡、LDAP 负载均衡等。
+- 我的角色：牵头 3 个组件的迁移（认证请求处理服务、SOAP 触发消息处理服务、基于 CRD 的 Dispatcher Controller 及其 Helm Chart）；其余服务是核心开发。
+- Dispatcher Controller：本人用 Go 独立开发，基于 CRD 的 Kubernetes 自定义控制器。面试可能追问：Informer/Watch 机制、Reconcile 循环怎么写、是否用了 client-go 或 controller-runtime（kubebuilder）、控制器挂了或重启时状态怎么恢复。【待补充：它具体调度分发什么】
+- 升级方式：Kubernetes 滚动升级。具体指标涉及公司机密，面试时也不报数字。
+
 **Q1. 从虚拟机迁到容器，最难的是什么？** ★★
 
 回答要点：电信网元是有状态的服务，难点通常在于：
