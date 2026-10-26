@@ -80,7 +80,14 @@ h2 {
 ul { padding-left: 1.15em; }
 li { break-inside: avoid; }
 .rows > ul, .timeline > ul, .flat > ul { list-style: none; padding-left: 0; }
-.rows li:not(.row) { list-style: disc; margin-left: 1.15em; }
+.rows li:not(.row) { position: relative; padding-left: 1.25em; }
+ul.sub { list-style: none; }
+ul.sub > li { position: relative; }
+.rows li:not(.row)::before, ul.sub > li::before {
+  content: ""; position: absolute; left: .3em; top: calc(.64em - 2.5px);
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+}
+ul.sub > li::before { left: -1em; }
 li.row {
   display: grid;
   grid-template-columns: var(--lbl, 4.6em) minmax(0, 1fr);
@@ -96,6 +103,16 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 .val:empty + ul { padding-top: 0; }
 
 .flat ul { padding-left: 0; }
+li.edu { display: flex; flex-wrap: wrap; align-items: baseline; }
+li.edu > span { white-space: nowrap; }
+/* 全角右括号自带半字宽右侧空白，会让分隔线两侧间距不等 */
+li.edu .paren-end { margin-right: -.5em; }
+li.edu > span + span::before {
+  content: ""; display: inline-block; width: 1px; height: .85em;
+  margin: 0 .75em; vertical-align: -.08em; background: var(--faint);
+}
+li.edu .school { font-weight: 700; }
+li.edu .num { font-family: var(--num); }
 
 .timeline { margin-left: 4px; padding-left: 14px; border-left: 1px solid var(--rail); }
 .timeline ul { padding-left: 0; }
@@ -120,11 +137,11 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </style>
 </head>
 <body>
-<header class="basic"><div class="who"><h1>张恒</h1><p class="intent">求职意向：C/C++ 高级软件工程师<span class="nowrap">（通信 / 嵌入式与物联网方向）</span></p></div><div class="kv"><p><span class="k">工作年限</span><span class="colon">：</span><span class="v">16 年</span></p><p><span class="k">出生年月</span><span class="colon">：</span><span class="v">1987.12</span></p><p><span class="k">期望城市</span><span class="colon">：</span><span class="v">青岛</span></p><p><span class="k">到岗时间</span><span class="colon">：</span><span class="v">2026.12 起</span></p><p><span class="k">电话</span><span class="colon">：</span><span class="v">151-9248-5800</span></p><p><span class="k">邮箱</span><span class="colon">：</span><span class="v">354379271@qq.com</span></p></div><img class="photo" src="avatar.jpg" alt="照片"></header>
+<header class="basic"><div class="who"><h1>张恒</h1><p class="intent">求职意向：C/C++ 高级软件工程师<span class="nowrap">（通信 / 嵌入式与物联网方向）</span></p></div><div class="kv"><p><span class="k">工作年限</span><span class="colon">：</span><span class="v">16 年</span></p><p><span class="k">出生年月</span><span class="colon">：</span><span class="v">1987.12</span></p><p><span class="k">期望城市</span><span class="colon">：</span><span class="v">青岛</span></p><p><span class="k">电话</span><span class="colon">：</span><span class="v">151-9248-5800</span></p><p><span class="k">邮箱</span><span class="colon">：</span><span class="v">354379271@qq.com</span></p></div><img class="photo" src="avatar.jpg" alt="照片"></header>
 <h2>教育背景</h2>
 <section class="sec flat">
 <ul>
-<li>大连理工大学 ｜ 软件工程（嵌入式方向） ｜ 本科 ｜ 2006.09 – 2010.06 ｜ 英语六级（557）
+<li class="edu"><span class="school">大连理工大学</span><span>软件工程（嵌入式方向<span class="paren-end">）</span></span><span>本科</span><span class="num">2006.09 – 2010.06</span><span>英语六级（557<span class="paren-end">）</span></span>
 </li></ul>
 </section>
 <h2>个人优势</h2>
@@ -167,7 +184,7 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li class="row"><span class="lbl">团队带领</span><span class="val">多次牵头新功能开发，带领 5~6 人小组从设计到交付；负责新员工培训与内部技术分享</span>
 </li>
-<li class="row"><span class="lbl">云原生改造</span><span class="val">主导核心网用户数据库容器化迁移开发，参与全产品不中断升级方案设计（2020 至今）</span>
+<li class="row"><span class="lbl">云原生改造</span><span class="val">主导核心网用户数据库 C++ 服务容器化迁移开发，参与全产品不中断升级方案设计（2020 至今）</span>
 </li>
 <li class="row"><span class="lbl">现网支持</span><span class="val">为北美、欧洲运营商定位现网故障与性能瓶颈，主导 T-Mobile 重大故障根因定位（2017 – 2020）</span>
 </li>
@@ -179,7 +196,7 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li class="row"><span class="lbl">打印协议</span><span class="val">主导 AirPrint 与谷歌云打印协议开发，产品连续通过 AirPrint 1.1～1.5 认证</span>
 </li>
-<li><strong>IPv6 认证</strong>：主持搭建 IPv6 Ready Logo 测试环境，协议栈通过 Phase-1/Phase-2 认证
+<li class="row"><span class="lbl">IPv6 认证</span><span class="val">主持搭建 IPv6 Ready Logo 测试环境，协议栈通过 Phase-1/Phase-2 认证</span>
 </li>
 <li class="row"><span class="lbl">实习</span><span class="val">用 HTML、JavaScript、CSS 开发打印机内嵌管理网页，用 Selenium 编写自动化测试（2009 – 2010）</span>
 </li></ul>
@@ -198,25 +215,27 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li>根因：实验室按同等时延复现，设计控制变量测试（网卡队列数、发送缓冲区、物理机/虚拟机），锁定 CentOS virtio 多队列非真 RSS 导致 SCTP 乱序与快速重传，高 RTT 下拥塞窗口难以恢复
 </li>
-<li>修复：编码实现连接级自动隔离与缓冲区/超时补丁，输出单队列过渡、OS 升级、增连分流的中长期方案
+<li>修复：实现连接级自动隔离与缓冲区/超时补丁，输出单队列过渡、OS 升级、增连分流的中长期方案
 </li></ul>
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">12 小时内恢复业务，72 小时内补丁被现网采纳；单队列方案下单连接吞吐提升约 10 倍；推动广域网时延性能实验室与链路级监控告警建设</span>
 </li></ul>
-<div class="entry"><span class="title">核心网用户数据库容器化迁移（Kubernetes/OpenShift）<span class="role">主导开发</span></span><span class="date">2020.06 – 至今</span></div>
+<div class="entry"><span class="title">核心网用户数据库 C++ 服务容器化迁移（Linux / Kubernetes）<span class="role">主导开发</span></span><span class="date">2020.06 – 至今</span></div>
 <ul>
-<li class="row"><span class="lbl">背景</span><span class="val">核心网用户数据库原以虚拟机/VNF 交付，需迁移至 Kubernetes/OpenShift，且升级过程业务不中断</span>
+<li class="row"><span class="lbl">背景</span><span class="val">核心网用户数据库由多个 Linux C++ 服务进程组成，原以虚拟机/VNF 交付，需迁移至 Kubernetes/OpenShift，且升级过程业务不中断</span>
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>主导 3 个核心服务的容器化改造与 Helm 发布编排，负责认证与数据库更新通知通路的镜像、配置、健康检查与网络联调
+<li>服务改造：主导认证、数据库更新通知等 3 个 C++ 核心服务的云原生改造，进程模型改为单容器多进程，配置改为 ConfigMap 注入与热加载
 </li>
-<li>用 Go 开发基于 CRD 的 Kubernetes 自定义控制器，落地调度与分发逻辑
+<li>优雅启停：用 C++ 实现 SIGTERM 处理、Diameter / HTTP/2 链路摘除与在途请求排空，以及就绪/存活探针接口，保证滚动升级时业务不中断
 </li>
-<li>参与其余微服务改造，以及全产品滚动升级方案设计与联调
+<li>版本兼容：设计新旧版本消息与数据格式兼容方案，支持升级期间新旧版本 Pod 混跑
+</li>
+<li>配套发布：Helm 发布编排；用 Go 开发基于 CRD 的 Kubernetes 自定义控制器；参与全产品滚动升级方案设计与联调
 </li></ul>
 </li>
-<li class="row"><span class="lbl">成果</span><span class="val">产品支持滚动发版、业务不中断升级，已在 T-Mobile、Verizon、Vodafone 等北美与欧洲运营商商用</span>
+<li class="row"><span class="lbl">成果</span><span class="val">升级期间请求成功率 99.9%，单 Pod 2500 QPS；已在 T-Mobile、Verizon、Vodafone 等欧美运营商商用</span>
 </li></ul>
 <div class="entry"><span class="title">基于 RAG 的智能客服与工单问答系统<span class="role">公司内部项目 · 核心开发</span></span><span class="date">2025.10 – 2026.03</span></div>
 <ul>
@@ -228,7 +247,7 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li>检索问答：实现多轮改写、检索、相似度/重排拒答、带引用生成的 RAG 全链路，覆盖机型参数、故障码等易混淆检索场景
 </li>
-<li>工程化：SSE 流式输出与断连停止生成；对接 Jira REST API，按更新时间增量同步、全量对账
+<li>工程化：SSE 流式输出；对接 Jira REST API，工单增量同步与全量对账
 </li></ul>
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">已解决工单以案例卡片进入知识库，实现「文档 + 历史工单」统一检索；客户可自助问答，内部人员可复用历史方案，缩短首轮响应与重复分析时间</span>
@@ -248,7 +267,7 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 <li>上下文工程：按工具集裁剪提示词以命中前缀缓存，超预算自动压缩，技能（Skills）按需加载；多主机任务交给只读子 Agent 分头排查，只汇总结论
 </li></ul>
 </li>
-<li class="row"><span class="lbl">成果</span><span class="val">获诺基亚内部 AI 创新大赛二等奖并在公司内部推广；兼容 OpenAI、DeepSeek、Ollama 等模型，已发布 Windows / Linux 版本</span>
+<li class="row"><span class="lbl">成果</span><span class="val">获诺基亚内部 AI 创新大赛二等奖并在公司内部推广</span>
 </li></ul>
 <div class="entry"><span class="title">GPT-2 大模型 CPU 推理引擎（C++）<span class="role">个人项目</span></span><span class="date">2026.04 – 至今</span></div>
 <ul>
@@ -256,7 +275,7 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>算子库：张量与矩阵/向量算子，AVX2 SIMD 内核（多头注意力、GELU、LayerNorm、RMSNorm 等）
+<li>算子库：张量与矩阵/向量算子，AVX2 SIMD 内核（注意力、GELU、LayerNorm、RMSNorm）
 </li>
 <li>计算图：实现拓扑执行、形状推断、中间缓冲复用与节点计时
 </li>
@@ -265,7 +284,7 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 <li>采样：温度、Top-K、Top-P 采样，以及存在惩罚、频率惩罚等 Logits 处理器
 </li></ul>
 </li>
-<li class="row"><span class="lbl">成果</span><span class="val">Intel Core Ultra 5 135U（14 线程）上解码速度达约 111 token/s（Release 构建 + AVX2 内核 + 量化）</span>
+<li class="row"><span class="lbl">成果</span><span class="val">Intel Core Ultra 5 135U（14 线程）上解码速度达约 111 token/s</span>
 </li></ul>
 <div class="entry"><span class="title">苹果 AirPrint 打印协议开发与认证（ARM/VxWorks）<span class="role">协议开发与测试</span></span><span class="date">2013.11 – 2015.05</span></div>
 <ul>
@@ -279,7 +298,7 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 </li>
 <li>嵌入式联调：在 VxWorks 多任务环境下用 C/C++ 开发，与网络协议栈、驱动等并发任务协同联调
 </li>
-<li>认证测试：搭建认证对标环境，执行功能、互操作与回归测试，跟进规范 1.1 至 1.5 的差异并修复兼容性问题
+<li>认证测试：搭建认证环境，执行功能、互操作与回归测试，跟进 1.1 至 1.5 规范差异并修复兼容问题
 </li></ul>
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">多款打印机连续通过 AirPrint 1.1～1.5 认证，无线打印能力随产品迭代上市商用</span>

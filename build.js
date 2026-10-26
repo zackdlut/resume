@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-// 用法：node build.js [resume.md] [--pdf]
+// 用法：node build.js [resume.md] [--pdf] [--theme=classic] [--out=resume.v2]
 // 只支持简历用到的 Markdown 子集：# / ## / ### 标题、- 列表（两级）、整行 *说明*、
 // **加粗**、[链接](url)、![照片](文件)、<!-- 注释 -->。
 // "# 姓名" 之后、第一个 "##" 之前的 "键：值" 行渲染为基础信息栏。
+// --theme=classic 仿 zhangheng.pdf 的 Word 版式（校徽抬头、➢ 列表、蓝色分隔线）。
 
 const fs = require('fs');
 const path = require('path');
@@ -10,8 +11,11 @@ const { execFileSync } = require('child_process');
 
 const args = process.argv.slice(2);
 const wantPdf = args.includes('--pdf');
+const opt = (k) => (args.find((a) => a.startsWith(`--${k}=`)) || '').split('=')[1];
+const theme = opt('theme') || 'default';
+const classic = theme === 'classic';
 const input = path.resolve(args.find((a) => !a.startsWith('--')) || 'resume.md');
-const base = input.replace(/\.md$/, '');
+const base = opt('out') ? path.resolve(opt('out').replace(/\.(pdf|html)$/, '')) : input.replace(/\.md$/, '');
 const htmlOut = `${base}.html`;
 const pdfOut = `${base}.pdf`;
 
@@ -80,6 +84,39 @@ function renderHeader(name, lines, mdDir) {
   );
 }
 
+const CLASSIC_ORDER = ['姓名', '出生年月', '电话', '邮箱', '工作年限', '期望城市', '到岗时间'];
+const CLASSIC_LOGO = 'dut-logo.png';
+
+function renderClassicHeader(name, lines, mdDir) {
+  const kv = [['姓名', name]];
+  let intent = '';
+  let photo = '';
+  for (const line of lines) {
+    let m;
+    if ((m = line.match(/^!\[[^\]]*\]\(([^)]+)\)$/))) {
+      if (fs.existsSync(path.resolve(mdDir, m[1]))) photo = m[1];
+    } else if ((m = line.match(/^([^：:]{1,6})[：:]\s*(.*)$/))) {
+      if (/求职意向/.test(m[1])) intent = m[2];
+      else kv.push([m[1].trim(), m[2]]);
+    }
+  }
+  const rank = (k) => (CLASSIC_ORDER.includes(k) ? CLASSIC_ORDER.indexOf(k) : CLASSIC_ORDER.length);
+  kv.sort((a, b) => rank(a[0]) - rank(b[0]));
+  const cell = (k, v, cls = '') =>
+    `<p${cls ? ` class="${cls}"` : ''}><span class="k">${inline(k)}</span>：<span class="v">${inline(v)}</span></p>`;
+  return (
+    '<header class="classic">' +
+    (fs.existsSync(path.resolve(mdDir, CLASSIC_LOGO)) ? `<img class="logo" src="${CLASSIC_LOGO}" alt="校徽">` : '') +
+    (photo ? `<img class="photo" src="${escapeHtml(photo)}" alt="照片">` : '') +
+    '<h2>基本信息</h2>' +
+    '<div class="kv2">' +
+    kv.map(([k, v]) => cell(k, v)).join('') +
+    (intent ? cell('求职意向', intent, 'wide') : '') +
+    '</div>' +
+    '</header>'
+  );
+}
+
 function render(md, mdDir) {
   const lines = md.replace(/<!--[\s\S]*?-->/g, '').split(/\r?\n/);
   const out = [];
@@ -95,7 +132,7 @@ function render(md, mdDir) {
     }
   };
   const flushHeader = () => {
-    if (header) out.push(renderHeader(header.name, header.lines, mdDir));
+    if (header) out.push((classic ? renderClassicHeader : renderHeader)(header.name, header.lines, mdDir));
     header = null;
   };
 
@@ -125,10 +162,33 @@ function render(md, mdDir) {
         closeLists(depth);
         out.push('</li>');
       }
+      if (classic) {
+        const cells = item[2].split(SEP);
+        if (/教育/.test(section) && cells.length > 1) {
+          const di = cells.findIndex((c) => /^\d{4}\./.test(c));
+          if (di > 0) cells.unshift(...cells.splice(di, 1));
+          out.push(`<li class="edu">${cells.map((c) => `<span>${inline(c)}</span>`).join('')}`);
+        } else {
+          out.push(`<li>${inline(item[2])}`);
+        }
+        continue;
+      }
+      const cells = item[2].split(SEP);
+      if (/教育/.test(section) && cells.length > 1) {
+        out.push(
+          `<li class="edu">${cells
+            .map((c, i) => {
+              const cls = /^\d{4}\./.test(c) ? ' class="num"' : i === 0 ? ' class="school"' : '';
+              return `<span${cls}>${inline(c).replace(/）$/, '<span class="paren-end">）</span>')}</span>`;
+            })
+            .join('')}`
+        );
+        continue;
+      }
       const body = inline(item[2]);
       const row = body.match(/^<strong>([^<]+)<\/strong>(?:[：:]\s*|｜)([\s\S]*)$/);
       // 只把短标签放进固定列。年份单独放行，长标签保持普通一行，避免逐字竖排。
-      const useRow = row && ([...row[1]].length <= 6 || /^\d{4}/.test(row[1]));
+      const useRow = row && ([...row[1].replace(/\s/g, '')].length <= 6 || /^\d{4}/.test(row[1]));
       out.push(
         useRow
           ? `<li class="row"><span class="lbl">${row[1]}</span><span class="val">${row[2]}</span>`
@@ -149,6 +209,16 @@ function render(md, mdDir) {
       const parts = m[1].split(SEP);
       const date = parts.length > 1 ? parts.pop() : '';
       const [title, ...rest] = parts;
+      if (classic) {
+        out.push(
+          '<div class="entry">' +
+            `<span class="title">${inline(title)}</span>` +
+            `<span class="role">${rest.map(inline).join(' · ')}</span>` +
+            `<span class="date">${inline(date)}</span>` +
+            '</div>'
+        );
+        continue;
+      }
       out.push(
         '<div class="entry">' +
           `<span class="title">${inline(title)}` +
@@ -246,7 +316,14 @@ h2 {
 ul { padding-left: 1.15em; }
 li { break-inside: avoid; }
 .rows > ul, .timeline > ul, .flat > ul { list-style: none; padding-left: 0; }
-.rows li:not(.row) { list-style: disc; margin-left: 1.15em; }
+.rows li:not(.row) { position: relative; padding-left: 1.25em; }
+ul.sub { list-style: none; }
+ul.sub > li { position: relative; }
+.rows li:not(.row)::before, ul.sub > li::before {
+  content: ""; position: absolute; left: .3em; top: calc(.64em - 2.5px);
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+}
+ul.sub > li::before { left: -1em; }
 li.row {
   display: grid;
   grid-template-columns: var(--lbl, 4.6em) minmax(0, 1fr);
@@ -262,6 +339,16 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
 .val:empty + ul { padding-top: 0; }
 
 .flat ul { padding-left: 0; }
+li.edu { display: flex; flex-wrap: wrap; align-items: baseline; }
+li.edu > span { white-space: nowrap; }
+/* 全角右括号自带半字宽右侧空白，会让分隔线两侧间距不等 */
+li.edu .paren-end { margin-right: -.5em; }
+li.edu > span + span::before {
+  content: ""; display: inline-block; width: 1px; height: .85em;
+  margin: 0 .75em; vertical-align: -.08em; background: var(--faint);
+}
+li.edu .school { font-weight: 700; }
+li.edu .num { font-family: var(--num); }
 
 .timeline { margin-left: 4px; padding-left: 14px; border-left: 1px solid var(--rail); }
 .timeline ul { padding-left: 0; }
@@ -283,6 +370,74 @@ li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
   font-family: var(--num); color: var(--strong);
 }
 .desc { color: var(--muted); break-after: avoid; }
+`;
+
+const CSS_CLASSIC = `
+@page { size: A4; margin: 9mm 13mm 8mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #000; --line: #95b3d7;
+  /* 宋体没有粗体字形，Chrome 不会像 Word 那样伪加粗，粗体部分换用雅黑 */
+  --bold: Calibri, "Microsoft YaHei", SimHei, "PingFang SC", "Noto Sans CJK SC", sans-serif;
+}
+html { background: #ececec; }
+body {
+  font-family: Calibri, SimSun, "Songti SC", "Noto Serif CJK SC", serif;
+  font-size: 10pt; line-height: 1.36; color: var(--ink);
+  width: 210mm; min-height: 297mm; margin: 24px auto; padding: 10mm 13mm;
+  background: #fff; box-shadow: 0 2px 16px rgba(0, 0, 0, .12);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+@media print {
+  html { background: none; }
+  body { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
+}
+a { color: inherit; text-decoration: none; white-space: nowrap; }
+strong, h2, .entry, .kv2, .edu span + span { font-family: var(--bold); font-weight: 700; }
+em { font-style: normal; }
+
+header.classic { position: relative; min-height: 33mm; }
+.logo { display: block; height: 13mm; margin: 0 auto 1mm; }
+.photo {
+  position: absolute; right: 0; top: 0; width: 24mm; height: 31mm;
+  object-fit: cover; object-position: center 35%;
+}
+.kv2 {
+  display: grid; grid-template-columns: 1fr 1.25fr; column-gap: 14px;
+  padding: 1px 30mm 0 2em; font-weight: 700;
+}
+.kv2 p { white-space: nowrap; }
+.kv2 .k { display: inline-block; width: 4.4em; text-align-last: justify; }
+.kv2 .wide { grid-column: 1 / -1; }
+
+h2 {
+  font-size: 11pt; font-weight: 700;
+  margin-top: 6px; padding-top: 5px; border-top: 1px solid var(--line);
+  break-after: avoid;
+}
+header.classic h2 { margin-top: 0; padding-top: 0; border-top: 0; }
+.sec { padding-top: 1px; }
+
+ul { list-style: none; padding-left: 1.6em; }
+li { break-inside: avoid; }
+li:has(> ul.sub) { break-inside: auto; }
+.sec > ul > li { position: relative; padding-left: 1.5em; }
+.sec > ul > li::before { content: "➢"; position: absolute; left: 0; }
+.sec > ul > li.edu { display: flex; flex-wrap: wrap; column-gap: 2.4em; padding-left: 0; }
+.sec > ul > li.edu::before { content: none; }
+.edu span + span { font-weight: 700; }
+ul.sub { padding-left: .3em; counter-reset: n; }
+ul.sub > li { position: relative; padding-left: 1.5em; }
+ul.sub > li::before { counter-increment: n; content: counter(n) "."; position: absolute; left: 0; }
+
+.entry {
+  display: flex; align-items: baseline; gap: 12px;
+  margin-top: 5px; font-weight: 700; break-after: avoid;
+}
+.sec > .entry:first-child { margin-top: 1px; }
+.entry .title { flex: 1; }
+.entry .date { white-space: nowrap; }
+.desc { break-after: avoid; }
 `;
 
 function findChrome() {
@@ -308,7 +463,7 @@ const html = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <title>${escapeHtml(name)} - 简历</title>
-<style>${CSS}</style>
+<style>${classic ? CSS_CLASSIC : CSS}</style>
 </head>
 <body>
 ${render(md, path.dirname(input))}
