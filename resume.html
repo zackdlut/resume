@@ -182,9 +182,9 @@ li.edu .num { font-family: var(--num); }
 <ul>
 <li class="row"><span class="lbl">模块负责</span><span class="val">4G/5G 网络通信、数据库缓存、通用应用中间件 3 个核心模块负责人，主导设计、评审与质量把关</span>
 </li>
-<li class="row"><span class="lbl">团队带领</span><span class="val">多次牵头新功能开发，带领 5~6 人小组从设计到交付；负责新员工培训与内部技术分享</span>
+<li class="row"><span class="lbl">团队带领</span><span class="val">多次牵头新功能开发，带领 5～6 人小组从设计到交付；负责新员工培训与内部技术分享</span>
 </li>
-<li class="row"><span class="lbl">云原生改造</span><span class="val">主导核心网用户数据库 C++ 服务容器化迁移开发，参与全产品不中断升级方案设计（2020 至今）</span>
+<li class="row"><span class="lbl">云原生改造</span><span class="val">主导核心网用户数据库 C++ 服务容器化迁移开发，参与全产品不中断升级方案设计（2020 – 至今）</span>
 </li>
 <li class="row"><span class="lbl">现网支持</span><span class="val">为北美、欧洲运营商定位现网故障与性能瓶颈，主导 T-Mobile 重大故障根因定位（2017 – 2020）</span>
 </li>
@@ -220,7 +220,7 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">12 小时内恢复业务，72 小时内补丁被现网采纳；单队列方案下单连接吞吐提升约 10 倍；推动广域网时延性能实验室与链路级监控告警建设</span>
 </li></ul>
-<div class="entry"><span class="title">核心网用户数据库 C++ 服务容器化迁移（Linux / Kubernetes）<span class="role">主导开发</span></span><span class="date">2020.06 – 至今</span></div>
+<div class="entry"><span class="title">核心网用户数据库 C++ 服务容器化迁移（Linux/Kubernetes）<span class="role">主导开发</span></span><span class="date">2020.06 – 至今</span></div>
 <ul>
 <li class="row"><span class="lbl">背景</span><span class="val">核心网用户数据库由多个 Linux C++ 服务进程组成，原以虚拟机/VNF 交付，需迁移至 Kubernetes/OpenShift，且升级过程业务不中断</span>
 </li>
@@ -228,7 +228,7 @@ li.edu .num { font-family: var(--num); }
 <ul class="sub">
 <li>服务改造：主导认证、数据库更新通知等 3 个 C++ 核心服务的云原生改造，进程模型改为单容器多进程，配置改为 ConfigMap 注入与热加载
 </li>
-<li>优雅启停：用 C++ 实现 SIGTERM 处理、Diameter / HTTP/2 链路摘除与在途请求排空，以及就绪/存活探针接口，保证滚动升级时业务不中断
+<li>优雅启停：用 C++ 实现 SIGTERM 处理、Diameter 与 HTTP/2 链路摘除与在途请求排空，以及就绪/存活探针接口，保证滚动升级时业务不中断
 </li>
 <li>版本兼容：设计新旧版本消息与数据格式兼容方案，支持升级期间新旧版本 Pod 混跑
 </li>
@@ -258,9 +258,9 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>基于 Electron + TypeScript 开发多标签 SSH 终端，内置感知终端输出与主机上下文的 AI 侧边栏，F12 进入 AI 模式后用自然语言生成并执行命令
+<li>终端开发：基于 Electron + TypeScript 开发多标签 SSH 终端，内置感知终端输出与主机上下文的 AI 侧边栏，F12 进入 AI 模式后用自然语言生成并执行命令
 </li>
-<li>实现基于 Function Calling 的 ReAct Agent 循环，提供命令执行、文件编辑、Git 操作、计划管理等 30 余个工具，支持 Plan / Agent / Execute 三种模式
+<li>Agent 引擎：实现基于 Function Calling 的 ReAct Agent 循环，提供命令执行、文件编辑、Git 操作、计划管理等 30 余个工具，支持 Plan/Agent/Execute 三种模式
 </li>
 <li>安全控制：「只读白名单 + 危险命令识别」三级审批策略，用循环守卫和步数预算防止 Agent 失控
 </li>
@@ -279,7 +279,7 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li>计算图：实现拓扑执行、形状推断、中间缓冲复用与节点计时
 </li>
-<li>模型推理：GPT-2 124M 模型加载、按头存放的 KV Cache、预填充（Prefill）/ 解码（Decode），手写前向计算与图执行两套路径
+<li>模型推理：GPT-2 124M 模型加载、按头存放的 KV Cache、预填充（Prefill）与解码（Decode），手写前向计算与图执行两套路径
 </li>
 <li>采样：温度、Top-K、Top-P 采样，以及存在惩罚、频率惩罚等 Logits 处理器
 </li></ul>
@@ -288,7 +288,7 @@ li.edu .num { font-family: var(--num); }
 </li></ul>
 <div class="entry"><span class="title">苹果 AirPrint 打印协议开发与认证（ARM/VxWorks）<span class="role">协议开发与测试</span></span><span class="date">2013.11 – 2015.05</span></div>
 <ul>
-<li class="row"><span class="lbl">背景</span><span class="val">产品线需支持 iPhone/iPad/macOS 免驱动无线打印并通过苹果官方认证，设备运行在内存与 CPU 受限的 ARM + VxWorks 平台上</span>
+<li class="row"><span class="lbl">背景</span><span class="val">产品线需支持 iPhone/iPad/macOS 免驱动无线打印并通过苹果官方认证，设备运行在内存与 CPU 受限的 ARM/VxWorks 平台上</span>
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
@@ -298,7 +298,7 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li>嵌入式联调：在 VxWorks 多任务环境下用 C/C++ 开发，与网络协议栈、驱动等并发任务协同联调
 </li>
-<li>认证测试：搭建认证环境，执行功能、互操作与回归测试，跟进 1.1 至 1.5 规范差异并修复兼容问题
+<li>认证测试：搭建认证环境，执行功能、互操作与回归测试，跟进 1.1～1.5 规范差异并修复兼容问题
 </li></ul>
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">多款打印机连续通过 AirPrint 1.1～1.5 认证，无线打印能力随产品迭代上市商用</span>
