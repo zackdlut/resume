@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markdown 转换 · PDF / Word</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #1a2332;
+      --border: #2d3a4d;
+      --text: #e7ecf3;
+      --muted: #8b9cb3;
+      --accent: #4f81bd;
+      --accent-hover: #6b97cf;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text);
+      display: flex; flex-direction: column;
+    }
+    header {
+      padding: 16px 24px; border-bottom: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+    }
+    header h1 { margin: 0; font-size: 1.15rem; font-weight: 600; }
+    header p { margin: 0; font-size: .85rem; color: var(--muted); flex: 1 1 200px; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    button, label.file-btn {
+      font: inherit; font-size: .875rem; cursor: pointer;
+      border: 1px solid var(--border); background: var(--panel); color: var(--text);
+      padding: 8px 14px; border-radius: 6px; transition: background .15s, border-color .15s;
+    }
+    button:hover, label.file-btn:hover { border-color: var(--accent); background: #243044; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    button.primary:hover { background: var(--accent-hover); }
+    input[type="file"] { display: none; }
+    main {
+      flex: 1; display: grid; grid-template-columns: 1fr 1fr; min-height: 0;
+    }
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+    }
+    .pane { display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--border); }
+    .pane:last-child { border-right: none; }
+    .pane-head {
+      padding: 8px 16px; font-size: .75rem; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--muted); border-bottom: 1px solid var(--border); background: var(--panel);
+    }
+    textarea#source {
+      flex: 1; width: 100%; resize: none; border: none; padding: 16px;
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 13px; line-height: 1.55;
+      background: #121820; color: #d4dce8;
+    }
+    textarea#source:focus { outline: none; }
+    #preview-wrap {
+      flex: 1; overflow: auto; background: #ececec; padding: 16px;
+    }
+    #preview-frame {
+      width: 100%; max-width: 210mm; min-height: 280mm; margin: 0 auto;
+      border: none; background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.15);
+    }
+    footer {
+      padding: 10px 24px; font-size: .8rem; color: var(--muted); border-top: 1px solid var(--border);
+    }
+    footer code { color: #a8c4e8; }
+    .status { margin-left: auto; font-size: .8rem; color: var(--muted); }
+    .mode-bar {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center; width: 100%;
+      padding-top: 4px;
+    }
+    select {
+      font: inherit; font-size: .875rem; padding: 6px 10px; border-radius: 6px;
+      border: 1px solid var(--border); background: var(--panel); color: var(--text);
+    }
+    .hint-warn { color: #e8b86d; font-size: .8rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Markdown → PDF / Word</h1>
+      <p id="subtitle">选择 .md 文件或编辑左侧内容，右侧实时预览。</p>
+    </div>
+    <div class="mode-bar">
+      <label>模式
+        <select id="mode">
+          <option value="resume" selected>简历排版（resume.embedding 同款）</option>
+          <option value="generic">通用 Markdown</option>
+        </select>
+      </label>
+      <label id="theme-wrap">主题
+        <select id="theme">
+          <option value="default" selected>默认（蓝条章节）</option>
+          <option value="classic">Classic（Word 大工模板）</option>
+        </select>
+      </label>
+      <span id="server-hint" class="hint-warn" hidden>简历 PDF/Word 需先运行 <code>node md-convert.js --serve</code> 并用 localhost 打开</span>
+    </div>
+    <div class="toolbar">
+      <label class="file-btn">打开 Markdown<input type="file" id="file-input" accept=".md,.markdown,text/markdown,text/plain"></label>
+      <a class="file-btn" id="open-resume-html" href="resume.embedding.html" target="_blank" rel="noopener">打开 resume.embedding.html</a>
+      <button type="button" id="btn-sample">载入示例</button>
+      <button type="button" id="btn-html">下载 HTML</button>
+      <button type="button" class="primary" id="btn-pdf">导出 PDF</button>
+      <button type="button" class="primary" id="btn-docx">导出 Word</button>
+      <span class="status" id="status"></span>
+    </div>
+  </header>
+  <main>
+    <div class="pane">
+      <div class="pane-head">Markdown 源文</div>
+      <textarea id="source" spellcheck="false" placeholder="# 标题&#10;&#10;在此粘贴或编辑 Markdown…"></textarea>
+    </div>
+    <div class="pane">
+      <div class="pane-head">预览（A4 排版）</div>
+      <div id="preview-wrap">
+        <iframe id="preview-frame" title="预览"></iframe>
+      </div>
+    </div>
+  </main>
+  <footer id="footer-help">
+    纯浏览器（<code>file://</code> 打开本页）：通用模式可导出；简历请点「打开 resume.embedding.html」→ 打印另存为 PDF。
+    改 MD 后需 Node 重新生成 HTML：<code>node build.js resume.embedding.md</code>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://unpkg.com/html-docx-js@0.3.1/dist/html-docx.js"></script>
+  <script>
+    const DOCUMENT_CSS = `
+@page { size: A4; margin: 18mm 16mm; }
+* { box-sizing: border-box; }
+body {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  font-size: 11pt; line-height: 1.65; color: #1a1a1a; margin: 0; padding: 16mm 18mm;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+h1 { font-size: 1.75em; margin: 0 0 .6em; border-bottom: 2px solid #4f81bd; padding-bottom: .25em; }
+h2 { font-size: 1.25em; margin: 1.2em 0 .5em; color: #4f81bd; }
+h3 { font-size: 1.05em; margin: 1em 0 .4em; }
+p { margin: .45em 0; }
+ul, ol { margin: .4em 0; padding-left: 1.5em; }
+li { margin: .2em 0; }
+blockquote { margin: .8em 0; padding: .4em 1em; border-left: 4px solid #c5d0dc; color: #444; background: #f7f9fb; }
+pre, code { font-family: ui-monospace, Consolas, monospace; font-size: .9em; }
+pre { overflow-x: auto; padding: .75em 1em; background: #f4f4f4; border-radius: 4px; border: 1px solid #e0e0e0; }
+code { background: #f0f0f0; padding: .1em .35em; border-radius: 3px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; margin: .8em 0; }
+th, td { border: 1px solid #ccc; padding: .35em .6em; }
+th { background: #eef3f9; }
+img { max-width: 100%; height: auto; }
+a { color: #2563eb; }
+hr { border: none; border-top: 1px solid #ddd; margin: 1.2em 0; }
+@media print {
+  body { padding: 0; }
+}
+`;
+
+    const source = document.getElementById('source');
+    const frame = document.getElementById('preview-frame');
+    const statusEl = document.getElementById('status');
+    const modeEl = document.getElementById('mode');
+    const themeEl = document.getElementById('theme');
+    const themeWrap = document.getElementById('theme-wrap');
+    const serverHint = document.getElementById('server-hint');
+    let debounceTimer;
+    let currentFilename = 'resume.md';
+    let resumeApiAvailable = false;
+
+    const apiBase = location.origin && location.protocol.startsWith('http') ? location.origin : '';
+
+    marked.setOptions({ gfm: true, breaks: false });
+
+    function isResumeMode() {
+      return modeEl.value === 'resume';
+    }
+
+    function stripComments(md) {
+      return md.replace(/<!--[\s\S]*?-->/g, '');
+    }
+
+    function titleFromMd(md) {
+      const m = md.match(/^#\s+(.+)$/m);
+      return m ? m[1].trim() : '文档';
+    }
+
+    function buildFullHtml(bodyHtml, title) {
+      return `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>${escapeAttr(title)}</title><style>${DOCUMENT_CSS}</style></head><body>${bodyHtml}</body></html>`;
+    }
+
+    function escapeAttr(s) {
+      return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    }
+
+    async function callResumeApi(formats) {
+      if (!apiBase) throw new Error('need-server');
+      const res = await fetch(`${apiBase}/api/resume/build`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          md: source.value,
+          filename: currentFilename,
+          theme: themeEl.value,
+          formats,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || res.statusText);
+      return data;
+    }
+
+    async function probeResumeApi() {
+      if (!apiBase) {
+        resumeApiAvailable = false;
+        serverHint.hidden = !isResumeMode();
+        if (!apiBase && isResumeMode()) {
+          serverHint.textContent =
+            'file:// 下简历预览/一键导出不可用。请用「打开 resume.embedding.html」打印 PDF，或 node md-convert.js --serve';
+          serverHint.hidden = false;
+        }
+        return;
+      }
+      try {
+        await callResumeApi([]);
+        resumeApiAvailable = true;
+        serverHint.hidden = true;
+      } catch {
+        resumeApiAvailable = false;
+        serverHint.hidden = !isResumeMode();
+      }
+    }
+
+    function renderPreviewGeneric() {
+      const md = stripComments(source.value);
+      const body = marked.parse(md || '*（空文档）*');
+      const title = titleFromMd(md);
+      frame.srcdoc = buildFullHtml(body, title);
+      statusEl.textContent = md.trim() ? '已更新预览（通用）' : '';
+    }
+
+    async function renderPreviewResume() {
+      const md = source.value.trim();
+      if (!md) {
+        frame.srcdoc = '<p style="padding:2em;color:#666">请打开 resume.embedding.md</p>';
+        return;
+      }
+      if (!resumeApiAvailable) {
+        frame.srcdoc = '<p style="padding:2em;color:#666">请运行 node md-convert.js --serve 后通过 http://127.0.0.1:8765/ 打开本页。</p>';
+        statusEl.textContent = '需本地服务';
+        return;
+      }
+      statusEl.textContent = '渲染中…';
+      try {
+        const data = await callResumeApi([]);
+        frame.srcdoc = data.html;
+        statusEl.textContent = '已更新预览（简历排版）';
+      } catch (e) {
+        statusEl.textContent = '预览失败';
+        console.error(e);
+      }
+    }
+
+    async function renderPreview() {
+      if (isResumeMode()) await renderPreviewResume();
+      else renderPreviewGeneric();
+    }
+
+    function scheduleRender() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => { renderPreview(); }, isResumeMode() ? 400 : 200);
+    }
+
+    modeEl.addEventListener('change', () => {
+      themeWrap.hidden = !isResumeMode();
+      document.getElementById('subtitle').textContent = isResumeMode()
+        ? '使用 build.js 渲染，与 resume.embedding.pdf 相同版式。'
+        : '通用 GFM；简历请切换为「简历排版」。';
+      probeResumeApi().then(renderPreview);
+    });
+    themeEl.addEventListener('change', scheduleRender);
+
+    source.addEventListener('input', scheduleRender);
+
+    document.getElementById('file-input').addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      currentFilename = file.name;
+      const reader = new FileReader();
+      reader.onload = () => {
+        source.value = reader.result;
+        if (/embedding|resume/i.test(file.name)) modeEl.value = 'resume';
+        themeWrap.hidden = !isResumeMode();
+        renderPreview();
+        statusEl.textContent = `已打开 ${file.name}`;
+      };
+      reader.readAsText(file, 'UTF-8');
+      e.target.value = '';
+    });
+
+    document.getElementById('btn-sample').addEventListener('click', () => {
+      modeEl.value = 'generic';
+      themeWrap.hidden = true;
+      source.value = `# 示例文档\n\n## 简介\n\n通用 Markdown 示例。\n`;
+      renderPreviewGeneric();
+    });
+
+    function getExportHtmlGeneric() {
+      const md = stripComments(source.value);
+      if (!md.trim()) {
+        alert('请先输入或打开 Markdown 内容');
+        return null;
+      }
+      const body = marked.parse(md);
+      return { html: buildFullHtml(body, titleFromMd(md)), title: titleFromMd(md) };
+    }
+
+    function downloadBlob(blob, filename) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function b64ToBlob(b64, mime) {
+      const bin = atob(b64);
+      const arr = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      return new Blob([arr], { type: mime });
+    }
+
+    document.getElementById('btn-html').addEventListener('click', async () => {
+      if (isResumeMode() && resumeApiAvailable) {
+        try {
+          const data = await callResumeApi([]);
+          downloadBlob(new Blob([data.html], { type: 'text/html;charset=utf-8' }), `${data.name || titleFromMd(source.value)}.html`);
+        } catch (e) {
+          alert(e.message === 'need-server' ? '请用 node md-convert.js --serve 打开' : String(e.message || e));
+        }
+        return;
+      }
+      const data = getExportHtmlGeneric();
+      if (!data) return;
+      downloadBlob(new Blob([data.html], { type: 'text/html;charset=utf-8' }), `${data.title}.html`);
+    });
+
+    document.getElementById('btn-pdf').addEventListener('click', async () => {
+      if (isResumeMode() && resumeApiAvailable) {
+        statusEl.textContent = '生成 PDF…';
+        try {
+          const data = await callResumeApi(['pdf']);
+          if (data.pdfBase64) {
+            downloadBlob(b64ToBlob(data.pdfBase64, 'application/pdf'), `${data.name || 'resume'}.pdf`);
+            statusEl.textContent = '已下载 PDF';
+            return;
+          }
+        } catch (e) {
+          alert(String(e.message || e));
+          return;
+        }
+      }
+      if (isResumeMode()) {
+        alert(
+          '简历 PDF（无需 Node）：\n' +
+          '1. 点击「打开 resume.embedding.html」\n' +
+          '2. Chrome 打印 → 另存为 PDF\n\n' +
+          '若刚改过 .md，需先运行：node build.js resume.embedding.md 更新 HTML'
+        );
+        return;
+      }
+      const data = getExportHtmlGeneric();
+      if (!data) return;
+      const w = window.open('', '_blank');
+      if (!w) {
+        alert('请允许弹出窗口');
+        return;
+      }
+      w.document.write(data.html);
+      w.document.close();
+      w.onload = () => { w.focus(); w.print(); };
+    });
+
+    document.getElementById('btn-docx').addEventListener('click', async () => {
+      if (isResumeMode() && resumeApiAvailable) {
+        statusEl.textContent = '生成 Word…';
+        try {
+          const data = await callResumeApi(['docx']);
+          if (data.docxBase64) {
+            downloadBlob(
+              b64ToBlob(data.docxBase64, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+              `${data.name || 'resume'}.docx`
+            );
+            statusEl.textContent = '已下载 Word';
+            return;
+          }
+        } catch (e) {
+          alert(String(e.message || e));
+          return;
+        }
+      }
+      if (isResumeMode()) {
+        alert(
+          '简历 Word 版式复杂，纯浏览器难以还原。\n' +
+          '建议：node build.js resume.embedding.md --docx\n' +
+          '或打开 resume.embedding.html 后在 Word 中「打开网页」另存（版式可能有偏差）'
+        );
+        return;
+      }
+      const data = getExportHtmlGeneric();
+      if (!data) return;
+      if (typeof htmlDocx === 'undefined') {
+        alert('Word 导出库未加载');
+        return;
+      }
+      try {
+        downloadBlob(htmlDocx.asBlob(data.html), `${data.title}.docx`);
+        statusEl.textContent = '已下载 Word';
+      } catch (err) {
+        console.error(err);
+        alert('Word 导出失败');
+      }
+    });
+
+    fetch('resume.embedding.md')
+      .then((r) => (r.ok ? r.text() : Promise.reject()))
+      .then((text) => {
+        source.value = text;
+        currentFilename = 'resume.embedding.md';
+        modeEl.value = 'resume';
+        return probeResumeApi();
+      })
+      .then(renderPreview)
+      .catch(() => {
+        source.value = '# 张恒\n\n请打开 resume.embedding.md。\n';
+        probeResumeApi().then(renderPreview);
+      });
+  </script>
+</body>
+</html>

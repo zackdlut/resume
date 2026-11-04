@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 用法：node build.js [resume.md] [--pdf] [--theme=classic] [--out=resume.v2]
+// 用法：node build.js [resume.md] [--pdf] [--docx] [--theme=classic] [--out=resume.v2]
 // 只支持简历用到的 Markdown 子集：# / ## / ### 标题、- 列表（两级）、整行 *说明*、
 // **加粗**、[链接](url)、![照片](文件)、<!-- 注释 -->。
 // "# 姓名" 之后、第一个 "##" 之前的 "键：值" 行渲染为基础信息栏。
@@ -7,17 +7,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execFileSync } = require('child_process');
 
-const args = process.argv.slice(2);
-const wantPdf = args.includes('--pdf');
-const opt = (k) => (args.find((a) => a.startsWith(`--${k}=`)) || '').split('=')[1];
-const theme = opt('theme') || 'default';
-const classic = theme === 'classic';
-const input = path.resolve(args.find((a) => !a.startsWith('--')) || 'resume.md');
-const base = opt('out') ? path.resolve(opt('out').replace(/\.(pdf|html)$/, '')) : input.replace(/\.md$/, '');
-const htmlOut = `${base}.html`;
-const pdfOut = `${base}.pdf`;
+const { exportPdf, exportDocx, embedImagesInHtml } = require('./md-convert-lib');
 
 const escapeHtml = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -117,7 +108,7 @@ function renderClassicHeader(name, lines, mdDir) {
   );
 }
 
-function render(md, mdDir) {
+function render(md, mdDir, classic = false) {
   const lines = md.replace(/<!--[\s\S]*?-->/g, '').split(/\r?\n/);
   const out = [];
   let listDepth = 0;
@@ -252,7 +243,7 @@ const CSS = `
   --mist: #d6dfe7;
   --muted: #666;
   --faint: #a6a6a6;
-  --num: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Segoe UI", sans-serif;
+  --num: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
 }
 html { background: #ececec; }
 body {
@@ -283,6 +274,7 @@ body {
   .timeline { margin-left: 2px; padding-left: 12px; }
   .timeline .entry::before { width: 7px; height: 7px; left: -17px; }
   .desc { margin-top: 0; }
+  .entry + ul > li + li, ul.sub > li { break-before: avoid; }
 }
 a { color: inherit; text-decoration: none; white-space: nowrap; }
 strong { font-weight: 700; }
@@ -440,25 +432,24 @@ ul.sub > li::before { counter-increment: n; content: counter(n) "."; position: a
 .desc { break-after: avoid; }
 `;
 
-function findChrome() {
-  const candidates = [
-    process.env.CHROME,
-    '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe',
-    '/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium',
-    '/usr/bin/chromium-browser',
-  ].filter(Boolean);
-  return candidates.find((p) => fs.existsSync(p));
-}
+async function buildResume(rawOpts) {
+  const opt = (k) => rawOpts[k];
+  const theme = opt('theme') || 'default';
+  const classic = theme === 'classic';
+  const input = path.resolve(rawOpts.input || 'resume.md');
+  const base = rawOpts.outBase
+    ? path.resolve(String(rawOpts.outBase).replace(/\.(pdf|html|docx)$/i, ''))
+    : input.replace(/\.md$/, '');
+  const htmlOut = `${base}.html`;
+  const pdfOut = `${base}.pdf`;
+  const docxOut = `${base}.docx`;
+  const wantPdf = !!rawOpts.pdf;
+  const wantDocx = !!rawOpts.docx;
 
-const toBrowserPath = (exe, p) =>
-  exe.startsWith('/mnt/') ? execFileSync('wslpath', ['-w', p]).toString().trim() : p;
-
-const md = fs.readFileSync(input, 'utf8');
-const name = (md.match(/^# (.*)$/m) || [, '简历'])[1].trim();
-const html = `<!DOCTYPE html>
+  const md = fs.readFileSync(input, 'utf8');
+  const name = (md.match(/^# (.*)$/m) || [, '简历'])[1].trim();
+  const mdDir = path.dirname(input);
+  const html = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -466,27 +457,55 @@ const html = `<!DOCTYPE html>
 <style>${classic ? CSS_CLASSIC : CSS}</style>
 </head>
 <body>
-${render(md, path.dirname(input))}
+${render(md, mdDir, classic)}
 </body>
 </html>
 `;
-fs.writeFileSync(htmlOut, html);
-console.log(`已生成 ${path.relative(process.cwd(), htmlOut)}`);
 
-if (wantPdf) {
-  const chrome = findChrome();
-  if (!chrome) {
-    console.error('未找到 Chrome/Edge，请用浏览器打开 HTML 后"打印 → 另存为 PDF"，或设置 CHROME 环境变量。');
-    process.exit(1);
+  fs.writeFileSync(htmlOut, html);
+  console.log(`已生成 ${path.relative(process.cwd(), htmlOut)}`);
+
+  if (wantPdf) {
+    try {
+      exportPdf(htmlOut, pdfOut);
+      console.log(`已生成 ${path.relative(process.cwd(), pdfOut)}`);
+    } catch (e) {
+      console.error(e.message);
+      throw e;
+    }
   }
-  const src = toBrowserPath(chrome, htmlOut);
-  const url = src.startsWith('/') ? `file://${src}` : `file:///${src.replace(/\\/g, '/')}`;
-  execFileSync(chrome, [
-    '--headless=new',
-    '--disable-gpu',
-    '--no-pdf-header-footer',
-    `--print-to-pdf=${toBrowserPath(chrome, pdfOut)}`,
-    url,
-  ], { stdio: 'ignore' });
-  console.log(`已生成 ${path.relative(process.cwd(), pdfOut)}`);
+
+  if (wantDocx) {
+    const htmlForDocx = embedImagesInHtml(html, mdDir);
+    await exportDocx(htmlForDocx, docxOut);
+    console.log(`已生成 ${path.relative(process.cwd(), docxOut)}`);
+  }
+
+  return { htmlOut, pdfOut, docxOut, html, name };
+}
+
+function parseCliArgs(argv) {
+  const args = argv.slice(2);
+  const opt = (k) => (args.find((a) => a.startsWith(`--${k}=`)) || '').split('=')[1];
+  const input = args.find((a) => !a.startsWith('--')) || 'resume.md';
+  return {
+    input,
+    pdf: args.includes('--pdf'),
+    docx: args.includes('--docx'),
+    theme: opt('theme') || 'default',
+    outBase: opt('out'),
+  };
+}
+
+async function main() {
+  await buildResume(parseCliArgs(process.argv));
+}
+
+if (require.main === module) {
+  main().catch((e) => {
+    console.error(e.message || e);
+    process.exit(1);
+  });
+} else {
+  module.exports = { buildResume, render, parseCliArgs };
 }

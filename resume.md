@@ -51,7 +51,7 @@
 - **网络协议**：熟悉 TCP/IP、SCTP 传输协议，HTTP/2、Diameter 信令协议，以及 3GPP 4G/5G 核心网规范
 - **系统编程**：熟悉 Linux 多线程与高并发网络编程；熟练使用 perf、Valgrind、Wireshark 等工具调优排障
 - **云原生**：熟悉 Docker、Kubernetes、OpenShift、Helm 容器化部署与业务不中断升级
-- **嵌入式**：ARM/VxWorks 实时操作系统上的嵌入式网络协议栈开发
+- **嵌入式**：了解 ARM Cortex-M 系列平台；VxWorks 实时操作系统上的嵌入式网络协议栈开发
 - **AI 应用**：熟悉 RAG、Function Calling 与 ReAct Agent 开发；了解 Transformer 推理、KV Cache 与量化优化
 
 ## 工作经历

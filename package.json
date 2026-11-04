@@ -1,0 +1,15 @@
+{
+  "name": "resume-md-tools",
+  "private": true,
+  "description": "Markdown 转 HTML / PDF / Word",
+  "scripts": {
+    "convert": "node md-convert.js",
+    "serve": "node md-convert.js --serve",
+    "resume:embedding": "node build.js resume.embedding.md --pdf --docx",
+    "resume:embedding:pdf": "node build.js resume.embedding.md --pdf"
+  },
+  "dependencies": {
+    "html-to-docx": "^1.8.0",
+    "marked": "^15.0.6"
+  }
+}

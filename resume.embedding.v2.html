@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>张恒 - 简历</title>
+<style>
+@page { size: A4; margin: 9mm 13mm 8mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #000; --line: #95b3d7;
+  /* 宋体没有粗体字形，Chrome 不会像 Word 那样伪加粗，粗体部分换用雅黑 */
+  --bold: Calibri, "Microsoft YaHei", SimHei, "PingFang SC", "Noto Sans CJK SC", sans-serif;
+}
+html { background: #ececec; }
+body {
+  font-family: Calibri, SimSun, "Songti SC", "Noto Serif CJK SC", serif;
+  font-size: 10pt; line-height: 1.36; color: var(--ink);
+  width: 210mm; min-height: 297mm; margin: 24px auto; padding: 10mm 13mm;
+  background: #fff; box-shadow: 0 2px 16px rgba(0, 0, 0, .12);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+@media print {
+  html { background: none; }
+  body { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
+}
+a { color: inherit; text-decoration: none; white-space: nowrap; }
+strong, h2, .entry, .kv2, .edu span + span { font-family: var(--bold); font-weight: 700; }
+em { font-style: normal; }
+
+header.classic { position: relative; min-height: 33mm; }
+.logo { display: block; height: 13mm; margin: 0 auto 1mm; }
+.photo {
+  position: absolute; right: 0; top: 0; width: 24mm; height: 31mm;
+  object-fit: cover; object-position: center 35%;
+}
+.kv2 {
+  display: grid; grid-template-columns: 1fr 1.25fr; column-gap: 14px;
+  padding: 1px 30mm 0 2em; font-weight: 700;
+}
+.kv2 p { white-space: nowrap; }
+.kv2 .k { display: inline-block; width: 4.4em; text-align-last: justify; }
+.kv2 .wide { grid-column: 1 / -1; }
+
+h2 {
+  font-size: 11pt; font-weight: 700;
+  margin-top: 6px; padding-top: 5px; border-top: 1px solid var(--line);
+  break-after: avoid;
+}
+header.classic h2 { margin-top: 0; padding-top: 0; border-top: 0; }
+.sec { padding-top: 1px; }
+
+ul { list-style: none; padding-left: 1.6em; }
+li { break-inside: avoid; }
+li:has(> ul.sub) { break-inside: auto; }
+.sec > ul > li { position: relative; padding-left: 1.5em; }
+.sec > ul > li::before { content: "➢"; position: absolute; left: 0; }
+.sec > ul > li.edu { display: flex; flex-wrap: wrap; column-gap: 2.4em; padding-left: 0; }
+.sec > ul > li.edu::before { content: none; }
+.edu span + span { font-weight: 700; }
+ul.sub { padding-left: .3em; counter-reset: n; }
+ul.sub > li { position: relative; padding-left: 1.5em; }
+ul.sub > li::before { counter-increment: n; content: counter(n) "."; position: absolute; left: 0; }
+
+.entry {
+  display: flex; align-items: baseline; gap: 12px;
+  margin-top: 5px; font-weight: 700; break-after: avoid;
+}
+.sec > .entry:first-child { margin-top: 1px; }
+.entry .title { flex: 1; }
+.entry .date { white-space: nowrap; }
+.desc { break-after: avoid; }
+</style>
+</head>
+<body>
+<header class="classic"><img class="logo" src="dut-logo.png" alt="校徽"><img class="photo" src="avatar.jpg" alt="照片"><h2>基本信息</h2><div class="kv2"><p><span class="k">姓名</span>：<span class="v">张恒</span></p><p><span class="k">出生年月</span>：<span class="v">1987.12</span></p><p><span class="k">电话</span>：<span class="v">151-9248-5800</span></p><p><span class="k">邮箱</span>：<span class="v">354379271@qq.com</span></p><p><span class="k">工作年限</span>：<span class="v">16 年</span></p><p><span class="k">期望城市</span>：<span class="v">青岛</span></p><p class="wide"><span class="k">求职意向</span>：<span class="v">嵌入式开发工程师、C/C++ 高级软件工程师</span></p></div></header>
+<h2>教育背景</h2>
+<section class="sec flat">
+<ul>
+<li class="edu"><span>2006.09 – 2010.06</span><span>大连理工大学</span><span>软件工程（嵌入式方向）</span><span>本科</span><span>英语六级（557）</span>
+</li></ul>
+</section>
+<h2>个人优势</h2>
+<section class="sec rows rows-meta">
+<ul>
+<li>16 年 C/C++ 软件研发经验，其中 5 年 ARM/VxWorks 实时操作系统嵌入式开发，11 年 Linux 服务器网络通信开发
+</li>
+<li>熟悉 ARM/VxWorks 实时多任务与 USB 设备端开发，负责 AirPrint 与 IPP over USB 协议开发
+</li>
+<li>扎实的 C/C++ 开发能力，熟悉 Linux、网络协议与多线程编程，具备复杂系统设计、高并发与性能优化经验
+</li>
+<li>丰富的现网问题分析经验，能从应用层一路深入到 Linux 内核网络栈与网卡驱动层定位复杂故障
+</li>
+<li>良好的跨团队协作能力，多次牵头新功能开发与技术攻关，英语可作为工作语言
+</li>
+<li>持续关注新技术，具备大模型推理与 AI 智能体应用的开发实践
+</li></ul>
+</section>
+<h2>专业技能</h2>
+<section class="sec rows rows-skill">
+<ul>
+<li><strong>编程语言</strong>：熟悉 C/C++（工作主用 C++11，个人项目使用 C++20）；熟练使用 Python、Shell；了解 Go
+</li>
+<li><strong>嵌入式</strong>：了解 ARM Cortex-M 系列平台；5 年 VxWorks 实时操作系统开发经验，掌握多任务调度与同步，能用 WindView 定位多任务性能瓶颈
+</li>
+<li><strong>USB</strong>：USB 2.0 设备端开发经验，涉及打印机类、描述符与批量端点传输，实现 IPP over USB 协议
+</li>
+<li><strong>网络协议</strong>：深入理解 TCP/IP 与 SCTP 的重传与拥塞控制机制；依据 RFC 实现过 HTTP、UPnP、SNMP 等嵌入式协议；熟悉 IPP、Bonjour、Diameter 与 3GPP 核心网规范
+</li>
+<li><strong>系统编程</strong>：擅长 Linux 多线程、非阻塞 I/O 与高并发网络编程，了解内核网络栈与网卡多队列；熟练使用 perf、Valgrind、Wireshark 等工具调优排障
+</li>
+<li><strong>云原生</strong>：掌握 Docker、Kubernetes、OpenShift、Helm，具备 C++ 服务容器化迁移与业务不中断升级的实战经验
+</li>
+<li><strong>AI 应用</strong>：开发过 ReAct 智能体；用 C++ 从零实现 Transformer 推理（SIMD、KV Cache）
+</li></ul>
+</section>
+<h2>工作经历</h2>
+<section class="sec timeline rows rows-date">
+<div class="entry"><span class="title">诺基亚通信投资（中国）有限公司青岛分公司</span><span class="role">高级软件工程师</span><span class="date">2015.06 – 至今</span></div>
+<ul>
+<li><strong>模块负责</strong>：4G/5G 网络通信、数据库缓存、通用应用中间件 3 个核心模块负责人，主导设计、评审与质量把关
+</li>
+<li><strong>团队带领</strong>：多次牵头新功能开发，带领 5～6 人小组从设计到交付；负责新员工培训与内部技术分享
+</li>
+<li><strong>云原生改造</strong>：主导核心网用户数据库 C++ 服务容器化迁移开发，参与全产品不中断升级方案设计（2020 – 至今）
+</li>
+<li><strong>现网支持</strong>：为北美、欧洲运营商定位现网故障与性能瓶颈，主导 T-Mobile 重大故障根因定位，深入 Linux 内核网络栈与虚拟网卡多队列定位 SCTP 传输问题（2017 – 2020）
+</li>
+<li><strong>核心网开发</strong>：用 C/C++ 按 3GPP 规范开发 4G 用户数据库与 IMS 功能并交付（2015 – 2017）
+</li></ul>
+<div class="entry"><span class="title">日冲信息（大连）有限公司</span><span class="role">嵌入式软件工程师</span><span class="date">2009.09 – 2015.05</span></div>
+<ul>
+<li><strong>协议栈开发</strong>：依据 RFC 在 ARM/VxWorks 上用 C/C++ 实现 HTTP、UPnP、SNMP 及 CIFS 文件共享等网络协议
+</li>
+<li><strong>打印协议</strong>：负责 AirPrint 与 IPP over USB 协议，连续通过 AirPrint 1.1～1.5 认证；参与谷歌云打印与网络扫描协议
+</li>
+<li><strong>性能优化</strong>：用 WindView 分析 VxWorks 多任务瓶颈；基于 Wireshark 抓包调优 TCP 窗口与重传，提升传输速率
+</li>
+<li><strong>IPv6 认证</strong>：主持搭建 IPv6 Ready Logo 测试环境，协议栈通过一、二阶段认证
+</li>
+<li><strong>实习</strong>：开发打印机内嵌管理网页，并编写网页自动化测试（2009 – 2010）
+</li></ul>
+</section>
+<h2>项目经历</h2>
+<section class="sec timeline rows rows-meta">
+<div class="entry"><span class="title">苹果 AirPrint 打印协议开发与认证（ARM/VxWorks）</span><span class="role">协议开发与测试</span><span class="date">2013.11 – 2015.05</span></div>
+<ul>
+<li><strong>背景</strong>：产品线需支持苹果手机、平板与电脑免驱动无线打印并通过官方认证，设备运行在内存与 CPU 受限的 ARM/VxWorks 平台上
+</li>
+<li><strong>我的工作</strong>：
+<ul class="sub">
+<li>服务发现：基于 Bonjour（mDNS/DNS-SD）实现打印服务在局域网内的发现与通告
+</li>
+<li>作业处理：基于 IPP 实现作业提交、状态查询与错误处理，支持多种文档与图片格式的打印流水线
+</li>
+<li>嵌入式联调：在 VxWorks 多任务环境下用 C/C++ 开发，与网络协议栈、驱动等并发任务协同联调
+</li>
+<li>认证测试：搭建认证环境，执行功能、互操作与回归测试，跟进 1.1～1.5 规范差异并修复兼容问题
+</li></ul>
+</li>
+<li><strong>成果</strong>：多款打印机连续通过 AirPrint 1.1～1.5 认证，无线打印能力随产品迭代上市商用
+</li></ul>
+<div class="entry"><span class="title">打印机 IPP over USB 开发（ARM/VxWorks）</span><span class="role">主导开发与测试</span><span class="date">2013.11 – 2015.05</span></div>
+<ul>
+<li><strong>背景</strong>：USB 直连打印依赖主机驱动；IPP over USB 在 USB 打印机类接口上承载网络打印协议，实现免驱动打印
+</li>
+<li><strong>我的工作</strong>：
+<ul class="sub">
+<li>USB 设备端：按规范配置打印机类接口与批量端点，实现批量传输上 HTTP 报文的收发与边界解析
+</li>
+<li>协议对接：将 USB 通道接入已有的嵌入式 HTTP 服务器与 IPP 模块，与网络通路共用同一套协议处理
+</li>
+<li>实时系统：在 VxWorks 多任务环境下用 C 开发，处理 USB 收发与协议处理任务之间的并发与同步
+</li>
+<li>联调测试：与主机端联调，完成功能与兼容性测试，定位并修复互通问题
+</li></ul>
+</li>
+<li><strong>成果</strong>：打印机在 USB 连接下即可实现免驱动 IPP 打印与作业状态查询，功能与网络打印保持一致
+</li></ul>
+<div class="entry"><span class="title">美国 T-Mobile 核心网信令时延故障（Linux 内核网络栈）</span><span class="role">主导根因定位</span><span class="date">2019.06 – 2019.09</span></div>
+<ul>
+<li><strong>背景</strong>：光纤中断后流量绕路，信令链路时延超 140 ms，约 229 万 4G 用户受影响，语音呼叫量下降 25%
+</li>
+<li><strong>我的工作</strong>：
+<ul class="sub">
+<li>应用层定位：抓包对比正常与异常 SCTP 连接，发现发送缓冲区堆积，读代码确认单线程阻塞发送使一条慢连接拖垮同线程其他连接
+</li>
+<li>内核层根因：实验室注入同等时延复现，控制变量测试网卡队列数、发送缓冲区、物理机与虚拟机，锁定虚拟网卡多队列未真正按流分发，导致 SCTP 乱序与快速重传，高时延下拥塞窗口难以恢复
+</li>
+<li>修复：C++ 实现连接级自动隔离，调优缓冲区与超时；中长期推动单队列、操作系统升级与增连分流
+</li></ul>
+</li>
+<li><strong>成果</strong>：12 小时内恢复业务，72 小时内补丁被现网采纳；单队列方案下单连接吞吐提升约 10 倍
+</li></ul>
+<div class="entry"><span class="title">核心网用户数据库 C++ 服务容器化迁移（Kubernetes）</span><span class="role">主导开发</span><span class="date">2020.06 – 至今</span></div>
+<ul>
+<li><strong>背景</strong>：用户数据库 C++ 服务原以虚拟机交付，需迁移至 Kubernetes 容器平台，且升级过程业务不中断
+</li>
+<li><strong>我的工作</strong>：
+<ul class="sub">
+<li>服务改造：主导 3 个 C++ 核心服务云原生改造：单容器多进程、配置注入与热加载
+</li>
+<li>优雅启停：C++ 实现退出信号处理、链路摘除、请求排空与健康探针，支持新旧版本混跑升级
+</li></ul>
+</li>
+<li><strong>成果</strong>：升级期间请求成功率 99.9%，单实例 2500 QPS；已在 T-Mobile、Verizon、Vodafone 等运营商商用
+</li></ul>
+<div class="entry"><span class="title">AI 智能运维终端</span><span class="role">独立开发</span><span class="date">2026.06 – 2026.09</span></div>
+<ul>
+<li><strong>背景</strong>：运维排障需在多台主机间反复敲命令、看输出，通用 AI 看不到终端上下文
+</li>
+<li><strong>我的工作</strong>：
+<ul class="sub">
+<li>终端开发：基于 Electron 开发多标签 SSH 终端，内置感知终端上下文的 AI 侧边栏
+</li>
+<li>智能体引擎：实现基于函数调用的 ReAct 智能体，提供 30 余个工具，三级审批防止误操作
+</li></ul>
+</li>
+<li><strong>成果</strong>：获诺基亚内部 AI 创新大赛二等奖并在公司内部推广
+</li></ul>
+<div class="entry"><span class="title">GPT-2 大模型 CPU 推理引擎（C++）</span><span class="role">个人项目</span><span class="date">2026.04 – 至今</span></div>
+<ul>
+<li><strong>背景</strong>：为理解大模型推理的底层原理，在笔记本 CPU 上用 C++ 从零实现 Transformer 推理全链路
+</li>
+<li><strong>我的工作</strong>：
+<ul class="sub">
+<li>算子库：张量与矩阵/向量算子，AVX2 SIMD 内核（注意力、GELU、LayerNorm、RMSNorm）
+</li>
+<li>计算图：实现拓扑执行、形状推断、中间缓冲复用与节点计时
+</li>
+<li>模型推理：GPT-2 模型加载、按注意力头存放的 KV Cache、预填充与逐词解码
+</li></ul>
+</li>
+<li><strong>成果</strong>：在 14 线程笔记本 CPU 上解码速度约 111 token/s
+</li></ul>
+</section>
+<h2>专利、荣誉与证书</h2>
+<section class="sec rows rows-meta">
+<ul>
+<li><strong>专利</strong>：第一发明人，PCT 国际专利 <a href="https://patents.google.com/patent/WO2025175539A1">WO2025175539A1</a>（《基于设备信息的 AKMA 认证》）
+</li>
+<li><strong>荣誉</strong>：2021.10 因绩效突出获授诺基亚 1000 股股权激励
+</li>
+<li><strong>软考</strong>：软件设计师（中级）
+</li>
+<li><strong>红帽认证</strong>：OpenShift 应用开发者（证书编号 <a href="https://rhtapps.redhat.com/verify?certId=240-240-408">240-240-408</a>）
+</li></ul>
+</section>
+</body>
+</html>
