@@ -21,54 +21,60 @@ const inline = (s) =>
     .replace(/【[^】]*】/g, '<span class="todo">$&</span>');
 
 // 求职意向超过两项时，在最后一项前换行，避免在 "C/C++" 这类词中间断开。
-const wrapIntent = (s) => {
-  const html = inline(s).replace(/（[^）]*）/g, '<span class="nowrap">$&</span>');
-  if ((html.match(/、/g) || []).length < 2) return html;
-  const i = html.lastIndexOf('、');
+const wrapIntent = (s, en = false) => {
+  const html = inline(s).replace(/[（(][^）)]*[）)]/g, '<span class="nowrap">$&</span>');
+  const sep = en ? ',' : '、';
+  if ((html.match(new RegExp(en ? ',' : '、', 'g')) || []).length < 2) return html;
+  const i = html.lastIndexOf(sep);
   return `${html.slice(0, i + 1)}<br>${html.slice(i + 1)}`;
 };
 
-const SEP = /\s*｜\s*/;
+const SEP = /\s*[｜|]\s*/;
 
 const sectionKind = (title) => {
-  if (/工作/.test(title)) return 'timeline rows rows-date';
-  if (/项目/.test(title)) return 'timeline rows rows-meta sec-projects';
-  if (/技能/.test(title)) return 'rows rows-skill';
-  if (/优势|专利|证书/.test(title)) return 'rows rows-meta';
-  if (/教育/.test(title)) return 'flat';
+  if (/工作|Work Experience/i.test(title)) return 'timeline rows rows-date';
+  if (/项目|Project Experience/i.test(title)) return 'timeline rows rows-meta sec-projects';
+  if (/技能|Technical Skills|Skills/i.test(title)) return 'rows rows-skill';
+  if (/优势|Summary|Highlights|Patent|Honor|Certificate/i.test(title)) return 'rows rows-meta';
+  if (/教育|Education/i.test(title)) return 'flat';
   return '';
 };
 
 const sectionTitle = (title) => {
-  const cls = /项目/.test(title) ? ' class="page-projects"' : '';
+  const cls = /项目|Project Experience/i.test(title) ? ' class="page-projects"' : '';
   return `<h2${cls}>${inline(title)}</h2>`;
 };
+
+const isEducationSection = (title) => /教育|Education/i.test(title);
 
 function renderHeader(name, lines, mdDir) {
   const kv = [];
   let intent = '';
   let photo = '';
   const extra = [];
+  const en = lines.some((l) => /^Target Role:/i.test(l.trim()));
   for (const line of lines) {
     let m;
     if ((m = line.match(/^!\[[^\]]*\]\(([^)]+)\)$/))) {
       if (fs.existsSync(path.resolve(mdDir, m[1]))) photo = m[1];
-    } else if ((m = line.match(/^([^：:]{1,6})[：:]\s*(.*)$/))) {
-      if (/求职意向/.test(m[1])) intent = m[2];
-      else kv.push([m[1].trim(), m[2]]);
+    } else if ((m = line.match(/^([^：:]+)[：:]\s*(.+)$/))) {
+      const key = m[1].trim();
+      if (/^求职意向$|^Target Role$/i.test(key)) intent = m[2].trim();
+      else kv.push([key, m[2].trim()]);
     } else {
       extra.push(line);
     }
   }
+  const intentLabel = en ? 'Target Role: ' : '求职意向：';
   return (
     '<header class="basic">' +
     '<div class="who">' +
     `<h1>${inline(name)}</h1>` +
-    (intent ? `<p class="intent">求职意向：${wrapIntent(intent)}</p>` : '') +
+    (intent ? `<p class="intent">${intentLabel}${wrapIntent(intent, en)}</p>` : '') +
     '</div>' +
     '<div class="kv">' +
     kv
-      .map(([k, v]) => `<p><span class="k">${inline(k)}</span><span class="colon">：</span><span class="v">${inline(v)}</span></p>`)
+      .map(([k, v]) => `<p><span class="k">${inline(k)}</span><span class="colon">${en ? ': ' : '：'}</span><span class="v">${inline(v)}</span></p>`)
       .join('') +
     extra.map((l) => `<p>${inline(l)}</p>`).join('') +
     '</div>' +
@@ -132,7 +138,7 @@ function render(md, mdDir, classic = false) {
     }
   };
   const openTimelineBlock = () => {
-    if (!/工作|项目/.test(section)) return;
+    if (!/工作|项目|Work Experience|Project Experience/i.test(section)) return;
     closeTimelineBlock();
     out.push('<div class="timeline-block">');
     timelineBlock = true;
@@ -170,7 +176,7 @@ function render(md, mdDir, classic = false) {
       }
       if (classic) {
         const cells = item[2].split(SEP);
-        if (/教育/.test(section) && cells.length > 1) {
+        if (isEducationSection(section) && cells.length > 1) {
           const di = cells.findIndex((c) => /^\d{4}\./.test(c));
           if (di > 0) cells.unshift(...cells.splice(di, 1));
           out.push(`<li class="edu">${cells.map((c) => `<span>${inline(c)}</span>`).join('')}`);
@@ -180,7 +186,7 @@ function render(md, mdDir, classic = false) {
         continue;
       }
       const cells = item[2].split(SEP);
-      if (/教育/.test(section) && cells.length > 1) {
+      if (isEducationSection(section) && cells.length > 1) {
         out.push(
           `<li class="edu">${cells
             .map((c, i) => {
@@ -194,7 +200,11 @@ function render(md, mdDir, classic = false) {
       const body = inline(item[2]);
       const row = body.match(/^<strong>([^<]+)<\/strong>(?:[：:]\s*|｜)([\s\S]*)$/);
       // 只把短标签放进固定列。年份单独放行，长标签保持普通一行，避免逐字竖排。
-      const useRow = row && ([...row[1].replace(/\s/g, '')].length <= 6 || /^\d{4}/.test(row[1]));
+      const useRow =
+        row &&
+        ([...row[1].replace(/\s/g, '')].length <= 6 ||
+          /^\d{4}/.test(row[1]) ||
+          row[1].length <= 26);
       out.push(
         useRow
           ? `<li class="row"><span class="lbl">${row[1]}</span><span class="val">${row[2]}</span>`
@@ -272,6 +282,9 @@ body {
   width: 210mm; min-height: 297mm; margin: 24px auto; padding: 12mm 14mm;
   background: #fff; box-shadow: 0 2px 16px rgba(0, 0, 0, .12);
   -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+body.lang-en {
+  font-family: Calibri, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 @media print {
   @page { size: A4; margin: 8mm 11mm 7mm; }
@@ -359,6 +372,11 @@ li.row {
   align-items: baseline;
 }
 .rows { --lbl: 6.6em; }
+.lang-en .rows-skill { --lbl: 9.2em; }
+.lang-en .rows-date { --lbl: 7.4em; }
+.lang-en .rows-meta:has(.timeline-block) { --lbl: 6.6em; }
+.lang-en .sec-projects { --lbl: 6.8em; }
+.lang-en .kv .k { width: auto; min-width: 6.8em; text-align-last: left; }
 .lbl { font-weight: 700; white-space: nowrap; }
 .rows-date .lbl { font-family: var(--num); font-weight: 600; }
 li.row > ul { grid-column: 2 / -1; padding-top: 0; margin-top: 0; }
@@ -522,15 +540,16 @@ async function buildResume(rawOpts) {
 
   const md = fs.readFileSync(input, 'utf8');
   const name = (md.match(/^# (.*)$/m) || [, '简历'])[1].trim();
+  const en = /\.en\.md$/i.test(input) || /^Target Role:/m.test(md);
   const mdDir = path.dirname(input);
   const html = `<!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="${en ? 'en' : 'zh-CN'}">
 <head>
 <meta charset="UTF-8">
-<title>${escapeHtml(name)} - 简历</title>
+<title>${escapeHtml(name)} - ${en ? 'Resume' : '简历'}</title>
 <style>${classic ? CSS_CLASSIC : CSS}</style>
 </head>
-<body>
+<body class="${en ? 'lang-en' : ''}">
 ${render(md, mdDir, classic)}
 </body>
 </html>

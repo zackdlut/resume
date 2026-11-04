@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heng Zhang - Resume</title>
+<style>
+@page { size: A4; margin: 11mm 14mm 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  /* 色调对齐 zhangheng.pdf（Word 大工模板蓝 #4F81BD） */
+  --ink: #1a1a1a;
+  --accent: #4f81bd;
+  --strong: #4f81bd;
+  --sky: #4f81bd;
+  --rail: #c5d0dc;
+  --mist: #d6dfe7;
+  --muted: #666;
+  --faint: #a6a6a6;
+  --num: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+html { background: #ececec; }
+body {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  font-size: 10.5pt; line-height: 1.4; color: var(--ink);
+  width: 210mm; min-height: 297mm; margin: 24px auto; padding: 12mm 14mm;
+  background: #fff; box-shadow: 0 2px 16px rgba(0, 0, 0, .12);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+body.lang-en {
+  font-family: Calibri, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+@media print {
+  @page { size: A4; margin: 8mm 11mm 7mm; }
+  html { background: none; }
+  body {
+    width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none;
+    font-size: 9.65pt; line-height: 1.42;
+  }
+  header.basic { gap: 14px; padding-bottom: 6px; }
+  .who h1 { font-size: 20pt; letter-spacing: 4px; }
+  .intent { margin-top: 4px; }
+  .kv { padding-left: 14px; }
+  .kv p { line-height: 1.4; }
+  .photo { width: 21mm; height: 27mm; }
+  h2 { font-size: 10pt; padding: 2px 8px; margin: 7px 0 3px; letter-spacing: 1px; }
+  h2.page-projects {
+    break-before: page; page-break-before: always;
+    margin-top: 0; padding-top: 2px;
+  }
+  li { break-inside: auto; }
+  .timeline-block + .timeline-block { margin-top: 6px; padding-top: 0; }
+  .timeline-block + .timeline-block::before { margin-bottom: 4px; }
+  .timeline-block .entry {
+    margin-top: 0; padding: 2px 6px 3px 0; margin-left: 0;
+    border-radius: 2px; background: #eef3f8;
+  }
+  .timeline-block > ul { margin-bottom: 1px; }
+  .sec:not(.sec-projects) > ul > li + li { margin-top: 1px; }
+  .sec-projects .timeline-block + .timeline-block { margin-top: 5px; }
+  ul.sub > li { padding-left: 1.05em; }
+  ul.sub > li::before { left: .12em; }
+  li.row { column-gap: 8px; }
+  .desc { margin-top: 0; }
+  .timeline-block .entry + ul > li + li, ul.sub > li { break-before: avoid; }
+}
+a { color: inherit; text-decoration: none; white-space: nowrap; }
+strong { font-weight: 700; }
+em { font-style: normal; }
+.todo { color: var(--faint); font-weight: 400; }
+
+header.basic {
+  display: flex; align-items: center; gap: 22px;
+  padding: 2px 0 6px 2px; border-bottom: 1.5px solid var(--accent);
+}
+.who { flex: 1 1 auto; min-width: 0; }
+.who h1 { font-size: 22pt; letter-spacing: 6px; line-height: 1.25; }
+.intent { margin-top: 6px; color: var(--ink); font-weight: 700; }
+.nowrap { white-space: nowrap; }
+.kv { flex: 0 0 auto; border-left: 1px solid var(--rail); padding-left: 20px; }
+.kv p { line-height: 1.45; }
+.kv .k { display: inline-block; width: 4em; text-align-last: justify; color: var(--muted); }
+.kv .colon { color: var(--muted); }
+.kv .v { font-family: var(--num); white-space: nowrap; }
+.photo {
+  flex: none; width: 23mm; height: 30mm; object-fit: cover; object-position: center 35%;
+  border-radius: 4px;
+}
+
+h2 {
+  font-size: 11pt; font-weight: 700; letter-spacing: 2px;
+  color: #fff; background: var(--accent);
+  padding: 3px 10px; margin: 7px 0 4px; break-after: avoid;
+}
+
+h2.page-projects { break-before: page; page-break-before: always; }
+@media print {
+  h2.page-projects { margin-top: 0; }
+}
+
+ul { padding-left: 1.15em; }
+li { break-inside: avoid; }
+.rows > ul, .timeline > ul, .timeline-block > ul, .flat > ul { list-style: none; padding-left: 0; }
+.rows li:not(.row) { position: relative; padding-left: 1.25em; }
+ul.sub { list-style: none; padding-left: 0; }
+ul.sub > li { position: relative; padding-left: 1.15em; }
+.rows li:not(.row)::before, ul.sub > li::before {
+  content: ""; position: absolute; left: .35em; top: calc(.62em - 2.5px);
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+}
+ul.sub > li::before { left: .2em; }
+li.row {
+  display: grid;
+  grid-template-columns: var(--lbl, 4.6em) minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: baseline;
+}
+.rows { --lbl: 6.6em; }
+.lang-en .rows-skill { --lbl: 9.2em; }
+.lang-en .rows-date { --lbl: 7.4em; }
+.lang-en .rows-meta:has(.timeline-block) { --lbl: 6.6em; }
+.lang-en .sec-projects { --lbl: 6.8em; }
+.lang-en .kv .k { width: auto; min-width: 6.8em; text-align-last: left; }
+.lbl { font-weight: 700; white-space: nowrap; }
+.rows-date .lbl { font-family: var(--num); font-weight: 600; }
+li.row > ul { grid-column: 2 / -1; padding-top: 0; margin-top: 0; }
+li.row > ul.sub { padding-left: 0; }
+.val { min-width: 0; }
+.val:empty { display: none; }
+.val:empty + ul { padding-top: 0; }
+
+.flat ul { padding-left: 0; }
+li.edu { display: flex; flex-wrap: wrap; align-items: baseline; }
+li.edu > span { white-space: nowrap; }
+/* 全角右括号自带半字宽右侧空白，会让分隔线两侧间距不等 */
+li.edu .paren-end { margin-right: -.5em; }
+li.edu > span + span::before {
+  content: ""; display: inline-block; width: 1px; height: .85em;
+  margin: 0 .75em; vertical-align: -.08em; background: var(--faint);
+}
+li.edu .school { font-weight: 700; }
+li.edu .num { font-family: var(--num); }
+
+.timeline {
+  --tl-pad: 16px;
+  --tl-dot: 8px;
+  margin-left: 4px;
+  padding-left: var(--tl-pad);
+  border-left: 1.5px solid var(--rail);
+}
+.timeline ul { padding-left: 0; }
+/* 块间横线不盖住左侧竖线 */
+.timeline-block + .timeline-block {
+  margin-top: 8px; padding-top: 0; border-top: none;
+}
+.timeline-block + .timeline-block::before {
+  content: ""; display: block;
+  margin-left: 5px; padding-top: 6px;
+  border-top: 1px solid var(--mist);
+}
+.sec-projects .timeline-block + .timeline-block { margin-top: 6px; }
+.sec-projects .timeline-block + .timeline-block::before { padding-top: 5px; }
+.timeline-block > ul { margin-bottom: 2px; }
+.timeline-block .entry {
+  position: relative; display: flex; align-items: baseline; gap: 10px;
+  margin-top: 0; padding: 3px 8px 4px 0; margin-left: 0;
+  border-radius: 3px; background: #eef3f8; break-after: avoid;
+}
+.timeline-block .entry .title { color: var(--ink); }
+.timeline-block:first-child .entry { margin-top: 0; }
+.timeline-block .entry::before {
+  content: ""; position: absolute;
+  top: calc(.5em + 1px);
+  left: calc(-1 * var(--tl-pad) - 0.75px - var(--tl-dot) / 2);
+  width: var(--tl-dot); height: var(--tl-dot);
+  border-radius: 50%; background: #fff; border: 1.5px solid var(--accent);
+  box-sizing: border-box;
+}
+.timeline-block:first-child .entry::before { background: var(--accent); border-color: var(--accent); }
+.entry {
+  position: relative; display: flex; align-items: baseline; gap: 12px;
+  margin-top: 4px; break-after: avoid;
+}
+.entry .title { flex: 1; font-weight: 700; }
+.entry .role { font-weight: 400; color: var(--muted); }
+.entry .role::before { content: "·"; margin: 0 8px; color: var(--faint); }
+.entry .date {
+  flex: none; white-space: nowrap;
+  font-family: var(--num); color: var(--strong);
+}
+.desc { color: var(--muted); break-after: avoid; }
+</style>
+</head>
+<body class="lang-en">
+<header class="basic"><div class="who"><h1>Heng Zhang</h1><p class="intent">Target Role: Embedded Software Engineer, Senior C/C++ Software Engineer</p></div><div class="kv"><p><span class="k">Experience</span><span class="colon">: </span><span class="v">16 years</span></p><p><span class="k">Date of Birth</span><span class="colon">: </span><span class="v">1987.12.14</span></p><p><span class="k">Location</span><span class="colon">: </span><span class="v">Qingdao, China</span></p><p><span class="k">Phone</span><span class="colon">: </span><span class="v">+86-151-9248-5800</span></p><p><span class="k">Email</span><span class="colon">: </span><span class="v">354379271@qq.com</span></p></div><img class="photo" src="avatar.jpg" alt="照片"></header>
+<h2>Education</h2>
+<section class="sec flat">
+<ul>
+<li class="edu"><span class="school">Dalian University of Technology</span><span>Software Engineering (Embedded Systems)</span><span>B.S.</span><span class="num">2006.09 – 2010.06</span><span>CET-6 (557)</span>
+</li></ul>
+</section>
+<h2>Summary</h2>
+<section class="sec rows rows-meta">
+<ul>
+<li>16 years C/C++: 5 years ARM/VxWorks/FreeRTOS embedded, 11 years Linux server networking
+</li>
+<li>UART, I2C, SPI, USB, TCP/IP; led AirPrint and IPP over USB through Apple certification
+</li>
+<li>Linux multithreading; FreeRTOS exposure; system design, concurrency, and performance tuning
+</li>
+<li>Production debugging from application layer through Linux network stack and NIC drivers
+</li>
+<li>Cross-team technical lead; fluent professional English
+</li>
+<li>LLM inference and AI agent side projects
+</li></ul>
+</section>
+<h2>Technical Skills</h2>
+<section class="sec rows rows-skill">
+<ul>
+<li class="row"><span class="lbl">Languages</span><span class="val">C/C++ (C++11 at work, C++20 in personal projects); Python, Shell; familiar with Go</span>
+</li>
+<li class="row"><span class="lbl">Embedded</span><span class="val">5 years ARM/VxWorks/FreeRTOS; task scheduling/sync; WindView for RTOS profiling; UART/I2C/SPI/TCP/IP; USB 2.0 device (printer class, descriptors, bulk endpoints), IPP over USB; ARM Cortex-M basics</span>
+</li>
+<li class="row"><span class="lbl">Networking</span><span class="val">TCP/IP and SCTP retransmission/congestion; RFC-based HTTP/UPnP/SNMP on embedded; IPP, Bonjour, Diameter, 3GPP core</span>
+</li>
+<li class="row"><span class="lbl">Systems</span><span class="val">Linux threads, non-blocking I/O, high-concurrency servers; kernel stack and multi-queue NICs; perf, Valgrind, Wireshark</span>
+</li>
+<li class="row"><span class="lbl">Cloud</span><span class="val">Docker, Kubernetes, OpenShift, Helm; C++ service containerization and hitless upgrades</span>
+</li>
+<li class="row"><span class="lbl">AI</span><span class="val">ReAct agents; from-scratch C++ Transformer inference (SIMD, KV cache)</span>
+</li></ul>
+</section>
+<h2>Work Experience</h2>
+<section class="sec timeline rows rows-date">
+<div class="timeline-block">
+<div class="entry"><span class="title">Nokia (China) Qingdao<span class="role">Senior Software Engineer</span></span><span class="date">2015.06 – Present</span></div>
+<ul>
+<li class="row"><span class="lbl">Modules</span><span class="val">Owner of three core modules—4G/5G networking, DB cache, middleware; design and quality gate</span>
+</li>
+<li class="row"><span class="lbl">Leadership</span><span class="val">Led 5–6 engineer squads; onboarding and tech sharing</span>
+</li>
+<li class="row"><span class="lbl">Cloud Native</span><span class="val">Core user-database C++ services to Docker/Kubernetes; hitless upgrade (2020 – Present)</span>
+</li>
+<li class="row"><span class="lbl">Production</span><span class="val">NA/EU operator support; T-Mobile incident; Linux stack and virtio multi-queue SCTP issues (2017 – 2020)</span>
+</li>
+<li class="row"><span class="lbl">Core Network</span><span class="val">4G subscriber DB and IMS in C/C++ per 3GPP (2015 – 2017)</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">Hitachi Information (Dalian) Co., Ltd.<span class="role">Embedded Software Engineer</span></span><span class="date">2009.09 – 2015.05</span></div>
+<ul>
+<li class="row"><span class="lbl">Protocol Stacks</span><span class="val">HTTP, UPnP, SNMP, CIFS on ARM/VxWorks/FreeRTOS per RFCs</span>
+</li>
+<li class="row"><span class="lbl">Print Protocols</span><span class="val">AirPrint and IPP over USB; AirPrint 1.1–1.5 certification; Google Cloud Print and scan protocols</span>
+</li>
+<li class="row"><span class="lbl">Performance</span><span class="val">WindView task/sync analysis; Wireshark TCP window and retransmit tuning for scan/transfer throughput</span>
+</li>
+<li class="row"><span class="lbl">IPv6</span><span class="val">IPv6 Ready Logo lab; stack passed Phase-1/Phase-2</span>
+</li>
+<li class="row"><span class="lbl">Internship</span><span class="val">Embedded printer management web UI and automation tests (2009 – 2010)</span>
+</li></ul>
+</div>
+</section>
+<h2 class="page-projects">Project Experience</h2>
+<section class="sec timeline rows rows-meta sec-projects">
+<div class="timeline-block">
+<div class="entry"><span class="title">Apple AirPrint Development &amp; Certification (ARM/VxWorks/FreeRTOS)<span class="role">Protocol Engineer</span></span><span class="date">2013.11 – 2015.05</span></div>
+<ul>
+<li class="row"><span class="lbl">Background</span><span class="val">Driverless wireless print from phones/tablets/PCs with Apple certification on constrained ARM/VxWorks/FreeRTOS</span>
+</li>
+<li class="row"><span class="lbl">Contributions</span><span class="val"></span>
+<ul class="sub">
+<li>Discovery: Bonjour (mDNS/DNS-SD) on LAN
+</li>
+<li>Jobs: IPP submit/status/errors; multi-format print pipeline
+</li>
+<li>RTOS: C/C++ on VxWorks/FreeRTOS with stack and drivers
+</li>
+<li>Certification: harness for 1.1–1.5 functional, interop, regression
+</li></ul>
+</li>
+<li class="row"><span class="lbl">Results</span><span class="val">Multiple products certified 1.1–1.5; wireless print shipped</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">IPP over USB for Printers (ARM/VxWorks/FreeRTOS)<span class="role">Lead Developer</span></span><span class="date">2013.11 – 2015.05</span></div>
+<ul>
+<li class="row"><span class="lbl">Background</span><span class="val">USB printing needed host drivers; IPP over USB runs network print protocols on USB printer class for driverless print</span>
+</li>
+<li class="row"><span class="lbl">Contributions</span><span class="val"></span>
+<ul class="sub">
+<li>USB device: printer class interface and bulk endpoints; HTTP over bulk with framing
+</li>
+<li>Integration: USB path into existing embedded HTTP server and IPP stack shared with network path
+</li>
+<li>RTOS: C on VxWorks/FreeRTOS; concurrency between USB I/O and protocol tasks
+</li>
+<li>Test: host interoperability and compatibility fixes
+</li></ul>
+</li>
+<li class="row"><span class="lbl">Results</span><span class="val">Driverless IPP print and job status over USB matching network behavior</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">T-Mobile Core Signaling Latency (Linux Network Stack)<span class="role">Root-Cause Lead</span></span><span class="date">2019.06 – 2019.09</span></div>
+<ul>
+<li class="row"><span class="lbl">Background</span><span class="val">Rerouted traffic; signaling RTT &gt;140 ms; ~2.29M LTE users; voice call volume −25%</span>
+</li>
+<li class="row"><span class="lbl">Contributions</span><span class="val"></span>
+<ul class="sub">
+<li>App: packet compare on SCTP; send buffer pile-up; one slow connection blocked peers on same thread
+</li>
+<li>Kernel: lab replay; NIC queue count, buffers, PM/VM matrix; virtio multi-queue not flow-steering → SCTP reorder/fast retransmit; CWND recovery at high RTT
+</li>
+<li>Fix: C++ per-connection isolation; buffer/timeout tuning; single-queue, OS upgrade, spreading
+</li></ul>
+</li>
+<li class="row"><span class="lbl">Results</span><span class="val">Restore in 12 h; patch in 72 h; ~10× throughput per connection on single-queue</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">User-DB C++ Services on Kubernetes<span class="role">Lead Developer</span></span><span class="date">2020.06 – Present</span></div>
+<ul>
+<li class="row"><span class="lbl">Background</span><span class="val">User-database C++ services on VMs → Kubernetes with hitless upgrades</span>
+</li>
+<li class="row"><span class="lbl">Contributions</span><span class="val"></span>
+<ul class="sub">
+<li>Refactor: three core C++ services—single-container multi-process, config inject, hot reload
+</li>
+<li>Graceful exit: signal handling, link drain, probes; mixed-version rollout
+</li></ul>
+</li>
+<li class="row"><span class="lbl">Results</span><span class="val">99.9% success during upgrades; 2,500 QPS per instance; T-Mobile, Verizon, Vodafone</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">AI Ops Terminal<span class="role">Solo Developer</span></span><span class="date">2026.06 – 2026.09</span></div>
+<ul>
+<li class="row"><span class="lbl">Background</span><span class="val">Ops needs SSH context; generic AI is blind to terminals</span>
+</li>
+<li class="row"><span class="lbl">Contributions</span><span class="val"></span>
+<ul class="sub">
+<li>Electron multi-tab SSH with terminal-context AI sidebar
+</li>
+<li>Function-calling ReAct agent, 30+ tools, three-tier approval
+</li></ul>
+</li>
+<li class="row"><span class="lbl">Results</span><span class="val">Nokia internal AI contest 2nd place; internal rollout</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">GPT-2 CPU Inference Engine (C++)<span class="role">Personal Project</span></span><span class="date">2026.04 – Present</span></div>
+<ul>
+<li class="row"><span class="lbl">Background</span><span class="val">Learn LLM inference via from-scratch C++ Transformer on laptop CPU</span>
+</li>
+<li class="row"><span class="lbl">Contributions</span><span class="val"></span>
+<ul class="sub">
+<li>AVX2 ops; compute graph; GPT-2 load, KV cache, prefill/decode
+</li></ul>
+</li>
+<li class="row"><span class="lbl">Results</span><span class="val">~111 tokens/s on 14-thread laptop CPU</span>
+</li></ul>
+</div>
+</section>
+<h2>Patents, Honors &amp; Certifications</h2>
+<section class="sec rows rows-meta">
+<ul>
+<li class="row"><span class="lbl">Patent</span><span class="val">First inventor, PCT <a href="https://patents.google.com/patent/WO2025175539A1">WO2025175539A1</a> (<em>AKMA Authentication Based on Device Information</em>)</span>
+</li>
+<li class="row"><span class="lbl">Award</span><span class="val">Oct 2021 Nokia equity grant (1,000 shares)</span>
+</li>
+<li class="row"><span class="lbl">China</span><span class="val">Software Designer (Intermediate)</span>
+</li>
+<li class="row"><span class="lbl">Red Hat</span><span class="val">OpenShift Application Developer (<a href="https://rhtapps.redhat.com/verify?certId=240-240-408">240-240-408</a>)</span>
+</li></ul>
+</section>
+</body>
+</html>
