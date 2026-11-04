@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>张恒 - 简历</title>
+<style>
+@page { size: A4; margin: 11mm 14mm 10mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  /* 色调对齐 zhangheng.pdf（Word 大工模板蓝 #4F81BD） */
+  --ink: #1a1a1a;
+  --accent: #4f81bd;
+  --strong: #4f81bd;
+  --sky: #4f81bd;
+  --rail: #c5d0dc;
+  --mist: #d6dfe7;
+  --muted: #666;
+  --faint: #a6a6a6;
+  --num: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+html { background: #ececec; }
+body {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  font-size: 10.5pt; line-height: 1.4; color: var(--ink);
+  width: 210mm; min-height: 297mm; margin: 24px auto; padding: 12mm 14mm;
+  background: #fff; box-shadow: 0 2px 16px rgba(0, 0, 0, .12);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+@media print {
+  @page { size: A4; margin: 8mm 11mm 7mm; }
+  html { background: none; }
+  body {
+    width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none;
+    font-size: 9.65pt; line-height: 1.42;
+  }
+  header.basic { gap: 14px; padding-bottom: 6px; }
+  .who h1 { font-size: 20pt; letter-spacing: 4px; }
+  .intent { margin-top: 4px; }
+  .kv { padding-left: 14px; }
+  .kv p { line-height: 1.4; }
+  .photo { width: 21mm; height: 27mm; }
+  h2 { font-size: 10pt; padding: 2px 8px; margin: 7px 0 3px; letter-spacing: 1px; }
+  h2.page-projects {
+    break-before: page; page-break-before: always;
+    margin-top: 0; padding-top: 2px;
+  }
+  li { break-inside: auto; }
+  .timeline-block + .timeline-block { margin-top: 6px; padding-top: 0; }
+  .timeline-block + .timeline-block::before { margin-bottom: 4px; }
+  .timeline-block .entry {
+    margin-top: 0; padding: 2px 6px 3px 0; margin-left: 0;
+    border-radius: 2px; background: #eef3f8;
+  }
+  .timeline-block > ul { margin-bottom: 1px; }
+  .sec:not(.sec-projects) > ul > li + li { margin-top: 1px; }
+  .sec-projects .timeline-block + .timeline-block { margin-top: 5px; }
+  ul.sub > li { padding-left: 1.05em; }
+  ul.sub > li::before { left: .12em; }
+  li.row { column-gap: 8px; }
+  .desc { margin-top: 0; }
+  .timeline-block .entry + ul > li + li, ul.sub > li { break-before: avoid; }
+}
+a { color: inherit; text-decoration: none; white-space: nowrap; }
+strong { font-weight: 700; }
+em { font-style: normal; }
+.todo { color: var(--faint); font-weight: 400; }
+
+header.basic {
+  display: flex; align-items: center; gap: 22px;
+  padding: 2px 0 6px 2px; border-bottom: 1.5px solid var(--accent);
+}
+.who { flex: 1 1 auto; min-width: 0; }
+.who h1 { font-size: 22pt; letter-spacing: 6px; line-height: 1.25; }
+.intent { margin-top: 6px; color: var(--ink); font-weight: 700; }
+.nowrap { white-space: nowrap; }
+.kv { flex: 0 0 auto; border-left: 1px solid var(--rail); padding-left: 20px; }
+.kv p { line-height: 1.45; }
+.kv .k { display: inline-block; width: 4em; text-align-last: justify; color: var(--muted); }
+.kv .colon { color: var(--muted); }
+.kv .v { font-family: var(--num); white-space: nowrap; }
+.photo {
+  flex: none; width: 23mm; height: 30mm; object-fit: cover; object-position: center 35%;
+  border-radius: 4px;
+}
+
+h2 {
+  font-size: 11pt; font-weight: 700; letter-spacing: 2px;
+  color: #fff; background: var(--accent);
+  padding: 3px 10px; margin: 7px 0 4px; break-after: avoid;
+}
+
+h2.page-projects { break-before: page; page-break-before: always; }
+@media print {
+  h2.page-projects { margin-top: 0; }
+}
+
+ul { padding-left: 1.15em; }
+li { break-inside: avoid; }
+.rows > ul, .timeline > ul, .timeline-block > ul, .flat > ul { list-style: none; padding-left: 0; }
+.rows li:not(.row) { position: relative; padding-left: 1.25em; }
+ul.sub { list-style: none; padding-left: 0; }
+ul.sub > li { position: relative; padding-left: 1.15em; }
+.rows li:not(.row)::before, ul.sub > li::before {
+  content: ""; position: absolute; left: .35em; top: calc(.62em - 2.5px);
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+}
+ul.sub > li::before { left: .2em; }
+li.row {
+  display: grid;
+  grid-template-columns: var(--lbl, 4.6em) minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: baseline;
+}
+.rows { --lbl: 6.6em; }
+.lbl { font-weight: 700; white-space: nowrap; }
+.rows-date .lbl { font-family: var(--num); font-weight: 600; }
+li.row > ul { grid-column: 2 / -1; padding-top: 0; margin-top: 0; }
+li.row > ul.sub { padding-left: 0; }
+.val { min-width: 0; }
+.val:empty { display: none; }
+.val:empty + ul { padding-top: 0; }
+
+.flat ul { padding-left: 0; }
+li.edu { display: flex; flex-wrap: wrap; align-items: baseline; }
+li.edu > span { white-space: nowrap; }
+/* 全角右括号自带半字宽右侧空白，会让分隔线两侧间距不等 */
+li.edu .paren-end { margin-right: -.5em; }
+li.edu > span + span::before {
+  content: ""; display: inline-block; width: 1px; height: .85em;
+  margin: 0 .75em; vertical-align: -.08em; background: var(--faint);
+}
+li.edu .school { font-weight: 700; }
+li.edu .num { font-family: var(--num); }
+
+.timeline {
+  --tl-pad: 16px;
+  --tl-dot: 8px;
+  margin-left: 4px;
+  padding-left: var(--tl-pad);
+  border-left: 1.5px solid var(--rail);
+}
+.timeline ul { padding-left: 0; }
+/* 块间横线不盖住左侧竖线 */
+.timeline-block + .timeline-block {
+  margin-top: 8px; padding-top: 0; border-top: none;
+}
+.timeline-block + .timeline-block::before {
+  content: ""; display: block;
+  margin-left: 5px; padding-top: 6px;
+  border-top: 1px solid var(--mist);
+}
+.sec-projects .timeline-block + .timeline-block { margin-top: 6px; }
+.sec-projects .timeline-block + .timeline-block::before { padding-top: 5px; }
+.timeline-block > ul { margin-bottom: 2px; }
+.timeline-block .entry {
+  position: relative; display: flex; align-items: baseline; gap: 10px;
+  margin-top: 0; padding: 3px 8px 4px 0; margin-left: 0;
+  border-radius: 3px; background: #eef3f8; break-after: avoid;
+}
+.timeline-block .entry .title { color: var(--ink); }
+.timeline-block:first-child .entry { margin-top: 0; }
+.timeline-block .entry::before {
+  content: ""; position: absolute;
+  top: calc(.5em + 1px);
+  left: calc(-1 * var(--tl-pad) - 0.75px - var(--tl-dot) / 2);
+  width: var(--tl-dot); height: var(--tl-dot);
+  border-radius: 50%; background: #fff; border: 1.5px solid var(--accent);
+  box-sizing: border-box;
+}
+.timeline-block:first-child .entry::before { background: var(--accent); border-color: var(--accent); }
+.entry {
+  position: relative; display: flex; align-items: baseline; gap: 12px;
+  margin-top: 4px; break-after: avoid;
+}
+.entry .title { flex: 1; font-weight: 700; }
+.entry .role { font-weight: 400; color: var(--muted); }
+.entry .role::before { content: "·"; margin: 0 8px; color: var(--faint); }
+.entry .date {
+  flex: none; white-space: nowrap;
+  font-family: var(--num); color: var(--strong);
+}
+.desc { color: var(--muted); break-after: avoid; }
+</style>
+</head>
+<body>
+<header class="basic"><div class="who"><h1>张恒</h1><p class="intent">求职意向：嵌入式开发工程师、C/C++ 高级软件工程师</p></div><div class="kv"><p><span class="k">工作年限</span><span class="colon">：</span><span class="v">16 年</span></p><p><span class="k">出生日期</span><span class="colon">：</span><span class="v">1987.12.14</span></p><p><span class="k">期望城市</span><span class="colon">：</span><span class="v">青岛</span></p><p><span class="k">电话</span><span class="colon">：</span><span class="v">151-9248-5800</span></p><p><span class="k">邮箱</span><span class="colon">：</span><span class="v">354379271@qq.com</span></p></div><img class="photo" src="avatar.jpg" alt="照片"></header>
+<h2>教育背景</h2>
+<section class="sec flat">
+<ul>
+<li class="edu"><span class="school">大连理工大学</span><span>软件工程（嵌入式方向<span class="paren-end">）</span></span><span>本科</span><span class="num">2006.09 – 2010.06</span><span>英语六级（557<span class="paren-end">）</span></span>
+</li></ul>
+</section>
+<h2>个人优势</h2>
+<section class="sec rows rows-meta">
+<ul>
+<li>16 年 C/C++ 软件研发经验，其中 5 年 ARM/VxWorks/FreeRTOS 嵌入式开发，11 年 Linux 服务器网络通信开发
+</li>
+<li>熟悉 UART、I2C、SPI、USB、TCP/IP 等通信协议，负责 AirPrint 与 IPP over USB 开发并通过苹果官方认证
+</li>
+<li>熟悉 Linux 与多线程编程，了解 FreeRTOS，具备复杂系统设计、高并发与性能优化经验
+</li>
+<li>丰富的现网问题分析经验，能从应用层深入 Linux 内核网络栈与网卡驱动层定位复杂故障
+</li>
+<li>良好的跨团队协作能力，多次牵头新功能开发与技术攻关，英语可作为工作语言
+</li>
+<li>持续关注新技术，具备大模型推理与 AI 智能体应用的开发实践
+</li></ul>
+</section>
+<h2>专业技能</h2>
+<section class="sec rows rows-skill">
+<ul>
+<li class="row"><span class="lbl">编程语言</span><span class="val">熟悉 C/C++（工作主用 C++11，个人项目使用 C++20）；熟练使用 Python、Shell；了解 Go</span>
+</li>
+<li class="row"><span class="lbl">嵌入式</span><span class="val">5 年 ARM/VxWorks/FreeRTOS 实时系统开发，掌握多任务调度与同步，能用 WindView 定位多任务性能瓶颈；熟悉 UART、I2C、SPI、TCP/IP 及 USB 2.0 设备端（打印机类、描述符、批量端点）与 IPP over USB 实现；了解 ARM Cortex-M 平台</span>
+</li>
+<li class="row"><span class="lbl">网络协议</span><span class="val">深入理解 TCP/IP 与 SCTP 的重传与拥塞控制机制；依据 RFC 在嵌入式侧实现过 HTTP、UPnP、SNMP；熟悉 IPP、Bonjour、Diameter 与 3GPP 核心网规范</span>
+</li>
+<li class="row"><span class="lbl">系统编程</span><span class="val">擅长 Linux 多线程、非阻塞 I/O 与高并发网络编程，了解内核网络栈与网卡多队列；熟练使用 perf、Valgrind、Wireshark 等工具调优排障</span>
+</li>
+<li class="row"><span class="lbl">云原生</span><span class="val">掌握 Docker、Kubernetes、OpenShift、Helm，具备 C++ 服务容器化迁移与业务不中断升级经验</span>
+</li>
+<li class="row"><span class="lbl">AI 应用</span><span class="val">开发过 ReAct agent；用 C++ 从零实现 Transformer 推理（SIMD、KV Cache）</span>
+</li></ul>
+</section>
+<h2>工作经历</h2>
+<section class="sec timeline rows rows-date">
+<div class="timeline-block">
+<div class="entry"><span class="title">诺基亚通信投资（中国）有限公司青岛分公司<span class="role">高级软件工程师</span></span><span class="date">2015.06 – 至今</span></div>
+<ul>
+<li class="row"><span class="lbl">模块负责</span><span class="val">4G/5G 网络通信、数据库缓存（in-memory cache）、通用应用中间件（middleware）3 个核心模块负责人，主导设计、评审与质量把关</span>
+</li>
+<li class="row"><span class="lbl">团队带领</span><span class="val">多次牵头新功能开发，带领 5～6 人小组从设计到交付；负责新员工培训与内部技术分享</span>
+</li>
+<li class="row"><span class="lbl">云原生改造</span><span class="val">主导核心网用户数据库 C++ 服务向 Docker/Kubernetes 的容器化迁移开发，参与全产品 rolling update 方案设计（2020 – 至今）</span>
+</li>
+<li class="row"><span class="lbl">现网支持</span><span class="val">为北美、欧洲运营商定位现网故障与性能瓶颈，主导 T-Mobile 重大故障根因定位，深入 Linux 内核网络栈与虚拟网卡多队列定位 SCTP 传输问题（2017 – 2020）</span>
+</li>
+<li class="row"><span class="lbl">核心网开发</span><span class="val">用 C/C++ 按 3GPP 规范开发 4G 用户数据库与 IMS 功能并交付（2015 – 2017）</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">日冲信息（大连）有限公司<span class="role">嵌入式软件工程师</span></span><span class="date">2009.09 – 2015.05</span></div>
+<ul>
+<li class="row"><span class="lbl">协议栈开发</span><span class="val">依据 RFC 在 ARM/VxWorks/FreeRTOS 上用 C/C++ 实现 HTTP、UPnP、SNMP 及 CIFS 文件共享等网络协议</span>
+</li>
+<li class="row"><span class="lbl">打印协议</span><span class="val">负责 AirPrint 与 IPP over USB 协议，连续通过 AirPrint 1.1～1.5 认证；参与谷歌云打印与网络扫描协议</span>
+</li>
+<li class="row"><span class="lbl">性能优化</span><span class="val">在 ARM/VxWorks/FreeRTOS 多任务环境下用 WindView 分析任务调度与同步瓶颈，结合 Wireshark 调优 TCP 窗口与重传，提升网络扫描与传输速率</span>
+</li>
+<li class="row"><span class="lbl">IPv6 认证</span><span class="val">主持搭建 IPv6 Ready Logo 测试环境，协议栈通过一、二阶段认证</span>
+</li>
+<li class="row"><span class="lbl">实习</span><span class="val">开发打印机内嵌管理网页，并编写网页自动化测试（2009 – 2010）</span>
+</li></ul>
+</div>
+</section>
+<h2 class="page-projects">项目经历</h2>
+<section class="sec timeline rows rows-meta sec-projects">
+<div class="timeline-block">
+<div class="entry"><span class="title">苹果 AirPrint 打印协议开发与认证（ARM/VxWorks/FreeRTOS）<span class="role">协议开发与测试</span></span><span class="date">2013.11 – 2015.05</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">产品线需支持苹果手机、平板与电脑免驱动无线打印并通过官方认证，设备运行在内存与 CPU 受限的 ARM/VxWorks/FreeRTOS 平台上</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
+<ul class="sub">
+<li>服务发现：基于 Bonjour（mDNS/DNS-SD）实现打印服务在局域网内的发现与通告
+</li>
+<li>作业处理：基于 IPP 实现作业提交、状态查询与错误处理，支持多种文档与图片格式的打印流水线
+</li>
+<li>嵌入式联调：在 VxWorks/FreeRTOS 多任务环境下用 C/C++ 开发，与网络协议栈、驱动等并发任务协同联调
+</li>
+<li>认证测试：搭建认证环境，执行功能、互操作与回归测试，跟进 1.1～1.5 规范差异并修复兼容问题
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">多款打印机连续通过 AirPrint 1.1～1.5 认证，无线打印能力随产品迭代上市商用</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">打印机 IPP over USB 开发（ARM/VxWorks/FreeRTOS）<span class="role">主导开发与测试</span></span><span class="date">2013.11 – 2015.05</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">USB 直连打印依赖主机驱动；IPP over USB 在 USB 打印机类接口上承载网络打印协议，实现免驱动打印</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
+<ul class="sub">
+<li>USB 设备端：按规范配置打印机类接口与批量端点，实现批量传输上 HTTP 报文的收发与边界解析
+</li>
+<li>协议对接：将 USB 通道接入已有的嵌入式 HTTP 服务器与 IPP 模块，与网络通路共用同一套协议处理
+</li>
+<li>实时系统：在 VxWorks/FreeRTOS 多任务环境下用 C 开发，处理 USB 收发与协议处理任务之间的并发与同步
+</li>
+<li>联调测试：与主机端联调，完成功能与兼容性测试，定位并修复互通问题
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">打印机在 USB 连接下即可实现免驱动 IPP 打印与作业状态查询，功能与网络打印保持一致</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">美国 T-Mobile 核心网信令时延故障（Linux 内核网络栈）<span class="role">主导根因定位</span></span><span class="date">2019.06 – 2019.09</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">光纤中断后流量绕路，信令链路时延超 140 ms，约 229 万 4G 用户受影响，语音呼叫量下降 25%</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
+<ul class="sub">
+<li>应用层定位：抓包对比正常与异常 SCTP 连接，发现发送缓冲区堆积，读代码确认单线程阻塞发送使一条慢连接拖垮同线程其他连接
+</li>
+<li>内核层根因：实验室注入同等时延复现，控制变量测试网卡队列数、发送缓冲区、物理机与虚拟机，锁定虚拟网卡多队列未真正按流分发，导致 SCTP 乱序与快速重传，高时延下拥塞窗口难以恢复
+</li>
+<li>修复：C++ 实现连接级自动隔离，调优缓冲区与超时；中长期推动单队列、操作系统升级与增连分流
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">12 小时内恢复业务，72 小时内补丁被现网采纳；单队列方案下单连接吞吐提升约 10 倍</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">核心网用户数据库 C++ 服务容器化迁移（Kubernetes）<span class="role">主导开发</span></span><span class="date">2020.06 – 至今</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">用户数据库 C++ 服务原以虚拟机交付，需迁移至 Kubernetes 容器平台，且升级过程业务不中断</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
+<ul class="sub">
+<li>服务改造：主导 3 个 C++ 核心服务云原生改造：单容器多进程、ConfigMap 注入与 hot reload
+</li>
+<li>graceful shutdown：C++ 实现退出信号处理、connection draining / traffic drain 与 liveness/readiness probe，支持新旧版本混跑升级
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">升级期间请求成功率 99.9%，单实例 2500 QPS；已在 T-Mobile、Verizon、Vodafone 等运营商商用</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">AI 智能运维终端<span class="role">独立开发</span></span><span class="date">2026.06 – 2026.09</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">运维排障需在多台主机间反复敲命令、看输出，通用 AI 看不到终端上下文</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
+<ul class="sub">
+<li>终端开发：基于 Electron 开发多标签 SSH 终端，内置感知终端上下文的 AI 侧边栏
+</li>
+<li>智能体引擎：实现基于函数调用的 ReAct 智能体，提供 30 余个工具，三级审批防止误操作
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">获诺基亚内部 AI 创新大赛二等奖并在公司内部推广</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">GPT-2 大模型 CPU 推理引擎（C++）<span class="role">个人项目</span></span><span class="date">2026.04 – 至今</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">为理解大模型推理的底层原理，在笔记本 CPU 上用 C++ 从零实现 Transformer 推理全链路</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
+<ul class="sub">
+<li>算子库：张量与矩阵/向量算子，AVX2 SIMD 内核（注意力、GELU、LayerNorm、RMSNorm）
+</li>
+<li>计算图：实现拓扑执行、形状推断、中间缓冲复用与节点计时
+</li>
+<li>模型推理：GPT-2 模型加载、按注意力头存放的 KV Cache、预填充与逐词解码
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">在 14 线程笔记本 CPU 上解码速度约 111 token/s</span>
+</li></ul>
+</div>
+</section>
+<h2>专利、荣誉与证书</h2>
+<section class="sec rows rows-meta">
+<ul>
+<li class="row"><span class="lbl">专利</span><span class="val">第一发明人，PCT 国际专利 <a href="https://patents.google.com/patent/WO2025175539A1">WO2025175539A1</a>（《基于设备信息的 AKMA 认证》）</span>
+</li>
+<li class="row"><span class="lbl">荣誉</span><span class="val">2021.10 因绩效突出获授诺基亚 1000 股股权激励</span>
+</li>
+<li class="row"><span class="lbl">软考</span><span class="val">软件设计师（中级）</span>
+</li>
+<li class="row"><span class="lbl">红帽认证</span><span class="val">OpenShift 应用开发者（证书编号 <a href="https://rhtapps.redhat.com/verify?certId=240-240-408">240-240-408</a>）</span>
+</li></ul>
+</section>
+</body>
+</html>

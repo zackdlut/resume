@@ -3,7 +3,7 @@
   张恒 · 社招简历（16 年 · 嵌入式开发方向）
 ================================================================
   用法
-    - 嵌入式岗位投递版，突出 ARM/VxWorks 实时操作系统与 IPP over USB 经验；通用版见 resume.md
+    - 嵌入式岗位投递版，突出 ARM/VxWorks/FreeRTOS 实时操作系统与 IPP over USB 经验；通用版见 resume.md
     - node build.js resume.embedding.md --pdf
                              导出 resume.embedding.pdf
     - node build.js resume.embedding.md --pdf --docx
@@ -38,7 +38,7 @@
 
 ## 个人优势
 
-- 16 年 C/C++ 软件研发经验，其中 5 年 ARM/VxWorks 实时操作系统嵌入式开发，11 年 Linux 服务器网络通信开发
+- 16 年 C/C++ 软件研发经验，其中 5 年 ARM/VxWorks/FreeRTOS 实时操作系统嵌入式开发，11 年 Linux 服务器网络通信开发
 - 熟悉 UART、I2C、SPI、USB、TCP/IP 等通信协议，负责 AirPrint 与 IPP over USB 开发并通过苹果官方认证
 - 熟悉 Linux 与多线程编程，了解 FreeRTOS，具备复杂系统设计、高并发与性能优化经验
 - 丰富的现网问题分析经验，能从应用层深入 Linux 内核网络栈与网卡驱动层定位复杂故障
@@ -48,7 +48,7 @@
 ## 专业技能
 
 - **编程语言**：熟悉 C/C++（工作主用 C++11，个人项目使用 C++20）；熟练使用 Python、Shell；了解 Go
-- **嵌入式**：5 年 ARM/VxWorks 实时系统开发，掌握多任务调度与同步，能用 WindView 定位多任务性能瓶颈；熟悉 UART、I2C、SPI、TCP/IP 及 USB 2.0 设备端（打印机类、描述符、批量端点）与 IPP over USB 实现；了解 ARM Cortex-M 平台，VxWorks/FreeRTOS 实时操作系统
+- **嵌入式**：5 年 ARM/VxWorks/FreeRTOS 实时系统开发，掌握多任务调度与同步，能用 WindView 定位多任务性能瓶颈；熟悉 UART、I2C、SPI、TCP/IP 及 USB 2.0 设备端（打印机类、描述符、批量端点）与 IPP over USB 实现；了解 ARM Cortex-M 平台
 - **网络协议**：深入理解 TCP/IP 与 SCTP 的重传与拥塞控制机制；依据 RFC 在嵌入式侧实现过 HTTP、UPnP、SNMP；熟悉 IPP、Bonjour、Diameter 与 3GPP 核心网规范
 - **系统编程**：擅长 Linux 多线程、非阻塞 I/O 与高并发网络编程，了解内核网络栈与网卡多队列；熟练使用 perf、Valgrind、Wireshark 等工具调优排障
 - **云原生**：掌握 Docker、Kubernetes、OpenShift、Helm，具备 C++ 服务容器化迁移与业务不中断升级经验
@@ -60,49 +60,37 @@
 
 - **模块负责**：4G/5G 网络通信、数据库缓存、通用应用中间件 3 个核心模块负责人，主导设计、评审与质量把关
 - **团队带领**：多次牵头新功能开发，带领 5～6 人小组从设计到交付；负责新员工培训与内部技术分享
-- **云原生改造**：
-- 
-
-
-
-
-
-
-
-
-
-
-
+- **云原生改造**：主导核心网用户数据库 C++ 服务向 Docker/Kubernetes 的容器化迁移开发，参与全产品不中断升级方案设计（2020 – 至今）
 - **现网支持**：为北美、欧洲运营商定位现网故障与性能瓶颈，主导 T-Mobile 重大故障根因定位，深入 Linux 内核网络栈与虚拟网卡多队列定位 SCTP 传输问题（2017 – 2020）
 - **核心网开发**：用 C/C++ 按 3GPP 规范开发 4G 用户数据库与 IMS 功能并交付（2015 – 2017）
 
 ### 日冲信息（大连）有限公司 ｜ 嵌入式软件工程师 ｜ 2009.09 – 2015.05
 
-- **协议栈开发**：依据 RFC 在 ARM/VxWorks 上用 C/C++ 实现 HTTP、UPnP、SNMP 及 CIFS 文件共享等网络协议
+- **协议栈开发**：依据 RFC 在 ARM/VxWorks/FreeRTOS 上用 C/C++ 实现 HTTP、UPnP、SNMP 及 CIFS 文件共享等网络协议
 - **打印协议**：负责 AirPrint 与 IPP over USB 协议，连续通过 AirPrint 1.1～1.5 认证；参与谷歌云打印与网络扫描协议
-- **性能优化**：在 ARM/VxWorks 多任务环境下用 WindView 分析任务调度与同步瓶颈，结合 Wireshark 调优 TCP 窗口与重传，提升网络扫描与传输速率
+- **性能优化**：在 ARM/VxWorks/FreeRTOS 多任务环境下用 WindView 分析任务调度与同步瓶颈，结合 Wireshark 调优 TCP 窗口与重传，提升网络扫描与传输速率
 - **IPv6 认证**：主持搭建 IPv6 Ready Logo 测试环境，协议栈通过一、二阶段认证
 - **实习**：开发打印机内嵌管理网页，并编写网页自动化测试（2009 – 2010）
 
 ## 项目经历
 
-### 苹果 AirPrint 打印协议开发与认证（ARM/VxWorks） ｜ 协议开发与测试 ｜ 2013.11 – 2015.05
+### 苹果 AirPrint 打印协议开发与认证（ARM/VxWorks/FreeRTOS） ｜ 协议开发与测试 ｜ 2013.11 – 2015.05
 
-- **背景**：产品线需支持苹果手机、平板与电脑免驱动无线打印并通过官方认证，设备运行在内存与 CPU 受限的 ARM/VxWorks 平台上
+- **背景**：产品线需支持苹果手机、平板与电脑免驱动无线打印并通过官方认证，设备运行在内存与 CPU 受限的 ARM/VxWorks/FreeRTOS 平台上
 - **我的工作**：
   - 服务发现：基于 Bonjour（mDNS/DNS-SD）实现打印服务在局域网内的发现与通告
   - 作业处理：基于 IPP 实现作业提交、状态查询与错误处理，支持多种文档与图片格式的打印流水线
-  - 嵌入式联调：在 VxWorks 多任务环境下用 C/C++ 开发，与网络协议栈、驱动等并发任务协同联调
+  - 嵌入式联调：在 VxWorks/FreeRTOS 多任务环境下用 C/C++ 开发，与网络协议栈、驱动等并发任务协同联调
   - 认证测试：搭建认证环境，执行功能、互操作与回归测试，跟进 1.1～1.5 规范差异并修复兼容问题
 - **成果**：多款打印机连续通过 AirPrint 1.1～1.5 认证，无线打印能力随产品迭代上市商用
 
-### 打印机 IPP over USB 开发（ARM/VxWorks） ｜ 主导开发与测试 ｜ 2013.11 – 2015.05
+### 打印机 IPP over USB 开发（ARM/VxWorks/FreeRTOS） ｜ 主导开发与测试 ｜ 2013.11 – 2015.05
 
 - **背景**：USB 直连打印依赖主机驱动；IPP over USB 在 USB 打印机类接口上承载网络打印协议，实现免驱动打印
 - **我的工作**：
   - USB 设备端：按规范配置打印机类接口与批量端点，实现批量传输上 HTTP 报文的收发与边界解析
   - 协议对接：将 USB 通道接入已有的嵌入式 HTTP 服务器与 IPP 模块，与网络通路共用同一套协议处理
-  - 实时系统：在 VxWorks 多任务环境下用 C 开发，处理 USB 收发与协议处理任务之间的并发与同步
+  - 实时系统：在 VxWorks/FreeRTOS 多任务环境下用 C 开发，处理 USB 收发与协议处理任务之间的并发与同步
   - 联调测试：与主机端联调，完成功能与兼容性测试，定位并修复互通问题
 - **成果**：打印机在 USB 连接下即可实现免驱动 IPP 打印与作业状态查询，功能与网络打印保持一致
 

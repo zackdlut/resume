@@ -32,15 +32,17 @@ const SEP = /\s*｜\s*/;
 
 const sectionKind = (title) => {
   if (/工作/.test(title)) return 'timeline rows rows-date';
-  if (/项目/.test(title)) return 'timeline rows rows-meta';
+  if (/项目/.test(title)) return 'timeline rows rows-meta sec-projects';
   if (/技能/.test(title)) return 'rows rows-skill';
   if (/优势|专利|证书/.test(title)) return 'rows rows-meta';
   if (/教育/.test(title)) return 'flat';
   return '';
 };
 
-const sectionTitle = (title) =>
-  `<h2>${inline(title)}</h2>`;
+const sectionTitle = (title) => {
+  const cls = /项目/.test(title) ? ' class="page-projects"' : '';
+  return `<h2${cls}>${inline(title)}</h2>`;
+};
 
 function renderHeader(name, lines, mdDir) {
   const kv = [];
@@ -115,12 +117,25 @@ function render(md, mdDir, classic = false) {
   let header = null;
   let section = '';
   let inSection = false;
+  let timelineBlock = false;
 
   const closeLists = (to = 0) => {
     while (listDepth > to) {
       out.push('</li></ul>');
       listDepth--;
     }
+  };
+  const closeTimelineBlock = () => {
+    if (timelineBlock) {
+      out.push('</div>');
+      timelineBlock = false;
+    }
+  };
+  const openTimelineBlock = () => {
+    if (!/工作|项目/.test(section)) return;
+    closeTimelineBlock();
+    out.push('<div class="timeline-block">');
+    timelineBlock = true;
   };
   const flushHeader = () => {
     if (header) out.push((classic ? renderClassicHeader : renderHeader)(header.name, header.lines, mdDir));
@@ -191,7 +206,10 @@ function render(md, mdDir, classic = false) {
 
     if ((m = line.match(/^## (.*)$/))) {
       flushHeader();
-      if (inSection) out.push('</section>');
+      if (inSection) {
+        closeTimelineBlock();
+        out.push('</section>');
+      }
       section = m[1];
       out.push(sectionTitle(section));
       out.push(`<section class="sec ${sectionKind(section)}">`);
@@ -200,6 +218,7 @@ function render(md, mdDir, classic = false) {
       const parts = m[1].split(SEP);
       const date = parts.length > 1 ? parts.pop() : '';
       const [title, ...rest] = parts;
+      openTimelineBlock();
       if (classic) {
         out.push(
           '<div class="entry">' +
@@ -225,6 +244,7 @@ function render(md, mdDir, classic = false) {
     }
   }
   closeLists();
+  closeTimelineBlock();
   flushHeader();
   if (inSection) out.push('</section>');
   return out.join('\n');
@@ -258,7 +278,7 @@ body {
   html { background: none; }
   body {
     width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none;
-    font-size: 9.75pt; line-height: 1.45;
+    font-size: 9.65pt; line-height: 1.42;
   }
   header.basic { gap: 14px; padding-bottom: 6px; }
   .who h1 { font-size: 20pt; letter-spacing: 4px; }
@@ -266,15 +286,26 @@ body {
   .kv { padding-left: 14px; }
   .kv p { line-height: 1.4; }
   .photo { width: 21mm; height: 27mm; }
-  h2 { font-size: 10pt; padding: 2px 8px; margin: 9px 0 4px; letter-spacing: 1px; }
+  h2 { font-size: 10pt; padding: 2px 8px; margin: 7px 0 3px; letter-spacing: 1px; }
+  h2.page-projects {
+    break-before: page; page-break-before: always;
+    margin-top: 0; padding-top: 2px;
+  }
   li { break-inside: auto; }
-  .entry { margin-top: 7px; margin-bottom: 1px; }
-  .sec > ul > li + li { margin-top: 1px; }
+  .timeline-block + .timeline-block { margin-top: 6px; padding-top: 0; }
+  .timeline-block + .timeline-block::before { margin-bottom: 4px; }
+  .timeline-block .entry {
+    margin-top: 0; padding: 2px 6px 3px 0; margin-left: 0;
+    border-radius: 2px; background: #eef3f8;
+  }
+  .timeline-block > ul { margin-bottom: 1px; }
+  .sec:not(.sec-projects) > ul > li + li { margin-top: 1px; }
+  .sec-projects .timeline-block + .timeline-block { margin-top: 5px; }
+  ul.sub > li { padding-left: 1.05em; }
+  ul.sub > li::before { left: .12em; }
   li.row { column-gap: 8px; }
-  .timeline { margin-left: 2px; padding-left: 12px; }
-  .timeline .entry::before { width: 7px; height: 7px; left: -17px; }
   .desc { margin-top: 0; }
-  .entry + ul > li + li, ul.sub > li { break-before: avoid; }
+  .timeline-block .entry + ul > li + li, ul.sub > li { break-before: avoid; }
 }
 a { color: inherit; text-decoration: none; white-space: nowrap; }
 strong { font-weight: 700; }
@@ -302,20 +333,25 @@ header.basic {
 h2 {
   font-size: 11pt; font-weight: 700; letter-spacing: 2px;
   color: #fff; background: var(--accent);
-  padding: 3px 10px; margin: 8px 0 4px; break-after: avoid;
+  padding: 3px 10px; margin: 7px 0 4px; break-after: avoid;
+}
+
+h2.page-projects { break-before: page; page-break-before: always; }
+@media print {
+  h2.page-projects { margin-top: 0; }
 }
 
 ul { padding-left: 1.15em; }
 li { break-inside: avoid; }
-.rows > ul, .timeline > ul, .flat > ul { list-style: none; padding-left: 0; }
+.rows > ul, .timeline > ul, .timeline-block > ul, .flat > ul { list-style: none; padding-left: 0; }
 .rows li:not(.row) { position: relative; padding-left: 1.25em; }
-ul.sub { list-style: none; }
-ul.sub > li { position: relative; }
+ul.sub { list-style: none; padding-left: 0; }
+ul.sub > li { position: relative; padding-left: 1.15em; }
 .rows li:not(.row)::before, ul.sub > li::before {
-  content: ""; position: absolute; left: .3em; top: calc(.64em - 2.5px);
+  content: ""; position: absolute; left: .35em; top: calc(.62em - 2.5px);
   width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
 }
-ul.sub > li::before { left: -1em; }
+ul.sub > li::before { left: .2em; }
 li.row {
   display: grid;
   grid-template-columns: var(--lbl, 4.6em) minmax(0, 1fr);
@@ -325,7 +361,8 @@ li.row {
 .rows { --lbl: 6.6em; }
 .lbl { font-weight: 700; white-space: nowrap; }
 .rows-date .lbl { font-family: var(--num); font-weight: 600; }
-li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
+li.row > ul { grid-column: 2 / -1; padding-top: 0; margin-top: 0; }
+li.row > ul.sub { padding-left: 0; }
 .val { min-width: 0; }
 .val:empty { display: none; }
 .val:empty + ul { padding-top: 0; }
@@ -342,18 +379,46 @@ li.edu > span + span::before {
 li.edu .school { font-weight: 700; }
 li.edu .num { font-family: var(--num); }
 
-.timeline { margin-left: 4px; padding-left: 14px; border-left: 1px solid var(--rail); }
+.timeline {
+  --tl-pad: 16px;
+  --tl-dot: 8px;
+  margin-left: 4px;
+  padding-left: var(--tl-pad);
+  border-left: 1.5px solid var(--rail);
+}
 .timeline ul { padding-left: 0; }
+/* 块间横线不盖住左侧竖线 */
+.timeline-block + .timeline-block {
+  margin-top: 8px; padding-top: 0; border-top: none;
+}
+.timeline-block + .timeline-block::before {
+  content: ""; display: block;
+  margin-left: 5px; padding-top: 6px;
+  border-top: 1px solid var(--mist);
+}
+.sec-projects .timeline-block + .timeline-block { margin-top: 6px; }
+.sec-projects .timeline-block + .timeline-block::before { padding-top: 5px; }
+.timeline-block > ul { margin-bottom: 2px; }
+.timeline-block .entry {
+  position: relative; display: flex; align-items: baseline; gap: 10px;
+  margin-top: 0; padding: 3px 8px 4px 0; margin-left: 0;
+  border-radius: 3px; background: #eef3f8; break-after: avoid;
+}
+.timeline-block .entry .title { color: var(--ink); }
+.timeline-block:first-child .entry { margin-top: 0; }
+.timeline-block .entry::before {
+  content: ""; position: absolute;
+  top: calc(.5em + 1px);
+  left: calc(-1 * var(--tl-pad) - 0.75px - var(--tl-dot) / 2);
+  width: var(--tl-dot); height: var(--tl-dot);
+  border-radius: 50%; background: #fff; border: 1.5px solid var(--accent);
+  box-sizing: border-box;
+}
+.timeline-block:first-child .entry::before { background: var(--accent); border-color: var(--accent); }
 .entry {
   position: relative; display: flex; align-items: baseline; gap: 12px;
   margin-top: 4px; break-after: avoid;
 }
-.timeline > .entry:first-child { margin-top: 1px; }
-.timeline .entry::before {
-  content: ""; position: absolute; left: -18.5px; top: .45em;
-  width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 1.5px solid var(--accent);
-}
-.timeline .entry:first-of-type::before { background: var(--accent); border-color: var(--accent); }
 .entry .title { flex: 1; font-weight: 700; }
 .entry .role { font-weight: 400; color: var(--muted); }
 .entry .role::before { content: "·"; margin: 0 8px; color: var(--faint); }
@@ -422,6 +487,15 @@ ul.sub { padding-left: .3em; counter-reset: n; }
 ul.sub > li { position: relative; padding-left: 1.5em; }
 ul.sub > li::before { counter-increment: n; content: counter(n) "."; position: absolute; left: 0; }
 
+.timeline-block + .timeline-block {
+  margin-top: 7px; padding-top: 6px; border-top: 1px solid var(--line);
+}
+.timeline-block > ul { margin-bottom: 2px; }
+.timeline-block .entry {
+  display: flex; align-items: baseline; gap: 12px;
+  margin-top: 0; font-weight: 700; break-after: avoid;
+}
+.timeline-block:first-child .entry { margin-top: 1px; }
 .entry {
   display: flex; align-items: baseline; gap: 12px;
   margin-top: 5px; font-weight: 700; break-after: avoid;

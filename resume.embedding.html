@@ -31,7 +31,7 @@ body {
   html { background: none; }
   body {
     width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none;
-    font-size: 9.75pt; line-height: 1.45;
+    font-size: 9.65pt; line-height: 1.42;
   }
   header.basic { gap: 14px; padding-bottom: 6px; }
   .who h1 { font-size: 20pt; letter-spacing: 4px; }
@@ -39,15 +39,26 @@ body {
   .kv { padding-left: 14px; }
   .kv p { line-height: 1.4; }
   .photo { width: 21mm; height: 27mm; }
-  h2 { font-size: 10pt; padding: 2px 8px; margin: 9px 0 4px; letter-spacing: 1px; }
+  h2 { font-size: 10pt; padding: 2px 8px; margin: 7px 0 3px; letter-spacing: 1px; }
+  h2.page-projects {
+    break-before: page; page-break-before: always;
+    margin-top: 0; padding-top: 2px;
+  }
   li { break-inside: auto; }
-  .entry { margin-top: 7px; margin-bottom: 1px; }
-  .sec > ul > li + li { margin-top: 1px; }
+  .timeline-block + .timeline-block { margin-top: 6px; padding-top: 0; }
+  .timeline-block + .timeline-block::before { margin-bottom: 4px; }
+  .timeline-block .entry {
+    margin-top: 0; padding: 2px 6px 3px 0; margin-left: 0;
+    border-radius: 2px; background: #eef3f8;
+  }
+  .timeline-block > ul { margin-bottom: 1px; }
+  .sec:not(.sec-projects) > ul > li + li { margin-top: 1px; }
+  .sec-projects .timeline-block + .timeline-block { margin-top: 5px; }
+  ul.sub > li { padding-left: 1.05em; }
+  ul.sub > li::before { left: .12em; }
   li.row { column-gap: 8px; }
-  .timeline { margin-left: 2px; padding-left: 12px; }
-  .timeline .entry::before { width: 7px; height: 7px; left: -17px; }
   .desc { margin-top: 0; }
-  .entry + ul > li + li, ul.sub > li { break-before: avoid; }
+  .timeline-block .entry + ul > li + li, ul.sub > li { break-before: avoid; }
 }
 a { color: inherit; text-decoration: none; white-space: nowrap; }
 strong { font-weight: 700; }
@@ -75,20 +86,25 @@ header.basic {
 h2 {
   font-size: 11pt; font-weight: 700; letter-spacing: 2px;
   color: #fff; background: var(--accent);
-  padding: 3px 10px; margin: 8px 0 4px; break-after: avoid;
+  padding: 3px 10px; margin: 7px 0 4px; break-after: avoid;
+}
+
+h2.page-projects { break-before: page; page-break-before: always; }
+@media print {
+  h2.page-projects { margin-top: 0; }
 }
 
 ul { padding-left: 1.15em; }
 li { break-inside: avoid; }
-.rows > ul, .timeline > ul, .flat > ul { list-style: none; padding-left: 0; }
+.rows > ul, .timeline > ul, .timeline-block > ul, .flat > ul { list-style: none; padding-left: 0; }
 .rows li:not(.row) { position: relative; padding-left: 1.25em; }
-ul.sub { list-style: none; }
-ul.sub > li { position: relative; }
+ul.sub { list-style: none; padding-left: 0; }
+ul.sub > li { position: relative; padding-left: 1.15em; }
 .rows li:not(.row)::before, ul.sub > li::before {
-  content: ""; position: absolute; left: .3em; top: calc(.64em - 2.5px);
+  content: ""; position: absolute; left: .35em; top: calc(.62em - 2.5px);
   width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
 }
-ul.sub > li::before { left: -1em; }
+ul.sub > li::before { left: .2em; }
 li.row {
   display: grid;
   grid-template-columns: var(--lbl, 4.6em) minmax(0, 1fr);
@@ -98,7 +114,8 @@ li.row {
 .rows { --lbl: 6.6em; }
 .lbl { font-weight: 700; white-space: nowrap; }
 .rows-date .lbl { font-family: var(--num); font-weight: 600; }
-li.row > ul { grid-column: 2 / -1; padding-top: 1px; }
+li.row > ul { grid-column: 2 / -1; padding-top: 0; margin-top: 0; }
+li.row > ul.sub { padding-left: 0; }
 .val { min-width: 0; }
 .val:empty { display: none; }
 .val:empty + ul { padding-top: 0; }
@@ -115,18 +132,46 @@ li.edu > span + span::before {
 li.edu .school { font-weight: 700; }
 li.edu .num { font-family: var(--num); }
 
-.timeline { margin-left: 4px; padding-left: 14px; border-left: 1px solid var(--rail); }
+.timeline {
+  --tl-pad: 16px;
+  --tl-dot: 8px;
+  margin-left: 4px;
+  padding-left: var(--tl-pad);
+  border-left: 1.5px solid var(--rail);
+}
 .timeline ul { padding-left: 0; }
+/* 块间横线不盖住左侧竖线 */
+.timeline-block + .timeline-block {
+  margin-top: 8px; padding-top: 0; border-top: none;
+}
+.timeline-block + .timeline-block::before {
+  content: ""; display: block;
+  margin-left: 5px; padding-top: 6px;
+  border-top: 1px solid var(--mist);
+}
+.sec-projects .timeline-block + .timeline-block { margin-top: 6px; }
+.sec-projects .timeline-block + .timeline-block::before { padding-top: 5px; }
+.timeline-block > ul { margin-bottom: 2px; }
+.timeline-block .entry {
+  position: relative; display: flex; align-items: baseline; gap: 10px;
+  margin-top: 0; padding: 3px 8px 4px 0; margin-left: 0;
+  border-radius: 3px; background: #eef3f8; break-after: avoid;
+}
+.timeline-block .entry .title { color: var(--ink); }
+.timeline-block:first-child .entry { margin-top: 0; }
+.timeline-block .entry::before {
+  content: ""; position: absolute;
+  top: calc(.5em + 1px);
+  left: calc(-1 * var(--tl-pad) - 0.75px - var(--tl-dot) / 2);
+  width: var(--tl-dot); height: var(--tl-dot);
+  border-radius: 50%; background: #fff; border: 1.5px solid var(--accent);
+  box-sizing: border-box;
+}
+.timeline-block:first-child .entry::before { background: var(--accent); border-color: var(--accent); }
 .entry {
   position: relative; display: flex; align-items: baseline; gap: 12px;
   margin-top: 4px; break-after: avoid;
 }
-.timeline > .entry:first-child { margin-top: 1px; }
-.timeline .entry::before {
-  content: ""; position: absolute; left: -18.5px; top: .45em;
-  width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 1.5px solid var(--accent);
-}
-.timeline .entry:first-of-type::before { background: var(--accent); border-color: var(--accent); }
 .entry .title { flex: 1; font-weight: 700; }
 .entry .role { font-weight: 400; color: var(--muted); }
 .entry .role::before { content: "·"; margin: 0 8px; color: var(--faint); }
@@ -148,7 +193,7 @@ li.edu .num { font-family: var(--num); }
 <h2>个人优势</h2>
 <section class="sec rows rows-meta">
 <ul>
-<li>16 年 C/C++ 软件研发经验，其中 5 年 ARM/VxWorks 实时操作系统嵌入式开发，11 年 Linux 服务器网络通信开发
+<li>16 年 C/C++ 软件研发经验，其中 5 年 ARM/VxWorks/FreeRTOS 实时操作系统嵌入式开发，11 年 Linux 服务器网络通信开发
 </li>
 <li>熟悉 UART、I2C、SPI、USB、TCP/IP 等通信协议，负责 AirPrint 与 IPP over USB 开发并通过苹果官方认证
 </li>
@@ -166,7 +211,7 @@ li.edu .num { font-family: var(--num); }
 <ul>
 <li class="row"><span class="lbl">编程语言</span><span class="val">熟悉 C/C++（工作主用 C++11，个人项目使用 C++20）；熟练使用 Python、Shell；了解 Go</span>
 </li>
-<li class="row"><span class="lbl">嵌入式</span><span class="val">5 年 ARM/VxWorks 实时系统开发，掌握多任务调度与同步，能用 WindView 定位多任务性能瓶颈；熟悉 UART、I2C、SPI、TCP/IP 及 USB 2.0 设备端（打印机类、描述符、批量端点）与 IPP over USB 实现；了解 ARM Cortex-M 平台，VxWorks/FreeRTOS 实时操作系统</span>
+<li class="row"><span class="lbl">嵌入式</span><span class="val">5 年 ARM/VxWorks/FreeRTOS 实时系统开发，掌握多任务调度与同步，能用 WindView 定位多任务性能瓶颈；熟悉 UART、I2C、SPI、TCP/IP 及 USB 2.0 设备端（打印机类、描述符、批量端点）与 IPP over USB 实现；了解 ARM Cortex-M 平台</span>
 </li>
 <li class="row"><span class="lbl">网络协议</span><span class="val">深入理解 TCP/IP 与 SCTP 的重传与拥塞控制机制；依据 RFC 在嵌入式侧实现过 HTTP、UPnP、SNMP；熟悉 IPP、Bonjour、Diameter 与 3GPP 核心网规范</span>
 </li>
@@ -179,36 +224,41 @@ li.edu .num { font-family: var(--num); }
 </section>
 <h2>工作经历</h2>
 <section class="sec timeline rows rows-date">
+<div class="timeline-block">
 <div class="entry"><span class="title">诺基亚通信投资（中国）有限公司青岛分公司<span class="role">高级软件工程师</span></span><span class="date">2015.06 – 至今</span></div>
 <ul>
 <li class="row"><span class="lbl">模块负责</span><span class="val">4G/5G 网络通信、数据库缓存、通用应用中间件 3 个核心模块负责人，主导设计、评审与质量把关</span>
 </li>
 <li class="row"><span class="lbl">团队带领</span><span class="val">多次牵头新功能开发，带领 5～6 人小组从设计到交付；负责新员工培训与内部技术分享</span>
 </li>
-<li class="row"><span class="lbl">云原生改造</span><span class="val">主导核心网用户数据库 C++ 服务容器化迁移开发，参与全产品不中断升级方案设计（2020 – 至今）</span>
+<li class="row"><span class="lbl">云原生改造</span><span class="val">主导核心网用户数据库 C++ 服务向 Docker/Kubernetes 的容器化迁移开发，参与全产品不中断升级方案设计（2020 – 至今）</span>
 </li>
 <li class="row"><span class="lbl">现网支持</span><span class="val">为北美、欧洲运营商定位现网故障与性能瓶颈，主导 T-Mobile 重大故障根因定位，深入 Linux 内核网络栈与虚拟网卡多队列定位 SCTP 传输问题（2017 – 2020）</span>
 </li>
 <li class="row"><span class="lbl">核心网开发</span><span class="val">用 C/C++ 按 3GPP 规范开发 4G 用户数据库与 IMS 功能并交付（2015 – 2017）</span>
 </li></ul>
+</div>
+<div class="timeline-block">
 <div class="entry"><span class="title">日冲信息（大连）有限公司<span class="role">嵌入式软件工程师</span></span><span class="date">2009.09 – 2015.05</span></div>
 <ul>
-<li class="row"><span class="lbl">协议栈开发</span><span class="val">依据 RFC 在 ARM/VxWorks 上用 C/C++ 实现 HTTP、UPnP、SNMP 及 CIFS 文件共享等网络协议</span>
+<li class="row"><span class="lbl">协议栈开发</span><span class="val">依据 RFC 在 ARM/VxWorks/FreeRTOS 上用 C/C++ 实现 HTTP、UPnP、SNMP 及 CIFS 文件共享等网络协议</span>
 </li>
-<li class="row"><span class="lbl">打印协议</span><span class="val">在 ARM/VxWorks 资源受限平台上用 C/C++ 负责 AirPrint 与 IPP over USB 开发与认证测试，多款机型连续通过 AirPrint 1.1～1.5 并商用；参与谷歌云打印与网络扫描协议</span>
+<li class="row"><span class="lbl">打印协议</span><span class="val">负责 AirPrint 与 IPP over USB 协议，连续通过 AirPrint 1.1～1.5 认证；参与谷歌云打印与网络扫描协议</span>
 </li>
-<li class="row"><span class="lbl">性能优化</span><span class="val">用 WindView 分析 VxWorks 多任务瓶颈；基于 Wireshark 抓包调优 TCP 窗口与重传，提升传输速率</span>
+<li class="row"><span class="lbl">性能优化</span><span class="val">在 ARM/VxWorks/FreeRTOS 多任务环境下用 WindView 分析任务调度与同步瓶颈，结合 Wireshark 调优 TCP 窗口与重传，提升网络扫描与传输速率</span>
 </li>
 <li class="row"><span class="lbl">IPv6 认证</span><span class="val">主持搭建 IPv6 Ready Logo 测试环境，协议栈通过一、二阶段认证</span>
 </li>
 <li class="row"><span class="lbl">实习</span><span class="val">开发打印机内嵌管理网页，并编写网页自动化测试（2009 – 2010）</span>
 </li></ul>
+</div>
 </section>
-<h2>项目经历</h2>
-<section class="sec timeline rows rows-meta">
-<div class="entry"><span class="title">苹果 AirPrint 打印协议开发与认证（ARM/VxWorks）<span class="role">协议开发与测试</span></span><span class="date">2013.11 – 2015.05</span></div>
+<h2 class="page-projects">项目经历</h2>
+<section class="sec timeline rows rows-meta sec-projects">
+<div class="timeline-block">
+<div class="entry"><span class="title">苹果 AirPrint 打印协议开发与认证（ARM/VxWorks/FreeRTOS）<span class="role">协议开发与测试</span></span><span class="date">2013.11 – 2015.05</span></div>
 <ul>
-<li class="row"><span class="lbl">背景</span><span class="val">产品线需支持苹果手机、平板与电脑免驱动无线打印并通过官方认证，设备运行在内存与 CPU 受限的 ARM/VxWorks 平台上</span>
+<li class="row"><span class="lbl">背景</span><span class="val">产品线需支持苹果手机、平板与电脑免驱动无线打印并通过官方认证，设备运行在内存与 CPU 受限的 ARM/VxWorks/FreeRTOS 平台上</span>
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
@@ -216,14 +266,16 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li>作业处理：基于 IPP 实现作业提交、状态查询与错误处理，支持多种文档与图片格式的打印流水线
 </li>
-<li>嵌入式联调：在 VxWorks 多任务环境下用 C/C++ 开发，与网络协议栈、驱动等并发任务协同联调
+<li>嵌入式联调：在 VxWorks/FreeRTOS 多任务环境下用 C/C++ 开发，与网络协议栈、驱动等并发任务协同联调
 </li>
 <li>认证测试：搭建认证环境，执行功能、互操作与回归测试，跟进 1.1～1.5 规范差异并修复兼容问题
 </li></ul>
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">多款打印机连续通过 AirPrint 1.1～1.5 认证，无线打印能力随产品迭代上市商用</span>
 </li></ul>
-<div class="entry"><span class="title">打印机 IPP over USB 开发（ARM/VxWorks）<span class="role">主导开发与测试</span></span><span class="date">2013.11 – 2015.05</span></div>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">打印机 IPP over USB 开发（ARM/VxWorks/FreeRTOS）<span class="role">主导开发与测试</span></span><span class="date">2013.11 – 2015.05</span></div>
 <ul>
 <li class="row"><span class="lbl">背景</span><span class="val">USB 直连打印依赖主机驱动；IPP over USB 在 USB 打印机类接口上承载网络打印协议，实现免驱动打印</span>
 </li>
@@ -233,13 +285,15 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li>协议对接：将 USB 通道接入已有的嵌入式 HTTP 服务器与 IPP 模块，与网络通路共用同一套协议处理
 </li>
-<li>实时系统：在 VxWorks 多任务环境下用 C 开发，处理 USB 收发与协议处理任务之间的并发与同步
+<li>实时系统：在 VxWorks/FreeRTOS 多任务环境下用 C 开发，处理 USB 收发与协议处理任务之间的并发与同步
 </li>
 <li>联调测试：与主机端联调，完成功能与兼容性测试，定位并修复互通问题
 </li></ul>
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">打印机在 USB 连接下即可实现免驱动 IPP 打印与作业状态查询，功能与网络打印保持一致</span>
 </li></ul>
+</div>
+<div class="timeline-block">
 <div class="entry"><span class="title">美国 T-Mobile 核心网信令时延故障（Linux 内核网络栈）<span class="role">主导根因定位</span></span><span class="date">2019.06 – 2019.09</span></div>
 <ul>
 <li class="row"><span class="lbl">背景</span><span class="val">光纤中断后流量绕路，信令链路时延超 140 ms，约 229 万 4G 用户受影响，语音呼叫量下降 25%</span>
@@ -255,6 +309,8 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">12 小时内恢复业务，72 小时内补丁被现网采纳；单队列方案下单连接吞吐提升约 10 倍</span>
 </li></ul>
+</div>
+<div class="timeline-block">
 <div class="entry"><span class="title">核心网用户数据库 C++ 服务容器化迁移（Kubernetes）<span class="role">主导开发</span></span><span class="date">2020.06 – 至今</span></div>
 <ul>
 <li class="row"><span class="lbl">背景</span><span class="val">用户数据库 C++ 服务原以虚拟机交付，需迁移至 Kubernetes 容器平台，且升级过程业务不中断</span>
@@ -268,6 +324,8 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">升级期间请求成功率 99.9%，单实例 2500 QPS；已在 T-Mobile、Verizon、Vodafone 等运营商商用</span>
 </li></ul>
+</div>
+<div class="timeline-block">
 <div class="entry"><span class="title">AI 智能运维终端<span class="role">独立开发</span></span><span class="date">2026.06 – 2026.09</span></div>
 <ul>
 <li class="row"><span class="lbl">背景</span><span class="val">运维排障需在多台主机间反复敲命令、看输出，通用 AI 看不到终端上下文</span>
@@ -281,6 +339,8 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">获诺基亚内部 AI 创新大赛二等奖并在公司内部推广</span>
 </li></ul>
+</div>
+<div class="timeline-block">
 <div class="entry"><span class="title">GPT-2 大模型 CPU 推理引擎（C++）<span class="role">个人项目</span></span><span class="date">2026.04 – 至今</span></div>
 <ul>
 <li class="row"><span class="lbl">背景</span><span class="val">为理解大模型推理的底层原理，在笔记本 CPU 上用 C++ 从零实现 Transformer 推理全链路</span>
@@ -296,6 +356,7 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">在 14 线程笔记本 CPU 上解码速度约 111 token/s</span>
 </li></ul>
+</div>
 </section>
 <h2>专利、荣誉与证书</h2>
 <section class="sec rows rows-meta">
