@@ -137,10 +137,11 @@ function render(md, mdDir, classic = false) {
       timelineBlock = false;
     }
   };
-  const openTimelineBlock = () => {
+  const openTimelineBlock = (pageBreakBefore = false) => {
     if (!/工作|项目|Work Experience|Project Experience/i.test(section)) return;
     closeTimelineBlock();
-    out.push('<div class="timeline-block">');
+    const pb = pageBreakBefore ? ' page-break-before' : '';
+    out.push(`<div class="timeline-block${pb}">`);
     timelineBlock = true;
   };
   const flushHeader = () => {
@@ -228,7 +229,10 @@ function render(md, mdDir, classic = false) {
       const parts = m[1].split(SEP);
       const date = parts.length > 1 ? parts.pop() : '';
       const [title, ...rest] = parts;
-      openTimelineBlock();
+      const breakBefore =
+        /项目|Project Experience/i.test(section) &&
+        /C\+\+20.*推理引擎|LLM.*Inference Engine/i.test(title);
+      openTimelineBlock(breakBefore);
       if (classic) {
         out.push(
           '<div class="entry">' +
@@ -287,11 +291,11 @@ body.lang-en {
   font-family: Calibri, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 @media print {
-  @page { size: A4; margin: 8mm 11mm 7mm; }
+  @page { size: A4; margin: 7mm 10mm 6mm; }
   html { background: none; }
   body {
     width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none;
-    font-size: 9.65pt; line-height: 1.42;
+    font-size: 9.55pt; line-height: 1.38;
   }
   header.basic { gap: 14px; padding-bottom: 6px; }
   .who h1 { font-size: 20pt; letter-spacing: 4px; }
@@ -304,21 +308,27 @@ body.lang-en {
     break-before: page; page-break-before: always;
     margin-top: 0; padding-top: 2px;
   }
+  .timeline-block.page-break-before {
+    break-before: page; page-break-before: always;
+  }
   li { break-inside: auto; }
+  .sec-projects .timeline-block { break-inside: auto; page-break-inside: auto; }
+  li.row { break-inside: auto; page-break-inside: auto; }
   .timeline-block + .timeline-block { margin-top: 6px; padding-top: 0; }
   .timeline-block + .timeline-block::before { margin-bottom: 4px; }
   .timeline-block .entry {
     margin-top: 0; padding: 2px 6px 3px 0; margin-left: 0;
     border-radius: 2px; background: #eef3f8;
+    break-after: auto; page-break-after: auto;
   }
   .timeline-block > ul { margin-bottom: 1px; }
   .sec:not(.sec-projects) > ul > li + li { margin-top: 1px; }
-  .sec-projects .timeline-block + .timeline-block { margin-top: 5px; }
+  .sec-projects .timeline-block + .timeline-block { margin-top: 4px; }
+  .sec-projects .timeline-block + .timeline-block::before { padding-top: 3px; margin-bottom: 2px; }
   ul.sub > li { padding-left: 1.05em; }
   ul.sub > li::before { left: .12em; }
   li.row { column-gap: 8px; }
   .desc { margin-top: 0; }
-  .timeline-block .entry + ul > li + li, ul.sub > li { break-before: avoid; }
 }
 a { color: inherit; text-decoration: none; white-space: nowrap; }
 strong { font-weight: 700; }

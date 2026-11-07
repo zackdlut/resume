@@ -6,7 +6,9 @@
     "convert": "node md-convert.js",
     "serve": "node md-convert.js --serve",
     "resume:embedding": "node build.js resume.embedding.md --pdf --docx",
-    "resume:embedding:pdf": "node build.js resume.embedding.md --pdf"
+    "resume:embedding:pdf": "node build.js resume.embedding.md --pdf",
+    "embed:pdf": "node build.js embedding/resume.embedding.md --pdf",
+    "embed:docx": "node build.js embedding/resume.embedding.md --pdf --docx"
   },
   "dependencies": {
     "html-to-docx": "^1.8.0",
