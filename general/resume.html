@@ -60,6 +60,8 @@ body.lang-en {
     border-radius: 2px; background: #eef3f8;
     break-after: auto; page-break-after: auto;
   }
+  .sec-projects .timeline-block .entry,
+  .sec-projects .timeline-block > ul > li:first-child { break-after: avoid; page-break-after: avoid; }
   .timeline-block > ul { margin-bottom: 1px; }
   .sec:not(.sec-projects) > ul > li + li { margin-top: 1px; }
   .sec-projects .timeline-block + .timeline-block { margin-top: 4px; }
@@ -68,6 +70,12 @@ body.lang-en {
   ul.sub > li::before { left: .12em; }
   li.row { column-gap: 8px; }
   .desc { margin-top: 0; }
+  .sec:not(.sec-projects) { line-height: 1.55; }
+  .sec:not(.sec-projects) > ul > li + li { margin-top: 3px; }
+  .sec:not(.sec-projects) li.row { column-gap: 14px; }
+  .sec:not(.sec-projects) .timeline-block + .timeline-block { margin-top: 10px; }
+  .sec:not(.sec-projects) .timeline-block .entry { margin-bottom: 3px; }
+  h2:not(.page-projects) { margin: 11px 0 6px; }
 }
 a { color: inherit; text-decoration: none; white-space: nowrap; }
 strong { font-weight: 700; }
@@ -197,7 +205,7 @@ li.edu .num { font-family: var(--num); }
 </style>
 </head>
 <body class="">
-<header class="basic"><div class="who"><h1>张恒</h1><p class="intent">求职意向：C/C++ 高级软件工程师、嵌入式开发工程师</p></div><div class="kv"><p><span class="k">工作年限</span><span class="colon">：</span><span class="v">16 年</span></p><p><span class="k">出生年月</span><span class="colon">：</span><span class="v">1987.12</span></p><p><span class="k">期望城市</span><span class="colon">：</span><span class="v">青岛</span></p><p><span class="k">电话</span><span class="colon">：</span><span class="v">151-9248-5800</span></p><p><span class="k">邮箱</span><span class="colon">：</span><span class="v">354379271@qq.com</span></p></div><img class="photo" src="avatar.jpg" alt="照片"></header>
+<header class="basic"><div class="who"><h1>张恒</h1><p class="intent">求职意向：C/C++ 高级软件工程师</p></div><div class="kv"><p><span class="k">工作年限</span><span class="colon">：</span><span class="v">16 年</span></p><p><span class="k">期望城市</span><span class="colon">：</span><span class="v">青岛</span></p><p><span class="k">电话</span><span class="colon">：</span><span class="v"><span class="nowrap">151-9248-5800</span></span></p><p><span class="k">邮箱</span><span class="colon">：</span><span class="v">354379271@qq.com</span></p></div><img class="photo" src="avatar.jpg" alt="照片"></header>
 <h2>教育背景</h2>
 <section class="sec flat">
 <ul>
@@ -207,35 +215,19 @@ li.edu .num { font-family: var(--num); }
 <h2>个人优势</h2>
 <section class="sec rows rows-meta">
 <ul>
-<li>16 年 C/C++ 开发经验，其中 11 年 Linux 后端网络通信开发，5 年 ARM/VxWorks/FreeRTOS 实时操作系统网络协议栈开发
+<li><strong>16 年 C/C++ 开发经验</strong>，<strong>11 年 Linux 后端开发</strong>，<strong>5 年 ARM/VxWorks/FreeRTOS 嵌入式开发</strong>
 </li>
-<li>擅长高并发服务端架构设计与性能调优，能从代码、操作系统深入到硬件层（多线程、NUMA、CPU 缓存），定位并优化 CPU 与内存瓶颈
+<li>擅长<strong>高并发服务端</strong>与<strong>嵌入式实时系统</strong>的<strong>架构设计</strong>与<strong>性能调优</strong>，能快速定位并优化 CPU、内存与网络通信瓶颈
 </li>
-<li>熟悉 TCP/IP、SCTP 传输层协议，HTTP/HTTPS、HTTP/2、Diameter 等应用层协议，IPP、UPnP、AirPrint、USB 等设备通信协议，以及 3GPP 4G/5G 核心网规范
+<li>熟悉 TCP/IP、HTTP、HTTP/2、SCTP、Diameter 等<strong>网络协议</strong>，以及 3GPP 4G/5G <strong>核心网规范</strong>
 </li>
-<li>具备电信级产品云原生改造与 In-Service 不中断升级经验，熟悉 Docker、Kubernetes、OpenShift、Helm 等容器化技术
+<li>主导电信级产品<strong>云原生改造</strong>，实现业务不中断升级，熟悉 <strong>Docker、Kubernetes、Helm</strong> 等容器化技术
 </li>
-<li>长期支持北美、欧洲运营商，擅长生产环境复杂故障的快速定位与根因分析
+<li>2 年北美、欧洲运营商<strong>客户支持经验</strong>，擅长<strong>复杂故障的快速定位与根因分析</strong>
 </li>
-<li>英语可作为工作语言，多次牵头跨团队新功能开发与技术攻关
+<li><strong>英语可作为工作语言</strong>，多次<strong>牵头跨团队</strong>新功能开发与技术攻关
 </li>
-<li>持续关注新技术，具备大模型推理优化与 AI Agent 应用的开发实践
-</li></ul>
-</section>
-<h2>专业技能</h2>
-<section class="sec rows rows-skill">
-<ul>
-<li class="row"><span class="lbl">编程语言</span><span class="val">熟悉 C/C++ 及现代 C++ 特性；熟练使用 Python、Golang、Shell</span>
-</li>
-<li class="row"><span class="lbl">网络协议</span><span class="val">依据 RFC 在嵌入式设备上实现 HTTP、UPnP、SNMP、IPP/Bonjour 等协议栈；在 Linux 服务端开发基于 SCTP 的 Diameter 与 HTTP/2 信令处理</span>
-</li>
-<li class="row"><span class="lbl">系统编程</span><span class="val">熟悉 Linux 多线程与基于 epoll 的高并发网络编程，具备 NUMA、CPU 亲和与中断亲和调优经验；熟练使用 gdb、Valgrind、Sanitizer、perf、strace、Intel PCM、tcpdump 等工具进行调试、性能分析与问题定位</span>
-</li>
-<li class="row"><span class="lbl">云原生</span><span class="val">熟悉 Docker、Kubernetes、OpenShift、Helm 容器化部署与业务不中断升级；能用 Golang 开发 Kubernetes CRD 自定义控制器</span>
-</li>
-<li class="row"><span class="lbl">嵌入式</span><span class="val">熟悉 ARM 平台与 VxWorks、FreeRTOS 实时操作系统，掌握多任务调度、消息队列、信号量与优先级继承等机制；熟悉 USB 设备端开发与 WindView 性能分析</span>
-</li>
-<li class="row"><span class="lbl">AI 技术</span><span class="val">熟悉 AI Agent 开发（Function Calling、ReAct、子 Agent、上下文工程）与 RAG（LangChain、Chroma、Ollama）；理解 Transformer 推理原理，熟悉 KV Cache、SIMD 等推理优化技术</span>
+<li>持续关注新技术，具备<strong>大模型推理优化与 AI Agent</strong> 应用的开发实践
 </li></ul>
 </section>
 <h2>工作经历</h2>
@@ -243,144 +235,132 @@ li.edu .num { font-family: var(--num); }
 <div class="timeline-block">
 <div class="entry"><span class="title">诺基亚通信投资（中国）有限公司青岛分公司<span class="role">高级软件工程师</span></span><span class="date">2015.06 – 至今</span></div>
 <ul>
-<li class="row"><span class="lbl">模块负责</span><span class="val">4G/5G 网络通信、数据库缓存、通用应用中间件 3 个核心模块负责人，主导设计、评审与质量把关</span>
+<li class="row"><span class="lbl">高性能后端</span><span class="val">负责 4G/5G 用户数据库（HSS/UDM）Linux C++ 后端，基于 epoll、多线程与共享内存实现 Diameter、HTTP/2 高并发低时延处理</span>
 </li>
-<li class="row"><span class="lbl">团队带领</span><span class="val">多次牵头新功能开发，带领 6～7 人 Scrum 敏捷开发小组从设计到交付；负责新员工培训与技术分享</span>
+<li class="row"><span class="lbl">模块负责</span><span class="val">网络通信、数据库缓存、通用应用中间件 3 个核心模块负责人，负责架构设计、代码评审与质量把关</span>
 </li>
-<li class="row"><span class="lbl">云原生改造</span><span class="val">主导用户数据库 Linux C++ 后端服务 Docker 容器化迁移，负责全产品不中断升级设计</span>
+<li class="row"><span class="lbl">云原生改造</span><span class="val">主导用户数据库（HSS）后端服务器的 Docker/Kubernetes 容器化改造，负责全产品不中断升级方案设计</span>
 </li>
-<li class="row"><span class="lbl">生产排障</span><span class="val">为北美、欧洲运营商定位并解决核心网服务器生产环境中的网络、CPU、内存泄漏等重大问题，主导 T-Mobile 等运营商重大故障的根因定位</span>
+<li class="row"><span class="lbl">客户支持</span><span class="val">为北美、欧洲运营商定位并解决核心网现网的网络、CPU、内存泄漏等重大问题（2018.10 – 2020.09）</span>
 </li>
-<li class="row"><span class="lbl">核心网开发</span><span class="val">按 3GPP 规范用 C/C++ 开发 4G/5G 用户数据库（HSS/UDM）与 IMS（VoLTE 语音）功能，涉及 Diameter 与 HTTP/2 信令，从需求到交付</span>
+<li class="row"><span class="lbl">团队带领</span><span class="val">多次牵头新功能开发，带领 6～7 人 Scrum 小组从设计到交付；负责新员工培训与技术分享</span>
 </li></ul>
 </div>
 <div class="timeline-block">
 <div class="entry"><span class="title">日冲信息（大连）有限公司<span class="role">嵌入式软件工程师</span></span><span class="date">2010.06 – 2015.05</span></div>
 <ul>
-<li class="row"><span class="lbl">协议栈开发</span><span class="val">依据 RFC 在 ARM/VxWorks/FreeRTOS 上用 C/C++ 实现嵌入式 Web 服务器、HTTP/UPnP/WSD/SSDP、NetBIOS/CIFS 文件共享、POP3/SMTP 邮件打印与通知、SNMP MIB 等网络协议</span>
+<li class="row"><span class="lbl">协议及驱动开发</span><span class="val">负责打印机网络协议栈（HTTP、SNMP 等）与 USB 等相关驱动，在 ARM/VxWorks/FreeRTOS 上用 C/C++ 实现，适配资源受限设备</span>
 </li>
-<li class="row"><span class="lbl">打印扫描</span><span class="val">主导 AirPrint、IPP over USB、谷歌云打印（Privet）与 HP eSCL 扫描协议开发，连续通过 AirPrint 1.1～1.5 认证</span>
+<li class="row"><span class="lbl">功能开发</span><span class="val">主导打印、扫描等功能开发（AirPrint、IPP over USB、谷歌云打印），产品连续通过苹果 AirPrint 认证</span>
 </li>
-<li class="row"><span class="lbl">性能优化</span><span class="val">用 WindView 分析 VxWorks 多任务并发瓶颈；结合 Wireshark 调优 TCP/UDP 窗口与重传超时，提升打印与扫描传输速率</span>
+<li class="row"><span class="lbl">性能优化</span><span class="val">分析多任务与网络传输瓶颈，提升打印与扫描传输速率</span>
 </li>
-<li class="row"><span class="lbl">IPv6 认证</span><span class="val">主持搭建 IPv6 Ready Logo 测试环境（DHCPv6、DNS 等服务器与路由器），协议栈通过 Phase-1/Phase-2 认证</span>
+<li class="row"><span class="lbl">认证测试</span><span class="val">主持搭建协议认证环境，推动网络协议栈通过 IPv6 Ready Logo <span class="nowrap">Phase-1</span>/<span class="nowrap">Phase-2</span> 认证</span>
 </li>
-<li class="row"><span class="lbl">界面开发</span><span class="val">开发打印机触摸屏 GUI，用 HTML、JavaScript 等开发打印机内嵌管理网页，并用 Selenium 做网页自动化测试</span>
+<li class="row"><span class="lbl">UI开发测试</span><span class="val">负责触摸屏GUI界面与内嵌Web管理网页（HTML、JavaScript）的开发，并用 Selenium 完成自动化测试</span>
 </li></ul>
 </div>
+</section>
+<h2>专业技能</h2>
+<section class="sec rows rows-skill">
+<ul>
+<li class="row"><span class="lbl">编程语言</span><span class="val">熟练掌握 C/C++（C++11/14/17/20），熟练使用 Python、Golang、Shell</span>
+</li>
+<li class="row"><span class="lbl">后端开发</span><span class="val">掌握 Linux 高并发服务端架构设计，包括 epoll 事件驱动、线程池、缓存与负载均衡</span>
+</li>
+<li class="row"><span class="lbl">数据与通信</span><span class="val">在生产项目中使用 PostgreSQL、LDAP、Redis 做数据存储与缓存，用 gRPC + Protobuf 做服务间通信</span>
+</li>
+<li class="row"><span class="lbl">网络协议</span><span class="val">深入理解 TCP/IP、HTTP/2、SCTP、Diameter 等协议，具备扎实的 Socket 编程能力</span>
+</li>
+<li class="row"><span class="lbl">系统调优</span><span class="val">掌握 Linux 多线程、多进程与进程间通信，擅长 CPU、内存与网络调优；熟练使用 gdb、perf、Valgrind</span>
+</li>
+<li class="row"><span class="lbl">云原生</span><span class="val">熟练运用 Docker、Kubernetes、Helm，主导过容器化改造与业务不中断升级；能用 Golang 开发 CRD 控制器</span>
+</li>
+<li class="row"><span class="lbl">工程工具</span><span class="val">熟练使用 CMake、Git、GoogleTest、Jenkins 等开发与持续集成工具</span>
+</li>
+<li class="row"><span class="lbl">嵌入式</span><span class="val">5 年 ARM/VxWorks/FreeRTOS 经验，掌握多任务调度、消息队列、信号量与优先级继承，做过 USB 设备端开发</span>
+</li>
+<li class="row"><span class="lbl">AI 技术</span><span class="val">开发过 AI Agent 与 RAG 应用，理解大模型推理原理与性能优化方法；熟练使用 Cursor、Trae 等 AI 编程工具</span>
+</li></ul>
 </section>
 <h2 class="page-projects">项目经历</h2>
 <section class="sec timeline rows rows-meta sec-projects">
 <div class="timeline-block">
-<div class="entry"><span class="title">美国 T-Mobile 核心网现网信令时延故障<span class="role">主导根因定位</span></span><span class="date">2019.06 – 2019.09</span></div>
+<div class="entry"><span class="title">基于共享内存的数据库缓存系统设计<span class="role">模块负责人</span></span><span class="date">2025.09 – 2025.12</span></div>
 <ul>
-<li class="row"><span class="lbl">背景</span><span class="val">光纤中断后流量绕路，Diameter/SCTP 链路时延升至 140 ms 以上，约 229 万 LTE 用户受影响，VoLTE 呼叫量下降 25%</span>
+<li class="row"><span class="lbl">背景</span><span class="val">用户数据库前端上百个业务进程各自从后端数据库加载配置数据。启动与刷新时同一份配置被重复查询，数据库压力大、CPU 过载，且各进程数据不一致</span>
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>止损：与客户协同分析日志与抓包，定位并隔离高时延链路，配合流量迁移先行恢复业务
+<li>架构设计：新增独立缓存进程，统一从数据库加载配置并写入共享内存，业务进程再同步本地副本。解决上百个进程各自查库带来的数据库压力、CPU 过载和数据不一致，使查询由每进程一份变为全节点一份，查询量降低 40 倍
 </li>
-<li>定位：用 tcpdump、ping、perf 等工具对比正常与异常连接，发现 SCTP 队列大量堆积，并出现网络 EAGAIN 错误，读代码确认单线程阻塞发送使一条慢连接拖垮同线程其他连接
+<li>通知服务开发：用 C++ 开发 HTTP Server（epoll + 线程池）接收数据库变更通知，双 Pod 以 <span class="nowrap">Active-Active</span> 部署并兼做负载均衡。解决变更集中到达时的接入瓶颈和单点问题，处理能力达到 2500 TPS
 </li>
-<li>根因：实验室按同等时延复现，控制变量测试网卡队列数、发送缓冲区、物理机/虚拟机，锁定 CentOS KVM 虚拟机 virtio 多队列非真 RSS 导致 SCTP 乱序与快速重传，高 RTT 下拥塞窗口难以恢复
+<li>一致性设计：变更到达后只重新缓存变更条目或整表，再通知业务进程刷新本地副本，避免全量重载再次打满 CPU；用周期刷新和每日定点刷新兜底，解决通知丢失造成的数据不一致
 </li>
-<li>修复：C++ 实现连接级自动隔离（5 秒滑动窗口内累计 10 次写失败即拆除该连接，流量分摊到其余 23 条连接，10 秒自动重连），调大 SCTP 发送缓冲区以提高网络波动容忍度，缩短 epoll 超时时间避免阻塞其他连接的通信；输出单队列过渡、OS 升级、增连分流的中长期方案
+<li>质量把关：主导设计与代码评审，整理共享内存缓存的排障方法，用于生产问题定位和新员工培训
 </li></ul>
 </li>
-<li class="row"><span class="lbl">成果</span><span class="val">12 小时内恢复业务，72 小时内补丁被现网采纳；单队列方案下单连接吞吐提升约 10 倍；推动广域网时延性能实验室与链路级监控告警建设</span>
+<li class="row"><span class="lbl">成果</span><span class="val">消除 CPU 过载，数据库查询量降低 40 倍；已在 <span class="nowrap">T-Mobile</span>、Verizon 商用</span>
 </li></ul>
 </div>
 <div class="timeline-block">
-<div class="entry"><span class="title">核心网用户数据库共享内存数据缓存系统（C++/Linux）<span class="role">模块负责人</span></span><span class="date">2025.09 – 2025.12</span></div>
+<div class="entry"><span class="title">后端服务容器化改造与不中断升级<span class="role">主导开发</span></span><span class="date">2020.06 – 至今</span></div>
 <ul>
-<li class="row"><span class="lbl">背景</span><span class="val">HSS 前端上百个业务进程各自从后端数据库加载业务套餐等非用户配置数据，启动与刷新时数据库压力大、CPU 过载，且进程间数据不一致</span>
+<li class="row"><span class="lbl">背景</span><span class="val">电信核心网用户数据库由多个后端服务组成，原以虚拟机交付，升级需要 5 小时停机维护，业务中断</span>
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>架构设计：新增独立缓存进程统一从数据库加载配置数据，按数据类型写入共享内存，业务进程从共享内存同步本地副本，数据库查询由每个进程各一份变为全节点一份
+<li>容器化改造：牵头认证处理、数据变更通知等 C++ 核心服务从虚拟机迁到 Kubernetes/OpenShift，进程改为单容器多进程，配置改为 ConfigMap 注入并支持热加载。解决服务绑定虚拟机交付、配置变更必须重启进程的问题
 </li>
-<li>加载刷新：启动时用异步查询全量加载，按特性开关选择加载内容；支持周期刷新与每日定点刷新，作为增量更新的兜底
+<li>优雅退出开发：用 C++ 处理 SIGTERM，摘除 Diameter 与 HTTP/2 长连接并排空在途请求，同时实现就绪/存活探针。解决滚动升级时进程被直接终止、长连接中断和在途请求丢失的问题
 </li>
-<li>通知接入：用 C++ 开发高性能 HTTP Server（epoll + 线程池，gSOAP 解析 SOAP 消息）接收数据库变更通知并兼做负载均衡，双 Pod Active-Active 部署、轮询接收，解析后再转发给内部分发模块
+<li>兼容设计：设计新旧版本消息与数据格式的兼容方案，使升级期间新旧版本 Pod 可以混跑。解决滚动替换时新旧实例无法同时处理业务的问题
 </li>
-<li>增量更新：收到变更通知后按数据类型只重新缓存变更条目或整表，再通知各业务进程更新本地副本
-</li>
-<li>质量把关：主导设计与代码评审；整理共享内存缓存的查询与排障方法，用于生产问题定位与新员工培训
+<li>控制器开发：用 Golang 独立开发基于 CRD 的 Kubernetes 控制器，管理负载均衡 Pod 的滚动更新，并参与全产品 8 个 Helm Chart 的发布编排与联调。解决负载均衡实例与业务服务无法一起滚动升级的问题
 </li></ul>
 </li>
-<li class="row"><span class="lbl">成果</span><span class="val">HTTP Server 达 2500 TPS；数据库查询量降低 40 倍，消除 CPU 过载；已在美国运营商 T-Mobile、Verizon 商用</span>
+<li class="row"><span class="lbl">成果</span><span class="val">升级由 5 小时停机窗口变为不停机滚动升级，升级期间请求成功率 99.99%，单 POD 2500 QPS；已在 <span class="nowrap">T-Mobile</span>、Verizon、Vodafone 等欧美运营商商用</span>
 </li></ul>
 </div>
 <div class="timeline-block">
-<div class="entry"><span class="title">核心网用户数据库 C++ 服务容器化迁移（容器化）<span class="role">主导开发</span></span><span class="date">2020.06 – 至今</span></div>
+<div class="entry"><span class="title">K8s POD CPU 性能不均根因分析与调优<span class="role">主导分析与调优</span></span><span class="date">2025.09 – 2025.10</span></div>
 <ul>
-<li class="row"><span class="lbl">背景</span><span class="val">核心网用户数据库（HSS/UDM）由 7 个 Linux C++ 服务组成，原以虚拟机/VNF 交付，需迁移至 Kubernetes/OpenShift，且升级过程业务不中断</span>
+<li class="row"><span class="lbl">背景</span><span class="val">新版本容器平台压测中，同一节点上 8 个业务 Pod 承载相同流量，CPU 占用却相差600m，容量评估失真，影响交付</span>
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>服务改造：牵头认证请求处理、数据库更新通知等 C++ 核心服务的云原生改造，进程模型改为单容器多进程，配置改为 ConfigMap 注入与热加载
+<li>原因排除：用负载均衡计数和监控数据逐项复核，确认 8 个 Pod 流量一致、监控读数可信。排除流量分发不均和监控误差，避免后续分析建在错误前提上
 </li>
-<li>优雅启停：用 C++ 实现 SIGTERM 处理、Diameter 与 HTTP/2 链路摘除与在途请求排空，以及就绪/存活探针接口，保证滚动升级时业务不中断
+<li>访存分析：用 numactl、Intel PCM 量化跨 NUMA 访存，并用 Kubernetes 拓扑管理器把 Pod 约束到单个 NUMA 做对照。证明跨 NUMA 访存不是 CPU 差异的主因
 </li>
-<li>版本兼容：设计新旧版本消息与数据格式兼容方案，支持升级期间新旧版本 Pod 混跑
+<li>根因定位：设计十余组控制变量测试，逐项比较 Turbo 睿频、中断亲和、电源策略和 Pod 分布。定位主因是 kubelet 的 CPU 分配使 Pod 在两个 NUMA 上分布不均，高负载节点睿频更低（2.6 vs 2.9 GHz），网卡中断集中进一步拉大差异；中断亲和本身只贡献约 40～50m
 </li>
-<li>配套发布：用 Golang 独立开发基于 CRD 的 Dispatcher 自定义控制器，负责 Diameter Load Balancer Pod 的滚动更新；参与全产品 8 个 Helm Chart 的发布编排与滚动升级联调
+<li>方案设计：建议负载均衡按 Pod CPU 使用率分发流量，向 Kubernetes 社区提交 Issue 反馈 kubelet 的分配问题，并评估预留 CPU、关闭睿频等方案的代价。解决容量评估缺少可落地依据的问题
 </li></ul>
 </li>
-<li class="row"><span class="lbl">成果</span><span class="val">升级由 5 小时停机维护窗口变为无需窗口的滚动升级，期间请求成功率 99.99%，单 Pod 2500 QPS；已在 T-Mobile、Verizon、Vodafone 等欧美运营商商用</span>
+<li class="row"><span class="lbl">成果</span><span class="val">平衡两个 NUMA 的负载后，Pod 间 CPU 差异由约 600m 降至 150m；关闭 Turbo 可降至 100m 以内，但性能下降 10%～15%，为容量规划提供量化依据</span>
 </li></ul>
 </div>
 <div class="timeline-block">
-<div class="entry"><span class="title">用户数据库容器化部署 CPU 性能调优（性能调优）<span class="role">主导分析与调优</span></span><span class="date">2025.09 – 2025.10</span></div>
+<div class="entry"><span class="title">美国运营商通信网络延迟故障根因定位（<span class="nowrap">T-Mobile</span>）<span class="role">攻关负责人</span></span><span class="date">2019.06 – 2019.09</span></div>
 <ul>
-<li class="row"><span class="lbl">背景</span><span class="val">新版本容器平台压测中，同一工作节点上 8 个 HSS/HLR 呼叫处理 Pod 承载相同 TPS，CPU 占用却相差一倍以上（1430m vs 600m），影响容量评估与交付</span>
+<li class="row"><span class="lbl">背景</span><span class="val">运营商光纤中断后流量绕路，后端服务间 SCTP 长连接时延升至 140 ms 以上，约 229 万用户受影响，语音呼叫量下降 25%</span>
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>逐项排除：用负载均衡 Envoy 计数确认流量分发均匀，复核监控数据可信度，排除流量不均与监控误差
+<li>攻关协调：作为技术负责人牵头跨团队攻关，与美国、印度同事协作，协调客户现场支持和本地测试团队，按止损、复现、修复推进。保证现网止损和实验室复现在两地同时进行
 </li>
-<li>访存排查：分析容器 CPU 绑定与事务数据访问路径，用 numactl、pcm-numa 量化跨 NUMA 访存，再用拓扑管理器 single-numa-node 合并容器验证，证明跨 NUMA 不是主因
+<li>业务止损：与客户一起分析日志和抓包，隔离高时延链路并迁移流量。先把业务从绕路链路移走，12 小时内恢复业务
 </li>
-<li>控制变量：设计十余组对照测试，覆盖 Turbo Boost、中断亲和、电源策略、Pod 分布与附加负载，定位主因：kubelet static CPU 分配使 Pod 在两个 NUMA 上分布不均，高负载的 NUMA0 Turbo 频率更低（2600 vs 2900 MHz），网卡中断集中在 NUMA0 进一步加剧
+<li>故障定位：用 tcpdump、perf 对比正常与异常连接，发现发送队列堆积并出现 EAGAIN。确认单线程阻塞发送，一条慢连接拖垮同线程上的其他连接
 </li>
-<li>方案：推荐负载均衡按 Pod CPU 使用率分发流量；向 Kubernetes 社区反馈 kubelet CPU 分配问题（Issue #125453）；评估预留 CPU、合并容器、关闭 Turbo 等方案的代价与局限
+<li>根因定位：组织实验室按 140 ms 以上同等时延复现，控制变量测试网卡队列、发送缓冲区以及物理机与虚拟机。锁定 KVM 虚拟网卡多队列导致报文乱序和快速重传，高时延下拥塞窗口难以恢复
+</li>
+<li>修复开发：用 C++ 实现连接级自动隔离，5 秒滑动窗口内累计 10 次写失败即摘除该连接，流量分到其余 23 条，10 秒后自动重连；并调大发送缓冲区、缩短 epoll 超时。解决一条慢连接阻塞整个发送线程的问题
 </li></ul>
 </li>
-<li class="row"><span class="lbl">成果</span><span class="val">量化各因素贡献：平衡两个 NUMA 的负载后，Pod 间 CPU 差异由约 600m 降至 150m；关闭 Turbo 可降至 100m 以内，但性能下降 10%~15%；中断亲和仅贡献 40~50m</span>
-</li></ul>
-</div>
-<div class="timeline-block page-break-before">
-<div class="entry"><span class="title">C++20 大模型 CPU 推理引擎<span class="role">个人项目</span></span><span class="date">2026.04 – 至今</span></div>
-<ul>
-<li class="row"><span class="lbl">背景</span><span class="val">不依赖任何推理框架，在无 GPU 的笔记本 CPU 上从零实现 GPT-2 推理，逐项量化分析 cache、SIMD、内存带宽与线程同步对性能的影响，并与 llama.cpp 对标</span>
-</li>
-<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
-<ul class="sub">
-<li>矩阵乘优化：循环重排、三层分块、AVX2 + FMA 微内核与多线程，矩阵乘从 0.6 提升到 157.3 GFLOPS（274 倍，达本机实测峰值的 66%）
-</li>
-<li>解码优化：KV Cache 零拷贝视图；解码阶段改为按列并行的 GEMV，常驻线程池 + 动态抢块适配大小核，解决线程越多越慢的问题
-</li>
-<li>正确性：手写前向与计算图执行两套路径互为校验，并以 numpy 为独立参考逐层对拍，贪心输出与 Python 逐字节一致；126 个测试用例，ASan/UBSan/TSan 全部通过
-</li></ul>
-</li>
-<li class="row"><span class="lbl">成果</span><span class="val">GPT-2 解码速度由 7.5 提升到约 111 token/s（约 15 倍）；以 llama.cpp 约 1.8% 的代码量，达到其 23% 的预填充与 39% 的解码性能</span>
-</li></ul>
-</div>
-<div class="timeline-block">
-<div class="entry"><span class="title">AI 智能运维终端<span class="role">独立开发</span></span><span class="date">2026.06 – 2026.09</span></div>
-<ul>
-<li class="row"><span class="lbl">背景</span><span class="val">运维排障需在多台主机间反复敲命令；通用 AI 看不到终端上下文，直接执行又有误操作风险</span>
-</li>
-<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
-<ul class="sub">
-<li>终端与 Agent：基于 Electron + TypeScript 开发内置 AI 侧边栏的 SSH 终端，实现基于 Function Calling 的 ReAct Agent 与 30 余个运维工具
-</li>
-<li>安全控制：「只读白名单 + 危险命令识别」三级审批，配合循环守卫与步数预算防止 Agent 失控
-</li>
-<li>上下文工程：按工具集裁剪提示词以命中前缀缓存，超预算自动压缩，技能（Skills）按需加载；多主机任务交给只读子 Agent 分头排查，只汇总结论
-</li></ul>
-</li>
-<li class="row"><span class="lbl">成果</span><span class="val">获诺基亚内部 AI 创新大赛二等奖</span>
+<li class="row"><span class="lbl">成果</span><span class="val">12 小时内恢复业务，72 小时内补丁被现网采纳；网卡改为单队列后单连接吞吐提升约 10 倍；推动建立广域网时延测试环境与链路级监控告警</span>
 </li></ul>
 </div>
 <div class="timeline-block">
@@ -390,11 +370,11 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>服务发现：基于 Bonjour（mDNS/DNS-SD）实现打印服务的发现与通告
+<li>服务发现：基于 Bonjour（mDNS/<span class="nowrap">DNS-SD</span>）实现打印服务的发现与通告
 </li>
 <li>作业处理：基于 IPP 实现作业提交、状态查询与错误处理，文档数据边收边处理，支持 PDF、JPEG、URF 等格式的打印流水线
 </li>
-<li>问题攻关：认证中小文档可打印、大 PDF 失败或卡住；用 Wireshark 抓包发现 iOS 以 HTTP 分块传输（chunked）发送文档，而嵌入式 HTTP 服务器只支持 Content-Length，为其增加分块解码并边收边交给打印流水线，通过认证测试
+<li>问题攻关：认证测试中小文档能正常打印，大 PDF 却失败或卡住；用 Wireshark 抓包发现 iOS 以 HTTP 分块传输（chunked）发送文档，而嵌入式 HTTP 服务器只支持 <span class="nowrap">Content-Length</span>，于是为其增加分块解码，边收边交给打印流水线，最终通过认证
 </li>
 <li>认证测试：搭建认证环境，执行功能、互操作与回归测试，跟进 1.1～1.5 规范差异并修复兼容问题
 </li></ul>
@@ -405,20 +385,54 @@ li.edu .num { font-family: var(--num); }
 <div class="timeline-block">
 <div class="entry"><span class="title">基于 STM32/FreeRTOS 的打印机 IPP over USB 开发<span class="role">主导开发与测试</span></span><span class="date">2013.11 – 2013.12</span></div>
 <ul>
-<li class="row"><span class="lbl">背景</span><span class="val">传统 USB 打印依赖主机驱动、状态信息少；IPP over USB 在 USB 打印机类接口上承载 HTTP/IPP，在 STM32 针式打印机等机型上实现免驱动打印</span>
+<li class="row"><span class="lbl">背景</span><span class="val">传统 USB 打印依赖主机驱动，作业状态信息少；针式打印机基于 STM32/FreeRTOS，整机内存只有 128 KB，无法照搬常规 IPP 实现做免驱动打印</span>
 </li>
 <li class="row"><span class="lbl">我的工作</span><span class="val"></span>
 <ul class="sub">
-<li>USB 接口：基于 STM32 片上全速 USB（12 Mbps）配置 2 个协议码 0x04 的打印机类接口（一路传作业、一路查状态），各配一对批量端点，并保留传统打印接口兼容老主机；响应 GET_DEVICE_ID 等打印机类请求
+<li>接口开发：在 STM32 片上全速 USB（12 Mbps）上配置 2 个打印机类接口，一路传作业、一路查状态，各配一对批量端点，并保留传统打印接口。解决免驱动打印与老主机兼容不能同时满足的问题
 </li>
-<li>中断处理：USB 中断只做最少的工作，把收到的数据包写入预分配的静态缓冲池，凑满一块或收到短包后用 xQueueSendFromISR 交给对应接口的任务；USB 中断优先级设在 FreeRTOS 可管理范围内，保证在中断里调用 FreeRTOS 接口安全
+<li>中断设计：USB 中断只把收到的数据写入预分配静态缓冲池，凑满一块或收到短包后经消息队列交给对应任务，并把中断优先级放在 FreeRTOS 可管理范围内。解决中断里处理过重，以及在中断中调用系统接口不安全的问题
 </li>
-<li>流控反压：缓冲池耗尽时不再重新使能 OUT 端点，由硬件自动回 NAK 让主机暂停发送，任务归还缓冲区后再恢复接收，在仅 128 KB RAM 下既不丢包也不溢出
+<li>流控设计：缓冲池耗尽时不再重新使能 OUT 端点，由硬件自动回 NAK 暂停主机发送，任务归还缓冲区后再恢复接收。解决仅 128 KB RAM 下接收既丢包又溢出的问题
 </li>
-<li>报文解析：每个接口一个独立任务，用状态机解析 HTTP 报文边界（Content-Length 与 chunked），报文体边收边交给打印流水线；共享作业状态用带优先级继承的互斥信号量保护
+<li>报文处理：每个接口单独起一个任务，用状态机解析 <span class="nowrap">Content-Length</span> 和 chunked，报文体边收边交给打印流水线，共享作业状态用带优先级继承的互斥信号量保护。解决报文边界识别和多任务同时改作业状态的问题
 </li></ul>
 </li>
 <li class="row"><span class="lbl">成果</span><span class="val">打印机在 USB 直连下实现免驱动打印与作业状态查询；随 6 款机型上市</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">C++20 大模型 CPU 推理引擎<span class="role">个人项目</span></span><span class="date">2026.04 – 2026.06</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">在无 GPU 的笔记本 CPU 上从零实现 <span class="nowrap">GPT-2</span>，不依赖推理框架</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
+<ul class="sub">
+<li>矩阵乘优化：循环重排、三层分块、AVX2 与 FMA 微内核加多线程，从 0.6 提升到 157.3 GFLOPS（274 倍，达峰值 66%）
+</li>
+<li>解码优化：KV Cache 零拷贝，按列并行的矩阵向量乘配合常驻线程池动态抢块，解决大小核上线程越多越慢的问题
+</li>
+<li>正确性验证：两套前向路径互校，并以 numpy 逐层比对，126 个用例通过 ASan、UBSan、TSan
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">解码速度由 7.5 提升到约 111 token/s（约 15 倍）</span>
+</li></ul>
+</div>
+<div class="timeline-block">
+<div class="entry"><span class="title">AI 智能运维终端<span class="role">独立开发</span></span><span class="date">2026.07 – 2026.07</span></div>
+<ul>
+<li class="row"><span class="lbl">背景</span><span class="val">运维排障要在多台主机间反复敲命令，历史工单里的处理经验也难以在现场复用</span>
+</li>
+<li class="row"><span class="lbl">我的工作</span><span class="val"></span>
+<ul class="sub">
+<li>终端开发：基于 Electron 与 TypeScript 开发内置 AI 侧边栏的 SSH 终端，用 Function Calling 实现 ReAct Agent，接入 30 余个运维工具，危险命令需人工审批后才执行。解决多台主机间反复敲命令，以及危险命令被直接执行的问题
+</li>
+<li>上下文工程：按当前工具集裁剪提示词以命中前缀缓存，对话超出预算时自动压缩记忆；技能（Skills）按需加载，做渐进式披露。多主机任务交给只读子 Agent 分头排查，只汇总结论。解决长对话占满上下文窗口，以及技能一次全部加载导致提示词膨胀的问题
+</li>
+<li>检索开发：增量同步 Jira 工单，用内部 Ollama 部署的千问 Embedding 向量化后存入 Chroma，检索时向量与 BM25 双路召回并用 RRF 融合排序。解决排障时难以复用历史工单经验的问题
+</li></ul>
+</li>
+<li class="row"><span class="lbl">成果</span><span class="val">获诺基亚内部 AI 创新大赛二等奖</span>
 </li></ul>
 </div>
 </section>
@@ -431,7 +445,7 @@ li.edu .num { font-family: var(--num); }
 </li>
 <li class="row"><span class="lbl">软考</span><span class="val">软件设计师（中级）</span>
 </li>
-<li class="row"><span class="lbl">红帽认证</span><span class="val">OpenShift 应用开发者（证书编号 <a href="https://rhtapps.redhat.com/verify?certId=240-240-408">240-240-408</a>）</span>
+<li class="row"><span class="lbl">红帽认证</span><span class="val">OpenShift 应用开发者（证书编号 <a href="https://rhtapps.redhat.com/verify?certId=240-240-408"><span class="nowrap">240-240-408</span></a>）</span>
 </li></ul>
 </section>
 </body>

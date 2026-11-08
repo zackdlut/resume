@@ -18,7 +18,8 @@ const inline = (s) =>
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-    .replace(/【[^】]*】/g, '<span class="todo">$&</span>');
+    .replace(/【[^】]*】/g, '<span class="todo">$&</span>')
+    .replace(/(<[^>]+>)|\w+(?:-\w+)+/g, (m, tag) => tag || `<span class="nowrap">${m}</span>`);
 
 // 求职意向超过两项时，在最后一项前换行，避免在 "C/C++" 这类词中间断开。
 const wrapIntent = (s, en = false) => {
@@ -229,10 +230,7 @@ function render(md, mdDir, classic = false) {
       const parts = m[1].split(SEP);
       const date = parts.length > 1 ? parts.pop() : '';
       const [title, ...rest] = parts;
-      const breakBefore =
-        /项目|Project Experience/i.test(section) &&
-        /C\+\+20.*推理引擎|LLM.*Inference Engine/i.test(title);
-      openTimelineBlock(breakBefore);
+      openTimelineBlock(false);
       if (classic) {
         out.push(
           '<div class="entry">' +
@@ -321,6 +319,8 @@ body.lang-en {
     border-radius: 2px; background: #eef3f8;
     break-after: auto; page-break-after: auto;
   }
+  .sec-projects .timeline-block .entry,
+  .sec-projects .timeline-block > ul > li:first-child { break-after: avoid; page-break-after: avoid; }
   .timeline-block > ul { margin-bottom: 1px; }
   .sec:not(.sec-projects) > ul > li + li { margin-top: 1px; }
   .sec-projects .timeline-block + .timeline-block { margin-top: 4px; }
@@ -329,6 +329,12 @@ body.lang-en {
   ul.sub > li::before { left: .12em; }
   li.row { column-gap: 8px; }
   .desc { margin-top: 0; }
+  .sec:not(.sec-projects) { line-height: 1.55; }
+  .sec:not(.sec-projects) > ul > li + li { margin-top: 3px; }
+  .sec:not(.sec-projects) li.row { column-gap: 14px; }
+  .sec:not(.sec-projects) .timeline-block + .timeline-block { margin-top: 10px; }
+  .sec:not(.sec-projects) .timeline-block .entry { margin-bottom: 3px; }
+  h2:not(.page-projects) { margin: 11px 0 6px; }
 }
 a { color: inherit; text-decoration: none; white-space: nowrap; }
 strong { font-weight: 700; }
